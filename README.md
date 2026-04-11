@@ -7,6 +7,6 @@ Project end; -
 - [ ] authentication page
 	- [x] create register page ✅ 2026-04-11
 	- [x] create login page ✅ 2026-04-11
-	- [ ] implement form validation for both page
+	- [x] implement form validation both page for better ux
 	- [ ] implement better auth on server side
 	- [ ] implement better auth on client side
