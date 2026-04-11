@@ -18,6 +18,7 @@
       "@components/*": ["./app/components/*"],
       "@routes/*": ["./app/routes/*"],
       "@layouts/*": ["./app/layouts/*"],
+      "@hooks/*": ["./app/hooks/*"],
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
