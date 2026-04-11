@@ -1,6 +1,6 @@
 import RegisterForm from "@components/RegisterForm";
 import type { Route } from "./+types/register";
-import { authSchema } from "~/types/auth.type";
+import { registerSchema } from "~/hooks/auth/register.hook";
 import z from "zod";
 import { redirect } from "react-router";
 
@@ -16,11 +16,13 @@ export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const payload = Object.fromEntries(formData);
 
-  const validForm = authSchema.safeParse(payload);
+  const validForm = registerSchema.safeParse(payload);
 
   if (!validForm.success) {
-    return { errors: z.treeifyError(validForm.error) };
+    return { errors: z.flattenError(validForm.error) };
   }
+
+  console.log(validForm);
 
   return redirect("/");
 }
