@@ -27,7 +27,7 @@ export function useLoginForm() {
   const { handleSubmit, Field, Subscribe } = useForm({
     defaultValues: formDefaultValues,
     validators: {
-      onSubmit: loginSchema,
+      // onSubmit: loginSchema,
       onBlur: loginSchema,
     },
     onSubmit: async ({ value }) => {

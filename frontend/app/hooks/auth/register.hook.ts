@@ -29,7 +29,7 @@ export function useRegisterForm() {
   const { handleSubmit, Field, Subscribe } = useForm({
     defaultValues: formDefaultValues,
     validators: {
-      onSubmit: registerSchema,
+      // onSubmit: registerSchema,
       onBlur: registerSchema,
     },
     onSubmit: async ({ value }) => {
