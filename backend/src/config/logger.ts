@@ -5,12 +5,13 @@ const isProduction = env.BUN_APP_ENV === "production";
 
 const logger = pino({
   level: isProduction ? "info" : "debug",
+  timestamp: pino.stdTimeFunctions.isoTime,
   transport: {
     targets: [
       {
         target: "pino-pretty",
         level: isProduction ? "info" : "debug",
-        options: { colorize: true, translateTime: "SYS:standard" },
+        options: { colorize: true },
       },
       {
         target: "pino-roll",
@@ -21,7 +22,7 @@ const logger = pino({
           extension: ".log",
           mkdir: true,
           limit: { count: 7 },
-          size: 30,
+          size: "30m",
         },
       },
     ],
