@@ -21,7 +21,7 @@ const logger = pino({
           frequency: "daily",
           extension: ".log",
           mkdir: true,
-          limit: { count: 7 },
+          limit: { count: 1 },
           size: "30m",
         },
       },
