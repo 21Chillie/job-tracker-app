@@ -2,7 +2,8 @@ import { LuSmile, LuMail, LuKeyRound, LuEye, LuEyeOff } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import { useState } from "react";
-import { useLoginForm } from "~/hooks/auth/login.hook";
+import { useLoginForm } from "@hooks/auth/login.hook";
+import handleGoogleOauth from "@utils/google-oauth";
 
 function LoginForm() {
   const [viewPassword, setViewpassword] = useState<boolean>(false);
@@ -143,7 +144,11 @@ function LoginForm() {
               <div className="bg-base-content/30 h-px w-full"></div>
             </div>
 
-            <button className="btn btn-block">
+            <button
+              type="button"
+              className="btn btn-block"
+              onClick={() => handleGoogleOauth()}
+            >
               <span>
                 <FcGoogle />
               </span>

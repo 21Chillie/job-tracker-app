@@ -8,7 +8,8 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import { useState } from "react";
-import { useRegisterForm } from "~/hooks/auth/register.hook";
+import { useRegisterForm } from "@hooks/auth/register.hook";
+import handleGoogleOauth from "@utils/google-oauth";
 
 function RegisterForm() {
   const [viewPassword, setViewpassword] = useState<boolean>(false);
@@ -182,7 +183,11 @@ function RegisterForm() {
               <div className="bg-base-content/30 h-px w-full"></div>
             </div>
 
-            <button className="btn btn-block">
+            <button
+              type="button"
+              className="btn btn-block"
+              onClick={() => handleGoogleOauth()}
+            >
               <span>
                 <FcGoogle />
               </span>
