@@ -1,18 +1,11 @@
 import LoginForm from "@components/LoginForm";
-import { redirect, useActionData } from "react-router";
+import { redirect } from "react-router";
 import type { Route } from "./+types/login";
 import { loginSchema } from "@hooks/auth/login.hook";
-import z from "zod";
-import authClient from "@utils/auth-client";
+import authClient from "~/utils/auth/auth-client";
 import toast from "react-hot-toast";
 
 export default function Login() {
-  const actionData = useActionData<typeof clientAction>();
-
-  if (actionData?.error) {
-    toast.error(actionData.error);
-  }
-
   return (
     <>
       <LoginForm></LoginForm>
@@ -36,7 +29,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   });
 
   if (error) {
-    console.log(error);
+    toast.error(error.message as string);
     return { error: error.message };
   }
 
