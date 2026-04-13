@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import { useState } from "react";
 import { useLoginForm } from "@hooks/auth/login.hook";
-import handleGoogleOauth from "@utils/google-oauth";
+import handleGoogleOauth from "@utils/auth/google-oauth";
 
 function LoginForm() {
   const [viewPassword, setViewpassword] = useState<boolean>(false);

@@ -1,18 +1,11 @@
 import RegisterForm from "@components/RegisterForm";
-import type { Route } from "./+types/register";
-import { registerSchema } from "~/hooks/auth/register.hook";
-import z from "zod";
-import { redirect, useActionData } from "react-router";
-import authClient from "@utils/auth-client";
+import { registerSchema } from "@hooks/auth/register.hook";
+import { redirect } from "react-router";
+import authClient from "~/utils/auth/auth-client";
 import toast from "react-hot-toast";
+import type { Route } from "./+types/register";
 
 export default function Register() {
-  const actionData = useActionData<typeof clientAction>();
-
-  if (actionData?.error) {
-    toast.error(actionData.error);
-  }
-
   return (
     <>
       <RegisterForm></RegisterForm>
@@ -27,7 +20,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   const validForm = registerSchema.safeParse(payload);
 
   if (!validForm.success) {
-    return { error: z.prettifyError(validForm.error) };
+    return { error: "Please check your input fields" };
   }
 
   const { error } = await authClient.signUp.email({
@@ -37,7 +30,8 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   });
 
   if (error) {
-    console.error(error);
+    console.log(error);
+    toast.error(error.message as string);
     return { error: error.message };
   }
 
