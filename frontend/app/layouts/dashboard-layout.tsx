@@ -1,40 +1,53 @@
 import { Outlet, redirect, useNavigation } from "react-router";
 import Sidebar from "@components/sidebar/Sidebar";
 import Navbar from "@components/navbar/Navbar";
-import authClient from "@utils/auth/auth-client";
+// import authClient from "@utils/auth/auth-client";
 import Dock from "@components/dock/Dock";
 import type { Route } from "./+types/dashboard-layout";
+import { getUserSession } from "~/utils/auth/get-session";
 
-export async function clientLoader() {
-  const { data: session, error } = await authClient.getSession();
+/**
+ * The code below is for get user session on client side
+ * Longer code and not good practice
 
-  // Debug remove it later
-  console.log(`Session Data: ${session?.user.id.slice(0, 10)}...`);
+    export async function clientLoader() {
+      const { data: session, error } = await authClient.getSession();
 
-  if (!session || error) {
-    console.log(error);
+      if (!session || error) {
+        console.log(error);
+        return redirect("/login");
+      }
+
+      const user = {
+        name: session.user.name,
+        email: session.user.email,
+        image: session.user.image,
+      };
+
+      return { user };
+    }
+
+    export function HydrateFallback() {
+      return (
+        <>
+          <div className="bg-base-100 flex min-h-screen w-screen flex-col">
+            <main className="bg-base-200 m-3 grid flex-1 place-items-center rounded-xl">
+              <span className="loading loading-spinner text-primary"></span>
+            </main>
+          </div>
+        </>
+      );
+    }
+ */
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const user = await getUserSession(request);
+
+  if (!user) {
     return redirect("/login");
   }
 
-  const user = {
-    name: session.user.name,
-    email: session.user.email,
-    image: session.user.image,
-  };
-
   return { user };
-}
-
-export function HydrateFallback() {
-  return (
-    <>
-      <div className="bg-base-100 flex min-h-screen w-screen flex-col">
-        <main className="bg-base-200 m-3 grid flex-1 place-items-center rounded-xl">
-          <span className="loading loading-spinner text-primary"></span>
-        </main>
-      </div>
-    </>
-  );
 }
 
 export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
@@ -57,7 +70,7 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
                   <span className="loading loading-spinner text-primary"></span>
                 </div>
               ) : (
-                <Outlet></Outlet>
+                <Outlet context={loaderData.user}></Outlet>
               )}
             </div>
           </main>
