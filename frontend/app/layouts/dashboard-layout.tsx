@@ -4,7 +4,7 @@ import Navbar from "@components/navbar/Navbar";
 // import authClient from "@utils/auth/auth-client";
 import Dock from "@components/dock/Dock";
 import type { Route } from "./+types/dashboard-layout";
-import { getUserSession } from "~/utils/auth/get-session";
+import { getUserSession } from "~/services/get-session";
 
 /**
  * The code below is for get user session on client side
@@ -41,13 +41,13 @@ import { getUserSession } from "~/utils/auth/get-session";
  */
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const user = await getUserSession(request);
+  const session = await getUserSession(request);
 
-  if (!user) {
+  if (!session) {
     return redirect("/login");
   }
 
-  return { user };
+  return { user: session.user };
 }
 
 export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
