@@ -5,23 +5,19 @@ import authClient from "~/utils/auth/auth-client";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 
-export default function ProfileDropdownMenu({
-  name,
-  email,
-  image,
-}: UserType) {
+export default function ProfileDropdownMenu({ name, email, image }: UserType) {
   const navigate = useNavigate();
-  const [imgSrc, setImgSrc] = useState(image || "/mob-psycho.webp");
+  const [imgSrc, setImgSrc] = useState(image || "avatar-placeholder.webp");
 
   return (
     <>
       <div className="dropdown dropdown-end">
         <div tabIndex={0} role="button" className="btn btn-circle size-8">
           <img
-            className="rounded-full"
+            className="rounded-full object-cover size-8"
             src={imgSrc}
             alt="avatar image"
-            onError={() => setImgSrc("mob-psycho.webp")}
+            onError={() => setImgSrc("avatar-placeholder.webp")}
           />
         </div>
         <div
