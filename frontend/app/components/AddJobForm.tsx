@@ -1,8 +1,10 @@
 import { LuLink2 } from "react-icons/lu";
-import { Form } from "react-router";
+import { Form, useFetcher } from "react-router";
 
 export default function AddJobForm() {
   const todayDate = new Date().toISOString().split("T")[0];
+  const fetcher = useFetcher();
+  const busy = fetcher.state !== "idle";
 
   return (
     <>
@@ -101,12 +103,18 @@ export default function AddJobForm() {
           </fieldset>
 
           <div className="col-span-2 mt-6 flex justify-end gap-4">
-            <button type="button" className="btn btn-ghost">
+            <button type="reset" className="btn btn-ghost">
               Clear
             </button>
 
             <button type="submit" className="btn btn-primary">
-              Add Opportunity
+              {busy ? (
+                <div>
+                  <span className="loading loading-spinner"></span> Adding
+                </div>
+              ) : (
+                "Add opportunity"
+              )}
             </button>
           </div>
         </Form>
