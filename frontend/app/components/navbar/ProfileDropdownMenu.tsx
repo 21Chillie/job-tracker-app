@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import type { UserNavbarType } from "~/types/global.type";
+import type { UserType } from "~/types/user.type";
 import { ModalBody, ModalButton } from "../Modal";
 import authClient from "~/utils/auth/auth-client";
 import { useNavigate } from "react-router";
@@ -9,7 +9,7 @@ export default function ProfileDropdownMenu({
   name,
   email,
   image,
-}: UserNavbarType) {
+}: UserType) {
   const navigate = useNavigate();
   const [imgSrc, setImgSrc] = useState(image || "/mob-psycho.webp");
 

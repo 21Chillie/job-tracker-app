@@ -4,13 +4,13 @@ import env from "./env";
 const isProduction = env.BUN_APP_ENV === "production";
 
 const logger = pino({
-  level: isProduction ? "info" : "debug",
+  level: isProduction ? "info" : "trace",
   timestamp: pino.stdTimeFunctions.isoTime,
   transport: {
     targets: [
       {
         target: "pino-pretty",
-        level: isProduction ? "info" : "debug",
+        level: isProduction ? "info" : "trace",
         options: { colorize: true },
       },
       {
