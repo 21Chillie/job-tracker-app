@@ -51,8 +51,15 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
-  const navigate = useNavigation();
-  const pageIsLoading = navigate.state === "loading";
+  // const navigate = useNavigation();
+  // const pageIsLoading = navigate.state === "loading";
+
+  if (!loaderData.user) {
+    throw new Response("User session not found", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
 
   return (
     <>
@@ -65,13 +72,7 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
 
           <main className="bg-base-200 m-0 flex-1 overflow-y-auto rounded-xl md:m-4 md:mt-0 md:ml-0">
             <div className="relative mx-auto max-w-6xl space-y-6">
-              {pageIsLoading ? (
-                <div className="absolute inset-100 grid place-items-center">
-                  <span className="loading loading-spinner text-primary"></span>
-                </div>
-              ) : (
-                <Outlet context={loaderData.user}></Outlet>
-              )}
+              <Outlet context={loaderData.user}></Outlet>
             </div>
           </main>
 
