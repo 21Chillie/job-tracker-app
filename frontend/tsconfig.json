@@ -21,6 +21,7 @@
       "@hooks/*": ["./app/hooks/*"],
       "@utils/*": ["./app/utils/*"],
       "@configs/*": ["./app/configs/*"],
+      "@services/*": ["./app/services/*"],
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
