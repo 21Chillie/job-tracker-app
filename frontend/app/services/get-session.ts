@@ -1,4 +1,4 @@
-import api from "@configs/axiosInstance.config";
+import api from "@configs/axios-instance.config";
 import type { AxiosResponse } from "axios";
 import type { SessionType } from "~/types/user.type";
 
@@ -22,13 +22,3 @@ export async function getUserSession(request: Request) {
     return null;
   }
 }
-
-// export async function getUserSession(request: Request) {
-//   const session = await getSession(request);
-
-//   if (!session || !session.user) {
-//     return null;
-//   }
-
-//   return session.user;
-// }
