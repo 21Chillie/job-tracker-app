@@ -1,14 +1,15 @@
-import { Outlet, redirect } from "react-router";
-import Sidebar from "~/components/sidebar/Sidebar";
-import Navbar from "~/components/navbar/Navbar";
-import authClient from "~/utils/auth/auth-client";
+import { Outlet, redirect, useNavigation } from "react-router";
+import Sidebar from "@components/sidebar/Sidebar";
+import Navbar from "@components/navbar/Navbar";
+import authClient from "@utils/auth/auth-client";
+import Dock from "@components/dock/Dock";
 import type { Route } from "./+types/dashboard-layout";
 
 export async function clientLoader() {
   const { data: session, error } = await authClient.getSession();
 
   // Debug remove it later
-  console.log(`Session Data: ${session?.user.id.slice(0,10)}...`);
+  console.log(`Session Data: ${session?.user.id.slice(0, 10)}...`);
 
   if (!session || error) {
     console.log(error);
@@ -37,6 +38,9 @@ export function HydrateFallback() {
 }
 
 export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
+  const navigate = useNavigation();
+  const pageIsLoading = navigate.state === "loading";
+
   return (
     <>
       <div className="bg-base-100 flex min-h-screen w-full overflow-hidden">
@@ -45,11 +49,20 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
         {/* Navbar and Main Content */}
         <div className="flex flex-1 flex-col overflow-hidden">
           <Navbar user={loaderData.user}></Navbar>
-          <main className="bg-base-200 m-3 flex-1 overflow-y-auto rounded-xl md:m-4 md:mt-0 md:ml-0">
-            <div className="mx-auto max-w-6xl space-y-6">
-              <Outlet />
+
+          <main className="bg-base-200 m-0 flex-1 overflow-y-auto rounded-xl md:m-4 md:mt-0 md:ml-0">
+            <div className="relative mx-auto max-w-6xl space-y-6">
+              {pageIsLoading ? (
+                <div className="absolute inset-100 grid place-items-center">
+                  <span className="loading loading-spinner text-primary"></span>
+                </div>
+              ) : (
+                <Outlet></Outlet>
+              )}
             </div>
           </main>
+
+          <Dock></Dock>
         </div>
       </div>
     </>
