@@ -46,7 +46,9 @@ export default function AddJobForm() {
               name="fCompany"
               className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
               placeholder="e.g. CD Projekt Red"
+              required
             />
+            <p className="label">Required</p>
           </fieldset>
 
           <fieldset className="fieldset col-span-2 md:col-span-1">
@@ -68,10 +70,9 @@ export default function AddJobForm() {
             <select
               id="fJobStatus"
               name="fJobStatus"
-              defaultValue="Pick a job status"
+              defaultValue="Applied"
               className="select select-sm md:select-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
             >
-              <option disabled={true}>Pick a job status</option>
               <option value="applied">Applied</option>
               <option value="tested">Tested</option>
               <option value="interviewed">Interviewed</option>
@@ -84,8 +85,8 @@ export default function AddJobForm() {
           <fieldset className="fieldset col-span-2 md:col-span-1">
             <legend className="fieldset-legend">Applications Date</legend>
             <input
-              id="fJobDate"
-              name="fJobDate"
+              id="fAppliedDate"
+              name="fAppliedDate"
               type="date"
               className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
               defaultValue={todayDate}
@@ -99,6 +100,7 @@ export default function AddJobForm() {
               name="fNotes"
               className="textarea textarea-sm md:textarea-md focus-within:outline-primary/20 focus-within:border-primary/50 h-32 w-full p-3 md:p-4"
               placeholder="Briefly describe the role, salary range, or interview contacts..."
+              maxLength={500}
             ></textarea>
           </fieldset>
 
