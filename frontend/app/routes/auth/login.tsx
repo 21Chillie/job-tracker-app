@@ -4,6 +4,7 @@ import type { Route } from "./+types/login";
 import { loginSchema } from "@hooks/auth/login.hook";
 import authClient from "~/utils/auth/auth-client";
 import toast from "react-hot-toast";
+import z from "zod";
 
 export default function Login() {
   return (
@@ -20,7 +21,8 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   const validForm = loginSchema.safeParse(payload);
 
   if (!validForm.success) {
-    return { error: "Please check your input fields" };
+    toast.error(z.prettifyError(validForm.error));
+    return { error: z.prettifyError(validForm.error) };
   }
 
   const { error } = await authClient.signIn.email({

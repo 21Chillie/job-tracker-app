@@ -4,6 +4,7 @@ import { redirect } from "react-router";
 import authClient from "~/utils/auth/auth-client";
 import toast from "react-hot-toast";
 import type { Route } from "./+types/register";
+import z from "zod";
 
 export default function Register() {
   return (
@@ -20,7 +21,8 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   const validForm = registerSchema.safeParse(payload);
 
   if (!validForm.success) {
-    return { error: "Please check your input fields" };
+    toast.error(z.prettifyError(validForm.error));
+    return { error: z.prettifyError(validForm.error) };
   }
 
   const { error } = await authClient.signUp.email({
