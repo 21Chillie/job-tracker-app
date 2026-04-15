@@ -19,7 +19,7 @@ export function authMigrations() {
     if (!tableExists) {
       // execute the entire generated SQL file
       db.run(sql);
-      logger.info("Database schema initialized.");
+      logger.info("Database schema initialized (auth).");
     }
   } catch (error) {
     logger.fatal("Migration failed");
