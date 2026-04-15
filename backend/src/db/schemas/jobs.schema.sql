@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS jobs (
+id TEXT PRIMARY KEY,
+user_id TEXT NOT NULL,
+job_title TEXT NOT NULL,
+company TEXT NOT NULL,
+job_url TEXT,
+job_status TEXT DEFAULT 'applied',
+applied_date TEXT NOT NULL,
+notes TEXT,
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_jobs_user_id ON jobs(user_id);
