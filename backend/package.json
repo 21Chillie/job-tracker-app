@@ -4,6 +4,7 @@
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.7.6",
     "better-auth": "^1.6.2",
     "hono": "^4.12.12",
     "pino": "^10.3.1",
