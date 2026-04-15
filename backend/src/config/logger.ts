@@ -1,16 +1,16 @@
 import { pino } from "pino";
 import env from "./env";
 
-const isProduction = env.BUN_APP_ENV === "production";
+const isDevelopment = env.BUN_APP_ENV === "development";
 
 const logger = pino({
-  level: isProduction ? "info" : "trace",
+  level: isDevelopment ? "trace" : "info",
   timestamp: pino.stdTimeFunctions.isoTime,
   transport: {
     targets: [
       {
         target: "pino-pretty",
-        level: isProduction ? "info" : "trace",
+        level: isDevelopment ? "trace" : "info",
         options: { colorize: true },
       },
       {
