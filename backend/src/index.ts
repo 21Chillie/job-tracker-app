@@ -1,12 +1,16 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { HTTPException } from "hono/http-exception";
 import logMiddleware from "@middlewares/log.middleware";
-import logger from "@config/logger";
-import authRoute from "@routes/auth.route";
-import { authMigrations } from "@scripts/auth-migrate";
 import env from "@config/env";
+import logger from "@config/logger";
+import { authMigrations } from "@scripts/auth-migrate";
+import { jobsMigrations } from "@scripts/jobs-migrate";
+import authRoute from "@routes/auth.route";
+import jobsRoute from "@routes/jobs.route";
 
 authMigrations();
+jobsMigrations();
 
 const app = new Hono();
 
@@ -25,11 +29,34 @@ app.use(
 app.use("*", logMiddleware);
 
 app.get("/", (c) => {
-  logger.info("Hello Hono!");
-
-  return c.text("Hello Hono!");
+  return c.json({ message: "Hello from Hono!" });
 });
 
 app.route("/api/auth", authRoute);
+
+app.route("/api/jobs", jobsRoute);
+
+// Handle global error response
+app.onError((err, c) => {
+  const status = err instanceof HTTPException ? err.status : 500;
+
+  if (env.BUN_APP_ENV === "development") {
+    console.error(err.stack);
+  }
+
+  logger.error(`${err.name}: ${err.message}`);
+
+  return c.json(
+    {
+      success: false,
+      error: {
+        type: err.name || "InternalError",
+        message: err.message || "An unexpected error occurred",
+        stack: env.BUN_APP_ENV === "development" ? err.stack : undefined,
+      },
+    },
+    status,
+  );
+});
 
 export default app;
