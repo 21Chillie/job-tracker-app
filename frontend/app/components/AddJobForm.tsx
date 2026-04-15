@@ -104,12 +104,12 @@ export default function AddJobForm() {
             ></textarea>
           </fieldset>
 
-          <div className="col-span-2 mt-6 flex justify-end gap-4">
-            <button type="reset" className="btn btn-ghost">
+          <div className="col-span-2 mt-6 flex justify-end gap-4 flex-wrap">
+            <button type="reset" className="btn btn-ghost max-sm:btn-sm">
               Clear
             </button>
 
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary max-sm:btn-sm">
               {busy ? (
                 <div>
                   <span className="loading loading-spinner"></span> Adding
