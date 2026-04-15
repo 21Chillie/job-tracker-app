@@ -108,7 +108,7 @@ function LoginForm() {
                         ))}
                       </div>
                     ) : (
-                      <p className="label">
+                      <p className="label whitespace-normal">
                         Must be 8+ characters, includes uppercase and number.
                       </p>
                     )}
