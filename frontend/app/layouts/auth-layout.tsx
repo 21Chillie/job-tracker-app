@@ -22,20 +22,6 @@ export default function AuthLayout() {
         <main className="bg-base-200 m-3 grid flex-1 place-items-center rounded-xl">
           <Outlet></Outlet>
         </main>
-
-        <div className="fixed right-6 bottom-6">
-          <a
-            role="link"
-            href="https://github.com/21Chillie/job-tracker-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-soft btn-circle group"
-          >
-            <span>
-              <FaGithub className="text-base-content/70 group-hover:text-base-content size-5 transition-colors" />
-            </span>
-          </a>
-        </div>
       </div>
     </>
   );
