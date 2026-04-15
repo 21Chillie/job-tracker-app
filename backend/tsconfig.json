@@ -11,6 +11,7 @@
       "@scripts/*": ["./src/scripts/*"],
       "@utils/*": ["./src/utils/*"],
       "@config/*": ["./src/config/*"],
+      "@controllers/*": ["./src/controllers/*"],
     },
   },
 }
