@@ -1,14 +1,18 @@
 import { Link, useNavigate } from "react-router";
-import type { UserType } from "~/types/user.type";
 import { ModalBody, ModalButton } from "@components/Modal";
-import { useState } from "react";
 import { useAppDispatch } from "@configs/store.config";
 import authService from "@services/auth.service";
+import { useQuery } from "@tanstack/react-query";
+import { sessionQueryOption } from "~/hooks/auth/useSession.hook";
 
-export default function ProfileDropdownMenu({ name, email, image }: UserType) {
-  const [imgSrc, setImgSrc] = useState(image || "avatar-placeholder.webp");
+export default function ProfileDropdownMenu() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { data: session } = useQuery(sessionQueryOption());
+
+  if (!session) return;
+
+  const { name, email, image } = session.user;
 
   return (
     <>
@@ -16,9 +20,8 @@ export default function ProfileDropdownMenu({ name, email, image }: UserType) {
         <div tabIndex={0} role="button" className="btn btn-circle size-8">
           <img
             className="size-8 rounded-full object-cover"
-            src={imgSrc}
+            src={image || "avatar-placeholder.webp"}
             alt="avatar image"
-            onError={() => setImgSrc("avatar-placeholder.webp")}
           />
         </div>
         <div
