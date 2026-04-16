@@ -15,7 +15,15 @@
 	- [x] create navbar component ✅ 2026-04-14
 	- [x] create sidebar component ✅ 2026-04-14
 	- [x] function to signout account ✅ 2026-04-14
+- [x] Refactor the code (authentication): ✅ 2026-04-16
+	- [x] implement redux toolkit in authentication flow for centralize auth action and state (apply what I learn about redux toolkit) ✅ 2026-04-16
+	- [x] centralize all authentication function/login for improving maintainability and code consistency ✅ 2026-04-16
+	- [x] fix some layouts and styles in authentication and dashboard page (UI only) ✅ 2026-04-16
 - [ ] home route
 - [ ] job list route
 - [ ] add new jobs route⏫ 
+	- [x] create UI form component ✅ 2026-04-16
+	- [x] add logic to handle form data (client) ✅ 2026-04-16
+	- [x] add backend POST route to handle form data and insert that data into database ✅ 2026-04-16
+	- [ ] refactor client code to use useMutation from tanstack query
 - [ ] profile route⏫
