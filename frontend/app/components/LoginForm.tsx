@@ -2,7 +2,7 @@ import { LuSmile, LuMail, LuKeyRound, LuEye, LuEyeOff } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import { useState } from "react";
-import { useLoginForm } from "@hooks/auth/login.hook";
+import { useLoginForm } from "@hooks/auth/useLogin.hook";
 import { useAppDispatch } from "@configs/store.config";
 import authService from "@services/auth.service";
 

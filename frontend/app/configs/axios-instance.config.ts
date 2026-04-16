@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosError, type AxiosResponse } from "axios";
+import axios, { type AxiosResponse } from "axios";
 import env from "./env.config";
 import toast from "react-hot-toast";
 
@@ -48,7 +48,7 @@ api.interceptors.response.use(
           break;
 
         default:
-          toast.error("Unexpected error occurred");
+          toast.error(error.message);
           break;
       }
     }

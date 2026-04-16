@@ -1,12 +1,11 @@
 import { useNavigation } from "react-router";
 import { Outlet } from "react-router";
-import { FaGithub } from "react-icons/fa";
 
 export default function AuthLayout() {
   const navigation = useNavigation();
-  const pageIsLoading = navigation.state === "loading";
+  const isNavigating = Boolean(navigation.location);
 
-  if (pageIsLoading) {
+  if (isNavigating) {
     return (
       <>
         <div className="bg-base-100 grid min-h-screen w-screen flex-col place-items-center">

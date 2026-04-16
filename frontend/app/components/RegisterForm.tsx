@@ -8,7 +8,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import { useState } from "react";
-import { useRegisterForm } from "@hooks/auth/register.hook";
+import { useRegisterForm } from "@hooks/auth/useRegister.hook";
 import { useAppDispatch } from "@configs/store.config";
 import authService from "@services/auth.service";
 
