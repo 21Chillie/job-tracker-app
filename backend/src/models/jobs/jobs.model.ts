@@ -1,4 +1,5 @@
 import db from "@db/db-client";
+import logger from "@config/logger";
 import { JobApplicationFormDataType } from "~/types/jobs.types";
 
 const jobsModel = {
@@ -22,6 +23,10 @@ const jobsModel = {
         applied_date: fAppliedDate,
         notes: fNotes || null,
       });
+
+      logger.info(
+        `Job created successfully. [${id}, ${userId.slice(0, 10)}...]`,
+      );
 
       return result;
     } catch (err) {
