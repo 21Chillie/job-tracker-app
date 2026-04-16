@@ -10,7 +10,6 @@ export const checkAuth = createMiddleware(async (c, next) => {
   });
 
   if (!session) {
-    logger.debug("User session is not found");
     throw new HTTPException(401, {
       message: "User session is not found",
     });
