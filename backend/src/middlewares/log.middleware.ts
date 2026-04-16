@@ -16,7 +16,7 @@ const logMiddleware = createMiddleware(async (c, next) => {
     const status = c.res.status;
 
     // Stream to Pino
-    logger.info(
+    logger.trace(
       {
         method,
         path,

@@ -1,27 +1,24 @@
-import { Link } from "react-router";
-import type { UserNavbarType } from "~/types/global.type";
-import { ModalBody, ModalButton } from "../Modal";
-import authClient from "~/utils/auth/auth-client";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
+import type { UserType } from "~/types/user.type";
+import { ModalBody, ModalButton } from "@components/Modal";
 import { useState } from "react";
+import { useAppDispatch } from "@configs/store.config";
+import authService from "@services/auth.service";
 
-export default function ProfileDropdownMenu({
-  name,
-  email,
-  image,
-}: UserNavbarType) {
+export default function ProfileDropdownMenu({ name, email, image }: UserType) {
+  const [imgSrc, setImgSrc] = useState(image || "avatar-placeholder.webp");
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [imgSrc, setImgSrc] = useState(image || "/mob-psycho.webp");
 
   return (
     <>
       <div className="dropdown dropdown-end">
         <div tabIndex={0} role="button" className="btn btn-circle size-8">
           <img
-            className="rounded-full"
+            className="size-8 rounded-full object-cover"
             src={imgSrc}
             alt="avatar image"
-            onError={() => setImgSrc("mob-psycho.webp")}
+            onError={() => setImgSrc("avatar-placeholder.webp")}
           />
         </div>
         <div
@@ -60,7 +57,7 @@ export default function ProfileDropdownMenu({
         action={{
           danger: true,
           method: () => {
-            authClient.signOut();
+            dispatch(authService.logout());
             navigate("/login");
           },
         }}

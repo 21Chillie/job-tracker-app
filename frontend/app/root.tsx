@@ -11,6 +11,8 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
+import { store } from "@configs/store.config";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -35,18 +37,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Toaster
-          toastOptions={{
-            success: {
-              className:
-                "!text-base-content !font-medium !bg-base-100 !border !border-base-300 !shadow-md",
-            },
-            error: {
-              className:
-                "!text-base-content !font-medium !bg-base-100 !border !border-base-300 !shadow-md",
-            },
-          }}
-        />
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -56,7 +46,30 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <Toaster
+        toastOptions={{
+          success: {
+            className:
+              "!text-base-content !font-medium !bg-base-100 !border !border-base-300 !shadow-md",
+            iconTheme: {
+              primary: "var(--color-primary)",
+              secondary: "var(--color-primary-content)",
+            },
+          },
+          error: {
+            className:
+              "!text-base-content !font-medium !bg-base-100 !border !border-base-300 !shadow-md",
+          },
+        }}
+      />
+
+      <Provider store={store}>
+        <Outlet />
+      </Provider>
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -68,7 +81,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     message = error.status === 404 ? "404" : "Error";
     details =
       error.status === 404
-        ? "The requested page could not be found."
+        ? error.data || "The requested page could not be found."
         : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;

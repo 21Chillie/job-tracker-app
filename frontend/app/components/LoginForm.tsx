@@ -3,11 +3,13 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import { useState } from "react";
 import { useLoginForm } from "@hooks/auth/login.hook";
-import handleGoogleOauth from "@utils/auth/google-oauth";
+import { useAppDispatch } from "@configs/store.config";
+import authService from "@services/auth.service";
 
 function LoginForm() {
   const [viewPassword, setViewpassword] = useState<boolean>(false);
   const { handleSubmit, Subscribe, Field } = useLoginForm();
+  const dispatch = useAppDispatch();
 
   const handleLoginForm = (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -108,7 +110,7 @@ function LoginForm() {
                         ))}
                       </div>
                     ) : (
-                      <p className="label">
+                      <p className="label whitespace-normal">
                         Must be 8+ characters, includes uppercase and number.
                       </p>
                     )}
@@ -147,7 +149,7 @@ function LoginForm() {
             <button
               type="button"
               className="btn btn-block"
-              onClick={() => handleGoogleOauth()}
+              onClick={() => dispatch(authService.loginGoogle())}
             >
               <span>
                 <FcGoogle />
