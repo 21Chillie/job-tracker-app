@@ -1,10 +1,10 @@
 import RegisterForm from "@components/RegisterForm";
 import { registerSchema } from "@hooks/auth/register.hook";
 import { redirect } from "react-router";
-import authClient from "~/utils/auth/auth-client";
 import toast from "react-hot-toast";
 import type { Route } from "./+types/register";
 import z from "zod";
+import authService from "@services/auth.service";
 
 export default function Register() {
   return (
@@ -25,17 +25,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     return { error: z.prettifyError(validForm.error) };
   }
 
-  const { error } = await authClient.signUp.email({
-    name: validForm.data.name,
-    email: validForm.data.email,
-    password: validForm.data.password,
-  });
-
-  if (error) {
-    console.log(error);
-    toast.error(error.message as string);
-    return { error: error.message };
-  }
+  await authService.registerEmail(validForm.data);
 
   return redirect("/");
 }
