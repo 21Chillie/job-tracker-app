@@ -1,47 +1,15 @@
 import { Outlet, redirect, useNavigation } from "react-router";
 import Sidebar from "@components/sidebar/Sidebar";
 import Navbar from "@components/navbar/Navbar";
-// import authClient from "@utils/auth/auth-client";
 import Dock from "@components/dock/Dock";
 import type { Route } from "./+types/dashboard-layout";
-import { getUserSession } from "~/services/get-session";
-
-/**
- * The code below is for get user session on client side
- * Longer code and not good practice
-
-    export async function clientLoader() {
-      const { data: session, error } = await authClient.getSession();
-
-      if (!session || error) {
-        console.log(error);
-        return redirect("/login");
-      }
-
-      const user = {
-        name: session.user.name,
-        email: session.user.email,
-        image: session.user.image,
-      };
-
-      return { user };
-    }
-
-    export function HydrateFallback() {
-      return (
-        <>
-          <div className="bg-base-100 flex min-h-screen w-screen flex-col">
-            <main className="bg-base-200 m-3 grid flex-1 place-items-center rounded-xl">
-              <span className="loading loading-spinner text-primary"></span>
-            </main>
-          </div>
-        </>
-      );
-    }
- */
+import { useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import queryClientConfig from "@configs/query-client.config";
+import authService from "@services/auth.service";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const session = await getUserSession(request);
+  const session = await authService.getSession(request);
 
   if (!session) {
     return redirect("/login");
@@ -53,13 +21,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
   const navigate = useNavigation();
   const pageIsLoading = navigate.state === "loading";
-
-  if (!loaderData.user) {
-    throw new Response("User session not found", {
-      status: 404,
-      statusText: "Not Found",
-    });
-  }
+  const [queryClient] = useState(() => new QueryClient(queryClientConfig));
 
   return (
     <>
@@ -77,7 +39,9 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
               </div>
             ) : (
               <div className="mx-auto max-w-6xl space-y-6">
-                <Outlet context={loaderData.user}></Outlet>
+                <QueryClientProvider client={queryClient}>
+                  <Outlet context={loaderData.user}></Outlet>
+                </QueryClientProvider>
               </div>
             )}
           </main>
