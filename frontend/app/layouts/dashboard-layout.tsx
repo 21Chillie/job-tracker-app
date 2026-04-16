@@ -3,34 +3,70 @@ import Sidebar from "@components/sidebar/Sidebar";
 import Navbar from "@components/navbar/Navbar";
 import Dock from "@components/dock/Dock";
 import type { Route } from "./+types/dashboard-layout";
-import { useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import queryClientConfig from "@configs/query-client.config";
-import authService from "@services/auth.service";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { sessionQueryOption, useSession } from "@hooks/auth/useSession.hook";
+import axios from "axios";
+import { getQueryClient } from "@configs/query-client.config";
+
+/**
+ * Fix bug data keep refetching when navigate the page
+ * For future references: https://github.com/remix-run/react-router/discussions/12944#discussioncomment-12056134
+ */
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const session = await authService.getSession(request);
+  const cookie = request.headers.get("cookie") || "";
+  const queryClient = getQueryClient();
 
-  if (!session) {
-    return redirect("/login");
+  try {
+    const session = await queryClient.fetchQuery(
+      sessionQueryOption(cookie),
+    );
+
+    if (!session || !cookie) {
+      getQueryClient().clear();
+      return redirect("/login");
+    }
+
+    return {
+      dehydratedState: dehydrate(queryClient),
+    };
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      throw redirect("/login");
+    }
+
+    throw error;
   }
-
-  return { user: session.user };
 }
+
+let isInitialRequest = true;
+
+export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
+  if (isInitialRequest) {
+    isInitialRequest = false;
+    return await serverLoader();
+  }
+  // Prevent calling the server loader during client-side search/navigation
+  return { dehydratedState: undefined };
+}
+
+clientLoader.hydrate = true as const;
 
 export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
   const navigation = useNavigation();
   const isNavigating = Boolean(navigation.location);
-  const [queryClient] = useState(() => new QueryClient(queryClientConfig));
+  const { dehydratedState } = loaderData;
+
+  const { data: session } = useSession();
 
   return (
-    <>
+    <HydrationBoundary state={dehydratedState}>
       <div className="bg-base-100 flex min-h-screen w-full overflow-hidden">
         <Sidebar></Sidebar>
 
         {/* Navbar and Main Content */}
         <div className="flex flex-1 flex-col overflow-hidden">
-          <Navbar user={loaderData.user}></Navbar>
+          <Navbar></Navbar>
 
           <main className="bg-base-200 relative m-0 flex-1 overflow-y-auto rounded-xl md:m-4 md:mt-0 md:ml-0">
             {isNavigating ? (
@@ -39,9 +75,7 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
               </div>
             ) : (
               <div className="mx-auto max-w-6xl space-y-6">
-                <QueryClientProvider client={queryClient}>
-                  <Outlet context={loaderData.user}></Outlet>
-                </QueryClientProvider>
+                <Outlet context={{ session }}></Outlet>
               </div>
             )}
           </main>
@@ -49,6 +83,6 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
           <Dock></Dock>
         </div>
       </div>
-    </>
+    </HydrationBoundary>
   );
 }
