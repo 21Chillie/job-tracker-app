@@ -1,5 +1,5 @@
 import RegisterForm from "@components/RegisterForm";
-import { registerSchema } from "@hooks/auth/register.hook";
+import { registerSchema } from "@hooks/auth/useRegister.hook";
 import { redirect } from "react-router";
 import toast from "react-hot-toast";
 import type { Route } from "./+types/register";
@@ -25,7 +25,15 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     return { error: z.prettifyError(validForm.error) };
   }
 
-  await authService.registerEmail(validForm.data);
+  try {
+    await authService.registerEmail(validForm.data);
+    return redirect("/");
+  } catch (err) {
+    console.error((err as Error).message);
 
-  return redirect("/");
+    throw new Response("An unknown error occurred when trying to login", {
+      status: 500,
+      statusText: "Internal Server Error",
+    });
+  }
 }
