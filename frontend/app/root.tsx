@@ -13,6 +13,10 @@ import "./app.css";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { store } from "@configs/store.config";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { getQueryClient } from "@configs/query-client.config";
+import { useState } from "react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -46,6 +50,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const [queryClient] = useState(() => getQueryClient());
+
   return (
     <>
       <Toaster
@@ -61,30 +67,38 @@ export default function App() {
           error: {
             className:
               "!text-base-content !font-medium !bg-base-100 !border !border-base-300 !shadow-md",
+            iconTheme: {
+              primary: "var(--color-error)",
+              secondary: "var(--color-error-content)",
+            },
           },
         }}
       />
 
-      <Provider store={store}>
-        <Outlet />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <Provider store={store}>
+          <Outlet />
+        </Provider>
+      </QueryClientProvider>
     </>
   );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
+  let status: number = 500;
+  let statusText = "Oops!";
+  let message = "An unexpected error occurred.";
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? error.data || "The requested page could not be found."
-        : error.statusText || details;
+    console.log(error);
+
+    status = error.status;
+    statusText = error.status === 404 ? "Not Found" : error.statusText;
+    message = error.data;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
+    message = error.message;
     stack = error.stack;
   }
 
@@ -92,25 +106,33 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     <main className="bg-base-200 grid min-h-screen place-items-center px-6 py-24 sm:py-32 lg:px-8">
       <section id="error-section" className="w-full max-w-2xl text-center">
         <header className="mb-8">
-          <p className="text-primary text-base font-semibold">
-            There was an error
-          </p>
+          <p className="text-primary text-base font-semibold">{status}</p>
           <h1 className="text-base-content mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
-            {message || "Something went wrong"}
+            {statusText}
           </h1>
           <p className="text-base-content/60 mt-6 text-base leading-7 text-pretty">
-            {details}
+            {message}
           </p>
         </header>
 
         <div className="mb-10 flex items-center justify-center gap-x-6">
-          <Link
-            className="group text-primary/80 hover:text-primary inline-flex flex-col font-medium transition-colors"
-            to="/"
-          >
-            Back Home
-            <div className="bg-primary h-0.5 scale-x-0 transition-transform group-hover:scale-x-100"></div>
-          </Link>
+          {status === 401 || 403 || 407 ? (
+            <Link
+              className="group text-primary/80 hover:text-primary inline-flex flex-col font-medium transition-colors"
+              to="/login"
+            >
+              Back to login page
+              <div className="bg-primary h-0.5 scale-x-0 transition-transform group-hover:scale-x-100"></div>
+            </Link>
+          ) : (
+            <Link
+              className="group text-primary/80 hover:text-primary inline-flex flex-col font-medium transition-colors"
+              to="/"
+            >
+              Back
+              <div className="bg-primary h-0.5 scale-x-0 transition-transform group-hover:scale-x-100"></div>
+            </Link>
+          )}
         </div>
 
         {stack && (
