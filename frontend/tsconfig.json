@@ -22,6 +22,7 @@
       "@utils/*": ["./app/utils/*"],
       "@configs/*": ["./app/configs/*"],
       "@services/*": ["./app/services/*"],
+      "@features/*": ["./app/features/*"],
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
