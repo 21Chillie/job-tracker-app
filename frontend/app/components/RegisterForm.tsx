@@ -9,11 +9,13 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import { useState } from "react";
 import { useRegisterForm } from "@hooks/auth/register.hook";
-import handleGoogleOauth from "@utils/auth/google-oauth";
+import { useAppDispatch } from "@configs/store.config";
+import authService from "@services/auth.service";
 
 function RegisterForm() {
   const [viewPassword, setViewpassword] = useState<boolean>(false);
   const { handleSubmit, Field, Subscribe } = useRegisterForm();
+  const dispatch = useAppDispatch();
 
   const handleRegisterForm = (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -186,7 +188,7 @@ function RegisterForm() {
             <button
               type="button"
               className="btn btn-block"
-              onClick={() => handleGoogleOauth()}
+              onClick={() => dispatch(authService.loginGoogle())}
             >
               <span>
                 <FcGoogle />

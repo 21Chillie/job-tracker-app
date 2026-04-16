@@ -1,20 +1,21 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import type { UserType } from "~/types/user.type";
-import { ModalBody, ModalButton } from "../Modal";
-import authClient from "~/utils/auth/auth-client";
-import { useNavigate } from "react-router";
+import { ModalBody, ModalButton } from "@components/Modal";
 import { useState } from "react";
+import { useAppDispatch } from "@configs/store.config";
+import authService from "@services/auth.service";
 
 export default function ProfileDropdownMenu({ name, email, image }: UserType) {
-  const navigate = useNavigate();
   const [imgSrc, setImgSrc] = useState(image || "avatar-placeholder.webp");
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   return (
     <>
       <div className="dropdown dropdown-end">
         <div tabIndex={0} role="button" className="btn btn-circle size-8">
           <img
-            className="rounded-full object-cover size-8"
+            className="size-8 rounded-full object-cover"
             src={imgSrc}
             alt="avatar image"
             onError={() => setImgSrc("avatar-placeholder.webp")}
@@ -56,7 +57,7 @@ export default function ProfileDropdownMenu({ name, email, image }: UserType) {
         action={{
           danger: true,
           method: () => {
-            authClient.signOut();
+            dispatch(authService.logout());
             navigate("/login");
           },
         }}
