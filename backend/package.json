@@ -5,8 +5,8 @@
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.6",
-    "better-auth": "^1.6.2",
-    "hono": "^4.12.12",
+    "better-auth": "^1.6.5",
+    "hono": "^4.12.14",
     "pino": "^10.3.1",
     "pino-roll": "^4.0.0",
     "zod": "^4.3.6"
