@@ -19,8 +19,8 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
-  const navigate = useNavigation();
-  const pageIsLoading = navigate.state === "loading";
+  const navigation = useNavigation();
+  const isNavigating = Boolean(navigation.location);
   const [queryClient] = useState(() => new QueryClient(queryClientConfig));
 
   return (
@@ -33,7 +33,7 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
           <Navbar user={loaderData.user}></Navbar>
 
           <main className="bg-base-200 relative m-0 flex-1 overflow-y-auto rounded-xl md:m-4 md:mt-0 md:ml-0">
-            {pageIsLoading ? (
+            {isNavigating ? (
               <div className="absolute inset-100 grid place-items-center">
                 <span className="loading loading-spinner text-primary"></span>
               </div>
