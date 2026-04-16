@@ -1,15 +1,14 @@
 import api from "@configs/axios-instance.config";
-import type { AxiosError, AxiosResponse } from "axios";
+import { isAxiosError, type AxiosResponse } from "axios";
 import type { SessionType } from "~/types/user.type";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import authClient from "@configs/auth-client";
 import toast from "react-hot-toast";
+import { getQueryClient } from "@configs/query-client.config";
 
 const authService = {
-  getSession: async (request: Request) => {
+  getSession: async (cookie?: string) => {
     try {
-      const cookie = request.headers.get("cookie") || "";
-
       const response: AxiosResponse<SessionType> = await api.get(
         "/api/auth/get-session",
         {
@@ -22,8 +21,14 @@ const authService = {
 
       return response.data;
     } catch (error) {
-      console.log(error as AxiosError);
-      return null;
+      if (isAxiosError(error)) {
+        throw new Response(error.message, {
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+        });
+      }
+
+      throw error;
     }
   },
 
@@ -35,8 +40,10 @@ const authService = {
         return rejectWithValue(error.message);
       }
 
+      getQueryClient().clear();
+
       return data;
-    } catch {
+    } catch (err) {
       return rejectWithValue(
         "An expected error occurred when trying to logout",
       );
