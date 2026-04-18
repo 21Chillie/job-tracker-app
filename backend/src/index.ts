@@ -4,13 +4,12 @@ import { HTTPException } from "hono/http-exception";
 import logMiddleware from "@middlewares/log.middleware";
 import env from "@config/env";
 import logger from "@config/logger";
-import { authMigrations } from "@scripts/auth-migrate";
-import { jobsMigrations } from "@scripts/jobs-migrate";
 import authRoute from "@routes/auth.route";
 import jobsRoute from "@routes/jobs.route";
+import { dbShutdown } from "@db/db-client";
+import { runDatabaseMigration } from "./scripts/migrate-database";
 
-authMigrations();
-jobsMigrations();
+runDatabaseMigration();
 
 const app = new Hono();
 
@@ -58,5 +57,8 @@ app.onError((err, c) => {
     status,
   );
 });
+
+process.on("SIGINT", dbShutdown);
+process.on("SIGTERM", dbShutdown);
 
 export default app;
