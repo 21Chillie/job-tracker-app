@@ -85,22 +85,41 @@ export default function App() {
   );
 }
 
+const STATUS_MESSAGES: Record<number, string> = {
+  401: "Unauthorized access, please login.",
+  403: "You don't have the right to access this content.",
+  404: "The page you are looking for could not be found.",
+  407: "Proxy Authentication Required.",
+  429: "Too many requests, please try again later.",
+  500: "Something went wrong on our server.",
+};
+
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let status: number = 500;
+  let status = 500;
   let statusText = "Oops!";
   let message = "An unexpected error occurred.";
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    console.log(error);
+    if (import.meta.env.DEV) console.error("Route Error:", error);
 
     status = error.status;
     statusText = error.status === 404 ? "Not Found" : error.statusText;
-    message = error.data;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
+
+    const customDataMessage =
+      typeof error.data === "string" ? error.data : error.data?.message;
+
+    message =
+      customDataMessage || STATUS_MESSAGES[status] || STATUS_MESSAGES[500];
+  } else if (error instanceof Error) {
+    console.error("Runtime Error:", error);
     message = error.message;
-    stack = error.stack;
+    if (import.meta.env.DEV) {
+      stack = error.stack;
+    }
   }
+
+  const isAuthError = [401, 403, 407].includes(status);
 
   return (
     <main className="bg-base-200 grid min-h-screen place-items-center px-6 py-24 sm:py-32 lg:px-8">
@@ -116,7 +135,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
         </header>
 
         <div className="mb-10 flex items-center justify-center gap-x-6">
-          {status === 401 || 403 || 407 ? (
+          {isAuthError ? (
             <Link
               className="group text-primary/80 hover:text-primary inline-flex flex-col font-medium transition-colors"
               to="/login"
@@ -129,7 +148,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
               className="group text-primary/80 hover:text-primary inline-flex flex-col font-medium transition-colors"
               to="/"
             >
-              Back
+              Back Home
               <div className="bg-primary h-0.5 scale-x-0 transition-transform group-hover:scale-x-100"></div>
             </Link>
           )}

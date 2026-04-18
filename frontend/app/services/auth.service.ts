@@ -1,10 +1,10 @@
-import api from "@configs/axios-instance.config";
-import { isAxiosError, type AxiosResponse } from "axios";
-import type { SessionType } from "~/types/user.type";
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import authClient from "@configs/auth-client";
-import toast from "react-hot-toast";
+import api from "@configs/axios-instance.config";
 import { getQueryClient } from "@configs/query-client.config";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { type AxiosResponse } from "axios";
+import { redirect } from "react-router";
+import type { SessionType } from "~/types/user.type";
 
 const authService = {
   getSession: async (cookie?: string) => {
@@ -20,34 +20,23 @@ const authService = {
       );
 
       return response.data;
-    } catch (error) {
-      if (isAxiosError(error)) {
-        throw new Response(error.message, {
-          status: error.response?.status,
-          statusText: error.response?.statusText,
-        });
-      }
-
-      throw error;
+    } catch {
+      throw redirect("/login");
     }
   },
 
   logout: createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
-    try {
-      const { data, error } = await authClient.signOut();
+    const { data, error } = await authClient.signOut();
 
-      if (error) {
-        return rejectWithValue(error.message);
-      }
-
-      getQueryClient().clear();
-
-      return data;
-    } catch (err) {
+    if (error) {
       return rejectWithValue(
-        "An expected error occurred when trying to logout",
+        error.message || "An expected error occurred when trying to logout",
       );
     }
+
+    getQueryClient().clear();
+
+    return data;
   }),
 
   loginGoogle: createAsyncThunk(
@@ -55,41 +44,34 @@ const authService = {
     async (_, { rejectWithValue }) => {
       const origin = window.location.origin;
 
-      try {
-        const { data, error } = await authClient.signIn.social({
-          provider: "google",
-          callbackURL: `${origin}/`,
-        });
+      const { data, error } = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: `${origin}/`,
+      });
 
-        if (error) {
-          rejectWithValue(error.message);
-        }
-
-        return data;
-      } catch {
-        rejectWithValue(
-          "An unexpected error occurred when trying to login with Google",
+      if (error) {
+        return rejectWithValue(
+          error.message ||
+            "An unexpected error occurred when trying to login with Google",
         );
       }
+
+      return data;
     },
   ),
 
   loginEmail: async (value: { email: string; password: string }) => {
-    try {
-      const { error } = await authClient.signIn.email({
-        email: value.email,
-        password: value.password,
-        rememberMe: true,
-      });
+    const { error, data } = await authClient.signIn.email({
+      email: value.email,
+      password: value.password,
+      rememberMe: true,
+    });
 
-      if (error && error.message) toast.error(error.message);
-
-      return;
-    } catch {
-      toast.error(
-        "An unexpected error occurred when trying to login with email",
-      );
+    if (error) {
+      throw new Error(error.message);
     }
+
+    return data;
   },
 
   registerEmail: async (value: {
@@ -97,21 +79,17 @@ const authService = {
     email: string;
     password: string;
   }) => {
-    try {
-      const { error } = await authClient.signUp.email({
-        name: value.name,
-        email: value.email,
-        password: value.password,
-      });
+    const { error, data } = await authClient.signUp.email({
+      name: value.name,
+      email: value.email,
+      password: value.password,
+    });
 
-      if (error && error.message) toast.error(error.message);
-
-      return;
-    } catch {
-      toast.error(
-        "An unexpected error occurred when trying to register with email",
-      );
+    if (error) {
+      throw new Error(error.message);
     }
+
+    return data;
   },
 };
 

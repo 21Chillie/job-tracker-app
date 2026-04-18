@@ -1,10 +1,8 @@
-import LoginForm from "@components/LoginForm";
+import LoginForm from "~/components/auth-page/LoginForm";
+import authService from "@services/auth.service";
+import toast from "react-hot-toast";
 import { redirect } from "react-router";
 import type { Route } from "./+types/login";
-import { loginSchema } from "@hooks/auth/useLogin.hook";
-import toast from "react-hot-toast";
-import z from "zod";
-import authService from "@services/auth.service";
 
 export default function Login() {
   return (
@@ -16,23 +14,20 @@ export default function Login() {
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
-  const payload = Object.fromEntries(formData);
-
-  const validForm = loginSchema.safeParse(payload);
-
-  if (!validForm.success) {
-    toast.error(z.prettifyError(validForm.error));
-    return { error: z.prettifyError(validForm.error) };
-  }
+  const payload = Object.fromEntries(formData) as {
+    email: string;
+    password: string;
+  };
 
   try {
-    await authService.loginEmail(validForm.data);
+    await authService.loginEmail(payload);
+
     return redirect("/");
   } catch (err) {
-    console.error((err as Error).message);
-    throw new Response("An unknown error occurred when trying to login", {
-      status: 500,
-      statusText: "Internal Server Error",
-    });
+    const errorMessage =
+      err instanceof Error ? err.message : "An unexpected error occurred when trying to login with email";
+
+    toast.error(errorMessage);
+    return { error: errorMessage };
   }
 }
