@@ -1,10 +1,8 @@
-import RegisterForm from "@components/RegisterForm";
-import { registerSchema } from "@hooks/auth/useRegister.hook";
-import { redirect } from "react-router";
-import toast from "react-hot-toast";
-import type { Route } from "./+types/register";
-import z from "zod";
+import RegisterForm from "~/components/auth-page/RegisterForm";
 import authService from "@services/auth.service";
+import toast from "react-hot-toast";
+import { redirect } from "react-router";
+import type { Route } from "./+types/register";
 
 export default function Register() {
   return (
@@ -16,24 +14,23 @@ export default function Register() {
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
-  const payload = Object.fromEntries(formData);
-
-  const validForm = registerSchema.safeParse(payload);
-
-  if (!validForm.success) {
-    toast.error(z.prettifyError(validForm.error));
-    return { error: z.prettifyError(validForm.error) };
-  }
+  const payload = Object.fromEntries(formData) as {
+    name: string;
+    email: string;
+    password: string;
+  };
 
   try {
-    await authService.registerEmail(validForm.data);
+    await authService.registerEmail(payload);
+
     return redirect("/");
   } catch (err) {
-    console.error((err as Error).message);
+    const errorMessage =
+      err instanceof Error
+        ? err.message
+        : "An unexpected error occurred when trying to register with email";
 
-    throw new Response("An unknown error occurred when trying to login", {
-      status: 500,
-      statusText: "Internal Server Error",
-    });
+    toast.error(errorMessage);
+    return { error: errorMessage };
   }
 }

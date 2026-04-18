@@ -6,7 +6,7 @@ const db = new Database("./src/db/database.sqlite", { strict: true });
 db.run("PRAGMA journal_mode = WAL");
 db.run("PRAGMA synchronous = NORMAL;");
 
-function dbShutdown() {
+export function dbShutdown() {
   logger.debug("Cleaning up SQLite");
 
   try {
@@ -22,8 +22,5 @@ function dbShutdown() {
     process.exit(0);
   }
 }
-
-process.on("SIGINT", dbShutdown);
-process.on("SIGTERM", dbShutdown);
 
 export default db;

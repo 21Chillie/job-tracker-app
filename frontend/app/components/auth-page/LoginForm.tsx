@@ -61,7 +61,10 @@ function LoginForm() {
                     {errors.length > 0 && isTouched && (
                       <div className="space-y-1">
                         {errors.map((error, index) => (
-                          <p className="text-error label" key={index}>
+                          <p
+                            className="text-error label whitespace-normal"
+                            key={index}
+                          >
                             {error?.message}
                           </p>
                         ))}
@@ -104,7 +107,10 @@ function LoginForm() {
                     {errors.length > 0 && isTouched ? (
                       <div>
                         {errors.map((error, index) => (
-                          <p key={index} className="text-error label">
+                          <p
+                            key={index}
+                            className="text-error label whitespace-normal"
+                          >
                             {error?.message}
                           </p>
                         ))}

@@ -4,3 +4,4 @@ node_modules/
 logs
 database.sqlite
 database.sqlite-*
+backups

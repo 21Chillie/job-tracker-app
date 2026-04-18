@@ -25,10 +25,10 @@ export function getQueryClient() {
     if (!browserQueryClient)
       browserQueryClient = new QueryClient(queryClientConfig);
 
-  /**
-   * Return the SAME QueryClient every single time.
-   * Because it's the same object, it keeps all cached data (like the user session) even when navigate between pages.
-   */
+    /**
+     * Return the SAME QueryClient every single time.
+     * Because it's the same object, it keeps all cached data (like the user session) even when navigate between pages.
+     */
     return browserQueryClient;
   }
 }

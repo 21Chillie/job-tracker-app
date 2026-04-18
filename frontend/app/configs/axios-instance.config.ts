@@ -1,6 +1,6 @@
 import axios, { type AxiosResponse } from "axios";
-import env from "./env.config";
 import toast from "react-hot-toast";
+import env from "./env.config";
 
 interface ApiErrorResponse {
   success: false;
@@ -29,28 +29,24 @@ api.interceptors.response.use(
     if (axios.isAxiosError<ApiErrorResponse>(error)) {
       const status = error.response?.status || 500;
       const data = error.response?.data;
+      const errorMessage =
+        data?.error.message ||
+        (data as any).message ||
+        error?.message ||
+        "An unexpected error occurred";
 
-      switch (status) {
-        case 400:
-          toast.error(`${status}: ${data?.error.message}`);
-          break;
-
-        case 401:
-          toast.error(`${status}: ${data?.error.message}`);
-          break;
-
-        case 404:
-          toast.error(`${status}: ${data?.error.message}`);
-          break;
-
-        case 500:
-          toast.error(`${status}: Internal Server Error`);
-          break;
-
-        default:
-          toast.error(error.message);
-          break;
+      if (typeof window !== "undefined") {
+        if (status && status !== 401 && status !== 403) {
+          toast.error(`${status}: ${errorMessage}`);
+        }
       }
+
+      if (import.meta.env.DEV) console.error(error);
+
+      throw new Response(errorMessage, {
+        status: status,
+        statusText: data?.error.type || "Error",
+      });
     }
 
     return Promise.reject(error);

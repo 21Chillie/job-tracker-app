@@ -9,7 +9,7 @@ const jobsModel = {
       data;
 
     const query = db.query(
-      "INSERT INTO jobs (id, user_id, job_title, company, job_url, job_status, applied_date, notes) VALUES ($id, $user_id, $job_title, $company, $job_url, $job_status, $applied_date, $notes) RETURNING *;",
+      "INSERT INTO job (id, user_id, job_title, company, job_url, job_status, applied_date, notes) VALUES ($id, $user_id, $job_title, $company, $job_url, $job_status, $applied_date, $notes) RETURNING *;",
     );
 
     try {

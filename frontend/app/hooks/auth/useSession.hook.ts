@@ -9,7 +9,7 @@ export function sessionQueryOption(cookie?: string) {
       return response;
     },
     staleTime: 1000 * 60 * 5,
-    // refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false,
     retry: false,
   });
 }

@@ -24,7 +24,10 @@ export default function AddJobForm() {
         </header>
 
         {/* NOTE: `f` in id and name input mean is `form` */}
-        <Form method="POST" className="grid grid-cols-2 gap-3 px-4 md:px-6">
+        <fetcher.Form
+          method="POST"
+          className="grid grid-cols-2 gap-3 px-4 md:px-6"
+        >
           <fieldset className="fieldset col-span-2">
             <legend className="fieldset-legend">Position</legend>
             <input
@@ -35,7 +38,7 @@ export default function AddJobForm() {
               placeholder="e.g. Fullstack Web Developer"
               required
             />
-            <p className="label">Required</p>
+            <p className="label whitespace-normal">Required</p>
           </fieldset>
 
           <fieldset className="fieldset col-span-2 md:col-span-1">
@@ -48,7 +51,7 @@ export default function AddJobForm() {
               placeholder="e.g. CD Projekt Red"
               required
             />
-            <p className="label">Required</p>
+            <p className="label whitespace-normal">Required</p>
           </fieldset>
 
           <fieldset className="fieldset col-span-2 md:col-span-1">
@@ -104,7 +107,7 @@ export default function AddJobForm() {
             ></textarea>
           </fieldset>
 
-          <div className="col-span-2 mt-6 flex justify-end gap-4 flex-wrap">
+          <div className="col-span-2 mt-6 flex flex-wrap justify-end gap-4">
             <button type="reset" className="btn btn-ghost max-sm:btn-sm">
               Clear
             </button>
@@ -119,7 +122,7 @@ export default function AddJobForm() {
               )}
             </button>
           </div>
-        </Form>
+        </fetcher.Form>
       </section>
     </>
   );

@@ -1,8 +1,8 @@
-import AddJobForm from "@components/AddJobForm";
-import type { Route } from "./+types/add-job";
+import AddJobForm from "~/components/job-page/AddJobForm";
+import api from "@configs/axios-instance.config";
 import toast from "react-hot-toast";
-import type { JobsApplicationFormType, JobsApiResponse } from "~/types/job.type";
-import api from "~/configs/axios-instance.config";
+import type { JobsApiResponse, JobsApplicationFormType } from "~/types/job.type";
+import type { Route } from "./+types/add-job";
 
 export default function AddJob() {
   return (
@@ -24,7 +24,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   }
 
   // Change this later using tanstack query
-  const result = await api.post<JobsApiResponse>("/api/jobs", payload);
+  const result = await api.post<JobsApiResponse>("/api/jobs/new", payload);
 
   if (result.data.success) {
     toast.success("Job added successfully");

@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router";
-import { ModalBody, ModalButton } from "@components/Modal";
+import { ModalBody, ModalButton } from "@components/reuse-ui/Modal";
 import { useAppDispatch } from "@configs/store.config";
 import authService from "@services/auth.service";
 import { useQuery } from "@tanstack/react-query";
-import { sessionQueryOption } from "~/hooks/auth/useSession.hook";
+import { sessionQueryOption } from "@hooks/auth/useSession.hook";
+import avatarProfileImg from "@components/profile/avatar-profile";
 
 export default function ProfileDropdownMenu() {
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ export default function ProfileDropdownMenu() {
         <div tabIndex={0} role="button" className="btn btn-circle size-8">
           <img
             className="size-8 rounded-full object-cover"
-            src={image || "avatar-placeholder.webp"}
+            src={image ?? avatarProfileImg[0].file}
             alt="avatar image"
           />
         </div>
@@ -43,7 +44,7 @@ export default function ProfileDropdownMenu() {
               </Link>
 
               <ModalButton
-                buttonName="Sign Out"
+                buttonName="Log Out"
                 buttonGhost={true}
                 buttonBlock={true}
                 buttonSmall={true}

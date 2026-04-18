@@ -17,26 +17,16 @@ export async function loader({ request }: Route.LoaderArgs) {
   const cookie = request.headers.get("cookie") || "";
   const queryClient = getQueryClient();
 
-  try {
-    const session = await queryClient.fetchQuery(
-      sessionQueryOption(cookie),
-    );
+  const session = await queryClient.fetchQuery(sessionQueryOption(cookie));
 
-    if (!session || !cookie) {
-      getQueryClient().clear();
-      return redirect("/login");
-    }
-
-    return {
-      dehydratedState: dehydrate(queryClient),
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      throw redirect("/login");
-    }
-
-    throw error;
+  if (!session || !cookie) {
+    getQueryClient().clear();
+    return redirect("/login");
   }
+
+  return {
+    dehydratedState: dehydrate(queryClient),
+  };
 }
 
 let isInitialRequest = true;
