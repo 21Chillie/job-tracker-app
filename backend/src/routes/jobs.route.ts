@@ -5,28 +5,29 @@ import { zValidator } from "@hono/zod-validator";
 import { JobFormSchema } from "~/types/jobs.types";
 import { HTTPException } from "hono/http-exception";
 import { jobsController } from "@controllers/jobs.controller";
+import { generalLimiter } from "@middlewares/rateLimiter.middleware";
 
 // Base url is /api/jobs
 
 const jobsRoute = new Hono<{ Variables: Variables }>();
 
-jobsRoute.use("*", checkAuth);
+jobsRoute.use("/*", checkAuth, generalLimiter);
 
 // For testing
 jobsRoute.get("/", (c) => {
-  const user = c.get("user");
+	const user = c.get("user");
 
-  return c.json({ message: "Hello from jobs route!", user: user.id });
+	return c.json({ message: "Hello from jobs route!", user: user.id });
 });
 
 jobsRoute.post(
-  "/",
-  zValidator("json", JobFormSchema, (result) => {
-    if (!result.success) {
-      throw new HTTPException(400, { message: result.error.message });
-    }
-  }),
-  jobsController.create,
+	"/new",
+	zValidator("json", JobFormSchema, (result) => {
+		if (!result.success) {
+			throw new HTTPException(400, { message: result.error.message });
+		}
+	}),
+	jobsController.create,
 );
 
 export default jobsRoute;
