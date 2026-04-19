@@ -1,10 +1,21 @@
-import { LuLink2 } from "react-icons/lu";
-import { Form, useFetcher } from "react-router";
+import { LuLink2, LuChevronDown } from "react-icons/lu";
+import { useFetcher } from "react-router";
+import { useJobForm, type FormJobDataType } from "@hooks/job/useJobFom.hook";
+import { statusList } from "./statusList";
+import { useState } from "react";
 
 export default function AddJobForm() {
-  const todayDate = new Date().toISOString().split("T")[0];
   const fetcher = useFetcher();
   const busy = fetcher.state !== "idle";
+  const { handleSubmit, Field, Subscribe } = useJobForm();
+  const [activeStatus, setActiveStatus] =
+    useState<FormJobDataType["status"]>("applied");
+
+  const handleFormSubmit = (e: React.SubmitEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleSubmit();
+  };
 
   return (
     <>
@@ -24,105 +35,282 @@ export default function AddJobForm() {
         </header>
 
         {/* NOTE: `f` in id and name input mean is `form` */}
-        <fetcher.Form
-          method="POST"
+        <form
           className="grid grid-cols-2 gap-3 px-4 md:px-6"
+          onSubmit={handleFormSubmit}
         >
-          <fieldset className="fieldset col-span-2">
-            <legend className="fieldset-legend">Position</legend>
-            <input
-              type="text"
-              id="fJobTitle"
-              name="fJobTitle"
-              className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
-              placeholder="e.g. Fullstack Web Developer"
-              required
-            />
-            <p className="label whitespace-normal">Required</p>
-          </fieldset>
+          <Field name="position">
+            {({ state, name, handleBlur, handleChange }) => {
+              const { errors } = state.meta;
 
-          <fieldset className="fieldset col-span-2 md:col-span-1">
-            <legend className="fieldset-legend">Company</legend>
-            <input
-              type="text"
-              id="fCompany"
-              name="fCompany"
-              className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
-              placeholder="e.g. CD Projekt Red"
-              required
-            />
-            <p className="label whitespace-normal">Required</p>
-          </fieldset>
+              return (
+                <fieldset className="fieldset col-span-2">
+                  <legend className="fieldset-legend">Position</legend>
+                  <input
+                    type="text"
+                    id={name}
+                    name={name}
+                    className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
+                    placeholder="e.g. Fullstack Web Developer"
+                    value={state.value}
+                    onBlur={handleBlur}
+                    onChange={(e) => handleChange(e.target.value)}
+                  />
+                  {errors.length > 0 ? (
+                    <div className="space-y-1">
+                      {errors.map((error, index) => (
+                        <p
+                          key={`fieldPositionErr${index}`}
+                          className="label text-error whitespace-normal"
+                        >
+                          {error?.message}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="label whitespace-normal">Required</p>
+                  )}
+                </fieldset>
+              );
+            }}
+          </Field>
 
-          <fieldset className="fieldset col-span-2 md:col-span-1">
-            <legend className="fieldset-legend">Job Posting URL</legend>
-            <label className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
-              <LuLink2 className="text-base-content/50" />
-              <input
-                type="url"
-                id="fJobUrl"
-                name="fJobUrl"
-                className="grow"
-                placeholder="https://www.linkedin.com/jobs/..."
-              />
-            </label>
-          </fieldset>
+          <Field name="company">
+            {({ state, name, handleBlur, handleChange }) => {
+              const { errors } = state.meta;
 
-          <fieldset className="fieldset col-span-2 md:col-span-1">
-            <legend className="fieldset-legend">Status</legend>
-            <select
-              id="fJobStatus"
-              name="fJobStatus"
-              defaultValue="Applied"
-              className="select select-sm md:select-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
-            >
-              <option value="applied">Applied</option>
-              <option value="tested">Tested</option>
-              <option value="interviewed">Interviewed</option>
-              <option value="offer">Offer</option>
-              <option value="accepted">Accepted</option>
-              <option value="rejected">Rejected</option>
-            </select>
-          </fieldset>
+              return (
+                <fieldset className="fieldset col-span-2 md:col-span-1">
+                  <legend className="fieldset-legend">Company</legend>
+                  <input
+                    type="text"
+                    id={name}
+                    name={name}
+                    className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
+                    placeholder="e.g. CD Projekt Red"
+                    value={state.value}
+                    onBlur={handleBlur}
+                    onChange={(e) => handleChange(e.target.value)}
+                  />
 
-          <fieldset className="fieldset col-span-2 md:col-span-1">
-            <legend className="fieldset-legend">Applications Date</legend>
-            <input
-              id="fAppliedDate"
-              name="fAppliedDate"
-              type="date"
-              className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
-              defaultValue={todayDate}
-            />
-          </fieldset>
+                  {errors.length > 0 ? (
+                    <div className="space-y-1">
+                      {errors.map((error, index) => (
+                        <p
+                          key={`fieldPositionErr${index}`}
+                          className="label text-error whitespace-normal"
+                        >
+                          {error?.message}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="label whitespace-normal">Required</p>
+                  )}
+                </fieldset>
+              );
+            }}
+          </Field>
 
-          <fieldset className="fieldset col-span-2">
-            <legend className="fieldset-legend">Notes</legend>
-            <textarea
-              id="fNotes"
-              name="fNotes"
-              className="textarea textarea-sm md:textarea-md focus-within:outline-primary/20 focus-within:border-primary/50 h-32 w-full p-3 md:p-4"
-              placeholder="Briefly describe the role, salary range, or interview contacts..."
-              maxLength={500}
-            ></textarea>
-          </fieldset>
+          <Field name="jobUrl">
+            {({ state, name, handleBlur, handleChange }) => {
+              const { errors } = state.meta;
+
+              return (
+                <fieldset className="fieldset col-span-2 md:col-span-1">
+                  <legend className="fieldset-legend">Job Posting URL</legend>
+                  <label className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
+                    <LuLink2 className="text-base-content/50" />
+                    <input
+                      type="text"
+                      id={name}
+                      name={name}
+                      className="grow"
+                      placeholder="https://www.linkedin.com/jobs/..."
+                      value={state.value}
+                      onBlur={handleBlur}
+                      onChange={(e) => handleChange(e.target.value)}
+                    />
+                  </label>
+
+                  {errors.length > 0 && (
+                    <div className="space-y-1">
+                      {errors.map((error, index) => (
+                        <p
+                          key={`fieldPositionErr${index}`}
+                          className="label text-error whitespace-normal"
+                        >
+                          {error?.message}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </fieldset>
+              );
+            }}
+          </Field>
+
+          <Field name="status">
+            {({ state, name, handleBlur, handleChange }) => {
+              const { errors } = state.meta;
+
+              return (
+                <fieldset className="fieldset col-span-2 md:col-span-1">
+                  <legend className="fieldset-legend">Status</legend>
+
+                  <div className="dropdown w-full">
+                    <input
+                      type="hidden"
+                      name={name}
+                      id={name}
+                      value={activeStatus}
+                      onBlur={handleBlur}
+                      onChange={() => handleChange(activeStatus)}
+                    />
+                    <button
+                      type="button"
+                      tabIndex={0}
+                      role="button"
+                      className="btn btn-sm md:btn-md border-base-content/20 bg-base-100 flex w-full justify-between font-normal"
+                    >
+                      <span className="capitalize">{activeStatus}</span>
+                      <span>
+                        <LuChevronDown />
+                      </span>
+                    </button>
+
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content menu bg-base-100 rounded-box border-base-content/15 z-1 mt-1 w-full border p-2 shadow-lg"
+                    >
+                      {statusList.map((status) => {
+                        return (
+                          <li>
+                            <button
+                              type="button"
+                              className={`btn btn-block flex justify-start font-normal capitalize ${activeStatus === status ? "" : "btn-ghost"}`}
+                              onClick={() => setActiveStatus(status)}
+                            >
+                              {status}
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+
+                  {errors.length > 0 && (
+                    <div className="space-y-1">
+                      {errors.map((error, index) => (
+                        <p
+                          key={`fieldPositionErr${index}`}
+                          className="label text-error whitespace-normal"
+                        >
+                          {error?.message}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </fieldset>
+              );
+            }}
+          </Field>
+
+          <Field name="appliedDate">
+            {({ state, name, handleBlur, handleChange }) => {
+              const { errors } = state.meta;
+
+              return (
+                <fieldset className="fieldset col-span-2 md:col-span-1">
+                  <legend className="fieldset-legend">Applications Date</legend>
+                  <input
+                    id={name}
+                    name={name}
+                    type="date"
+                    className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
+                    value={state.value}
+                    onBlur={handleBlur}
+                    onChange={(e) => handleChange(e.target.value)}
+                  />
+
+                  {errors.length > 0 && (
+                    <div className="space-y-1">
+                      {errors.map((error, index) => (
+                        <p
+                          key={`fieldPositionErr${index}`}
+                          className="label text-error whitespace-normal"
+                        >
+                          {error?.message}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </fieldset>
+              );
+            }}
+          </Field>
+
+          <Field name="notes">
+            {({ state, name, handleBlur, handleChange }) => {
+              const { errors } = state.meta;
+
+              return (
+                <fieldset className="fieldset col-span-2">
+                  <legend className="fieldset-legend">Notes</legend>
+                  <textarea
+                    id={name}
+                    name={name}
+                    className="textarea textarea-sm md:textarea-md focus-within:outline-primary/20 focus-within:border-primary/50 h-32 w-full p-3 md:p-4"
+                    placeholder="Briefly describe the role, salary range, or interview contacts..."
+                    value={state.value}
+                    onBlur={handleBlur}
+                    onChange={(e) => handleChange(e.target.value)}
+                  ></textarea>
+
+                  {errors.length > 0 ? (
+                    <div className="space-y-1">
+                      {errors.map((error, index) => (
+                        <p
+                          key={`fieldPositionErr${index}`}
+                          className="label text-error whitespace-normal"
+                        >
+                          {error?.message}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="label whitespace-normal">
+                      {state?.value?.length ?? "0"}/500 characters
+                    </p>
+                  )}
+                </fieldset>
+              );
+            }}
+          </Field>
 
           <div className="col-span-2 mt-6 flex flex-wrap justify-end gap-4">
             <button type="reset" className="btn btn-ghost max-sm:btn-sm">
               Clear
             </button>
 
-            <button type="submit" className="btn btn-primary max-sm:btn-sm">
-              {busy ? (
-                <div>
-                  <span className="loading loading-spinner"></span> Adding
-                </div>
-              ) : (
-                "Add opportunity"
+            <Subscribe
+              selector={(state) => [state.isSubmitting, state.canSubmit]}
+            >
+              {([isSubmitting, canSubmit]) => (
+                <button
+                  type="submit"
+                  disabled={isSubmitting || !canSubmit}
+                  className="btn btn-primary"
+                >
+                  {isSubmitting ? (
+                    <span className="loading loading-spinner"></span>
+                  ) : null}{" "}
+                  Add opportunity
+                </button>
               )}
-            </button>
+            </Subscribe>
           </div>
-        </fetcher.Form>
+        </form>
       </section>
     </>
   );
