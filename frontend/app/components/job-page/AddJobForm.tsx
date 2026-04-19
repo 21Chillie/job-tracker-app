@@ -1,15 +1,9 @@
 import { LuLink2, LuChevronDown } from "react-icons/lu";
-import { useFetcher } from "react-router";
-import { useJobForm, type FormJobDataType } from "@hooks/job/useJobFom.hook";
+import { useJobForm } from "@hooks/job/useJobFom.hook";
 import { statusList } from "./statusList";
-import { useState } from "react";
 
 export default function AddJobForm() {
-  const fetcher = useFetcher();
-  const busy = fetcher.state !== "idle";
   const { handleSubmit, Field, Subscribe } = useJobForm();
-  const [activeStatus, setActiveStatus] =
-    useState<FormJobDataType["status"]>("applied");
 
   const handleFormSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -159,21 +153,13 @@ export default function AddJobForm() {
                   <legend className="fieldset-legend">Status</legend>
 
                   <div className="dropdown w-full">
-                    <input
-                      type="hidden"
-                      name={name}
-                      id={name}
-                      value={activeStatus}
-                      onBlur={handleBlur}
-                      onChange={() => handleChange(activeStatus)}
-                    />
                     <button
                       type="button"
                       tabIndex={0}
                       role="button"
                       className="btn btn-sm md:btn-md border-base-content/20 bg-base-100 flex w-full justify-between font-normal"
                     >
-                      <span className="capitalize">{activeStatus}</span>
+                      <span className="capitalize">{state.value}</span>
                       <span>
                         <LuChevronDown />
                       </span>
@@ -188,8 +174,13 @@ export default function AddJobForm() {
                           <li>
                             <button
                               type="button"
-                              className={`btn btn-block flex justify-start font-normal capitalize ${activeStatus === status ? "" : "btn-ghost"}`}
-                              onClick={() => setActiveStatus(status)}
+                              className={`btn btn-block flex justify-start font-normal capitalize ${state.value === status ? "" : "btn-ghost"}`}
+                              onClick={() => {
+                                handleChange(status);
+
+                                // Close dropdown after click
+                                (document.activeElement as HTMLElement)?.blur();
+                              }}
                             >
                               {status}
                             </button>
