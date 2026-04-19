@@ -258,7 +258,7 @@ export default function ProfileForm() {
                     })}
                   </ul>
 
-                  {errors && (
+                  {errors.length > 0 && (
                     <div className="space-y-1">
                       {errors.map((err, index) => (
                         <p
