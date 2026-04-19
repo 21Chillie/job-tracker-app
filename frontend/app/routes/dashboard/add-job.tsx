@@ -1,7 +1,10 @@
-import AddJobForm from "~/components/job-page/AddJobForm";
+import AddJobForm from "@components/job-page/AddJobForm";
 import api from "@configs/axios-instance.config";
 import toast from "react-hot-toast";
-import type { JobsApiResponse, JobsApplicationFormType } from "~/types/job.type";
+import type {
+  JobsApiResponse,
+  JobsApplicationFormType,
+} from "~/types/job.type";
 import type { Route } from "./+types/add-job";
 
 export default function AddJob() {
