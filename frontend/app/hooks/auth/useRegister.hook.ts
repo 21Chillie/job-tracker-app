@@ -7,13 +7,13 @@ export const registerSchema = z.object({
   email: z.email("Invalid email address"),
   password: z
     .string()
-    .min(8, { message: "Password must be at least 8 characters long" })
+    .min(8, { error: "Password must be at least 8 characters long" })
     .regex(/[A-Z]/, {
-      message: "Password must contain at least one uppercase letter",
+      error: "Password must contain at least one uppercase letter",
     })
-    .regex(/[0-9]/, { message: "Password must contain at least one number" })
+    .regex(/[0-9]/, { error: "Password must contain at least one number" })
     .regex(/[^a-zA-Z0-9]/, {
-      message: "Password must contain at least one symbol",
+      error: "Password must contain at least one symbol",
     }),
 });
 
