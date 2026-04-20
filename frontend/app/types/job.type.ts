@@ -1,18 +1,3 @@
-export interface JobsApplicationFormType {
-  fJobTitle: string;
-  fCompany: string;
-  fJobUrl: string;
-  fJobStatus:
-    | "applied"
-    | "tested"
-    | "interviewed"
-    | "offer"
-    | "accepted"
-    | "rejected";
-  fAppliedDate: string;
-  fNotes: string;
-}
-
 export interface JobsDataType {
   id: string;
   user_id: string;
