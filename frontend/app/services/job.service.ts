@@ -12,6 +12,8 @@ const jobService = {
   }) => {
     if (!userId) throw new Response("User ID is required");
 
+    // TODO: need to handle formData validation
+
     const result = await api.post<JobsApiResponse>("/api/jobs/new", {
       ...formData,
       userId,
