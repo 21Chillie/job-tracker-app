@@ -47,6 +47,7 @@ const authService = {
       const { data, error } = await authClient.signIn.social({
         provider: "google",
         callbackURL: `${origin}/`,
+        disableRedirect: true,
       });
 
       if (error) {
@@ -55,6 +56,8 @@ const authService = {
             "An unexpected error occurred when trying to login with Google",
         );
       }
+
+      window.open(data?.url, "_blank", "noreferrer");
 
       return data;
     },
