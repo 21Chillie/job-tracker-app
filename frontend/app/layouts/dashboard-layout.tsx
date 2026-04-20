@@ -64,7 +64,7 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
                 <span className="loading loading-spinner text-primary"></span>
               </div>
             ) : (
-              <div className="mx-auto max-w-6xl space-y-6">
+              <div className="space-y-6">
                 <Outlet context={{ session }}></Outlet>
               </div>
             )}
