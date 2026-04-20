@@ -2,11 +2,12 @@ import db from "@db/db-client";
 import logger from "@config/logger";
 import { JobApplicationFormDataType } from "~/types/jobs.types";
 import { randomUUIDv7 } from "bun";
+import { QueryJobType } from "~/types/global.types";
 
 const jobsModel = {
-	create: async (userId: string, data: JobApplicationFormDataType) => {
+	create: async (data: JobApplicationFormDataType) => {
 		const id = randomUUIDv7();
-		const { position, company, jobUrl, status, appliedDate, notes } = data;
+		const { userId, position, company, jobUrl, status, appliedDate, notes } = data;
 
 		const query = db.query(
 			"INSERT INTO job (id, user_id, job_title, company, job_url, job_status, applied_date, notes) VALUES ($id, $user_id, $job_title, $company, $job_url, $job_status, $applied_date, $notes) RETURNING *;",
@@ -28,6 +29,71 @@ const jobsModel = {
 
 			return result;
 		} catch (err) {
+			throw new Error((err as Error).message);
+		}
+	},
+
+	getUserJob: async ({
+		userId,
+		search,
+		status = "all",
+		sortBy = "created_at",
+		order = "asc",
+		page = "1",
+		limit = "15",
+	}: QueryJobType) => {
+		// pagination
+		const currentPage = Math.max(1, parseInt(page));
+		const pageSize = Math.max(1, Math.min(100, parseInt(limit)));
+		const offset = (currentPage - 1) * pageSize;
+
+		// sorting
+		const allowedSortFields = ["job_title", "created_at", "applied_date"];
+		const sortField = allowedSortFields.includes(sortBy) ? sortBy : "created_at";
+		const sortDir = order.toLowerCase() === "asc" ? "ASC" : "DESC";
+
+		// base query
+		let baseQuery = `FROM job WHERE user_id = ?`;
+		const params: string[] = [userId];
+
+		// search query
+		if (search) {
+			baseQuery += ` AND (job_title LIKE ? OR company LIKE ?)`;
+			params.push(`%${search}%`, `%${search}%`);
+		}
+
+		// filter status
+		if (status && status !== "all") {
+			baseQuery += ` AND job_status = ?`;
+			params.push(status);
+		}
+
+		try {
+			// count total
+			const countQuery = `SELECT COUNT(*) as total ${baseQuery}`;
+			const { total } = db.prepare(countQuery).get(...params) as { total: number };
+
+			const jobsDataQuery = `SELECT * ${baseQuery} ORDER BY ${sortField} ${sortDir} LIMIT ? OFFSET ?`;
+
+			const jobs = db.prepare(jobsDataQuery).all(...params, pageSize, offset);
+
+			logger.info("Getting job data successfully");
+
+			return {
+				jobs,
+				meta: {
+					total,
+					page: currentPage,
+					limit: pageSize,
+					maxPages: Math.ceil(total / pageSize),
+					hasNextPage: currentPage * pageSize < total,
+					hasPrevPage: currentPage > 1,
+				},
+			};
+		} catch (err) {
+			const errorMessage = err instanceof Error ? err.message : "Something went wrong when trying to get user job data";
+
+			logger.error(`Database error: ${errorMessage}`);
 			throw new Error((err as Error).message);
 		}
 	},
