@@ -13,12 +13,8 @@ const jobsRoute = new Hono<{ Variables: Variables }>();
 
 jobsRoute.use("/*", checkAuth, generalLimiter);
 
-// For testing
-jobsRoute.get("/", (c) => {
-	const user = c.get("user");
-
-	return c.json({ message: "Hello from jobs route!", user: user.id });
-});
+// TODO: Add validation for query parameters
+jobsRoute.get("/", jobsController.getJobData);
 
 jobsRoute.post(
 	"/new",
