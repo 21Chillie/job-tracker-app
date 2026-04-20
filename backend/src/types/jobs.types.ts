@@ -1,6 +1,7 @@
 import z from "zod";
 
 export const JobFormSchema = z.object({
+	userId: z.string().min(1, { error: "You must provide user id" }),
 	position: z.string().min(1, { error: "You must provide value for position field" }),
 	company: z.string().min(1, { error: "You must provide value for company field" }),
 	jobUrl: z.url({ error: "Invalid URL address" }).optional().or(z.literal("")),
