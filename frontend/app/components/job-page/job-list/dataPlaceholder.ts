@@ -1,0 +1,240 @@
+export const dataJobsPlaceholder = [
+  {
+    position: "Frontend Developer",
+    company: "TechCorp Inc.",
+    jobPostingUrl: "https://techcorp.com/careers/frontend-dev",
+    status: "applied",
+    notes:
+      "React, TypeScript, 3 years experience required. Salary: $90-120k. Remote friendly.",
+  },
+  {
+    position: "Full Stack Engineer",
+    company: "WebFlow Solutions",
+    jobPostingUrl: "https://webflow.io/jobs/fullstack",
+    status: "interviewed",
+    notes:
+      "Node.js + Vue.js stack. Had technical interview with team lead. Salary: $100-130k.",
+  },
+  {
+    position: "Software Engineer",
+    company: "DataStream Analytics",
+    jobPostingUrl: "https://datastream.ai/careers",
+    status: "applied",
+    notes:
+      "Python, SQL, experience with data pipelines. Salary: $95-125k. Hybrid 3 days office.",
+  },
+  {
+    position: "Backend Developer",
+    company: "CloudMatrix",
+    jobPostingUrl: "https://cloudmatrix.io/jobs/backend",
+    status: "tested",
+    notes:
+      "Go, Kubernetes, AWS. Online coding challenge completed. Salary: $110-140k.",
+  },
+  {
+    position: "Junior Web Developer",
+    company: "StartupX",
+    jobPostingUrl: "https://startupx.co/careers",
+    status: "rejected",
+    notes:
+      "Entry level, HTML/CSS/JS. No response after interview. Contact: HR at hello@startupx.co",
+  },
+  {
+    position: "DevOps Engineer",
+    company: "InfraStack",
+    jobPostingUrl: "https://infrastack.com/jobs",
+    status: "applied",
+    notes:
+      "Terraform, Docker, CI/CD pipelines. Salary: $115-145k. On-site in SF.",
+  },
+  {
+    position: "React Developer",
+    company: "FinTech Pro",
+    jobPostingUrl: "https://fintechpro.io/careers",
+    status: "offer",
+    notes:
+      "React, Redux, financial app experience. Offer: $130k + equity. Contact: John Doe, hiring manager.",
+  },
+  {
+    position: "Software Developer",
+    company: "AppVenture",
+    jobPostingUrl: "https://appventure.com/jobs",
+    status: "applied",
+    notes:
+      "JavaScript, React Native, mobile development. Salary: $85-110k. Remote.",
+  },
+  {
+    position: "Frontend Engineer",
+    company: "PixelPerfect Studio",
+    jobPostingUrl: "https://pixelperfect.studio/careers",
+    status: "tested",
+    notes:
+      "Vue.js, Tailwind CSS, UI/UX focus. Completed portfolio review. Salary: $80-100k.",
+  },
+  {
+    position: "Full Stack Web Developer",
+    company: "CodeCraft Labs",
+    jobPostingUrl: "https://codecraft.dev/jobs",
+    status: "applied",
+    notes:
+      "MERN stack (MongoDB, Express, React, Node). Salary: $95-120k. Remote first.",
+  },
+  {
+    position: "Backend Engineer",
+    company: "APIConnect",
+    jobPostingUrl: "https://apiconnect.io/careers",
+    status: "interviewed",
+    notes:
+      "Java, Spring Boot, REST APIs. Second round with engineering manager. Salary: $105-135k.",
+  },
+  {
+    position: "JavaScript Developer",
+    company: "WebSolutions Inc.",
+    jobPostingUrl: "https://websolutions.com/jobs",
+    status: "applied",
+    notes: "React, Node.js, TypeScript. 2+ years experience. Salary: $85-105k.",
+  },
+  {
+    position: "Software Engineer Intern",
+    company: "TechGiant Corp",
+    jobPostingUrl: "https://techgiant.com/internships",
+    status: "rejected",
+    notes:
+      "Summer internship, Python, ML basics. Rejected after assessment. Contact: careers@techgiant.com",
+  },
+  {
+    position: "Product Engineer",
+    company: "InnovateTech",
+    jobPostingUrl: "https://innovatetech.io/careers",
+    status: "applied",
+    notes:
+      "Full stack, product mindset, agile experience. Salary: $100-130k. NYC office.",
+  },
+  {
+    position: "UI Developer",
+    company: "DesignFirst Agency",
+    jobPostingUrl: "https://designfirst.agency/jobs",
+    status: "accepted",
+    notes:
+      "HTML5, CSS3, JavaScript, Figma. Accepted offer at $85k. Start date: May 1st. Contact: Sarah Smith.",
+  },
+  {
+    position: "PHP Developer",
+    company: "WebAgency Plus",
+    jobPostingUrl: "https://webagencyplus.com/careers",
+    status: "applied",
+    notes: "Laravel, MySQL, WordPress. Salary: $70-90k. In-office in Chicago.",
+  },
+  {
+    position: "Python Developer",
+    company: "DataDriven AI",
+    jobPostingUrl: "https://datadriven.ai/jobs",
+    status: "tested",
+    notes:
+      "Django, PostgreSQL, ML integration. Technical interview scheduled. Salary: $100-125k.",
+  },
+  {
+    position: "Mobile Developer",
+    company: "AppForge",
+    jobPostingUrl: "https://appforge.io/careers",
+    status: "applied",
+    notes:
+      "Flutter, iOS, Android. Portfolio required. Salary: $90-115k. Remote.",
+  },
+  {
+    position: "Site Reliability Engineer",
+    company: "CloudScale Systems",
+    jobPostingUrl: "https://cloudscale.com/jobs",
+    status: "interviewed",
+    notes:
+      "Linux, Prometheus, Grafana. Panel interview with 3 engineers. Salary: $120-150k.",
+  },
+  {
+    position: "Junior Software Engineer",
+    company: "CodeBase Startup",
+    jobPostingUrl: "https://codebase.io/careers",
+    status: "applied",
+    notes:
+      "Entry level, eager to learn. Training provided. Salary: $65-80k. Austin, TX.",
+  },
+  {
+    position: "Angular Developer",
+    company: "Enterprise Solutions Ltd",
+    jobPostingUrl: "https://enterprise-solutions.com/jobs",
+    status: "applied",
+    notes:
+      "Angular, TypeScript, enterprise software. Salary: $95-120k. Contract to hire.",
+  },
+  {
+    position: "Data Engineer",
+    company: "AnalyticsPro",
+    jobPostingUrl: "https://analyticspro.io/careers",
+    status: "tested",
+    notes:
+      "SQL, Python, ETL pipelines. Completed SQL challenge. Salary: $110-140k. Hybrid.",
+  },
+  {
+    position: "Web Developer",
+    company: "Digital Agency Co",
+    jobPostingUrl: "https://digitalagency.co/jobs",
+    status: "rejected",
+    notes:
+      "WordPress, PHP, client projects. Portfolio not strong enough. Contact: info@digitalagency.co",
+  },
+  {
+    position: "Software Development Engineer",
+    company: "TechStart Global",
+    jobPostingUrl: "https://techstartglobal.com/careers",
+    status: "applied",
+    notes:
+      "Java, Spring, microservices architecture. Salary: $105-135k. Seattle area.",
+  },
+  {
+    position: "Node.js Developer",
+    company: "APIFirst",
+    jobPostingUrl: "https://apifirst.dev/jobs",
+    status: "interviewed",
+    notes:
+      "Express, GraphQL, MongoDB. Technical demo required. Salary: $95-125k.",
+  },
+  {
+    position: "QA Engineer",
+    company: "TestMaster Inc",
+    jobPostingUrl: "https://testmaster.com/careers",
+    status: "applied",
+    notes:
+      "Selenium, automated testing, Java. Salary: $80-100k. Manual + automation.",
+  },
+  {
+    position: "Cloud Developer",
+    company: "AWS Solutions Partner",
+    jobPostingUrl: "https://awspartner.io/jobs",
+    status: "tested",
+    notes:
+      "AWS certification preferred, serverless, Lambda. Completed assessment. Salary: $115-145k.",
+  },
+  {
+    position: "Systems Engineer",
+    company: "TechOps Group",
+    jobPostingUrl: "https://techopsgroup.com/careers",
+    status: "applied",
+    notes:
+      "Linux sysadmin, networking, scripting. Salary: $90-115k. Government contracting.",
+  },
+  {
+    position: "Vue.js Developer",
+    company: "ModernWeb Agency",
+    jobPostingUrl: "https://modernweb.agency/jobs",
+    status: "applied",
+    notes:
+      "Vue 3, Composition API, Pinia. Portfolio: vueprojects.com. Salary: $85-110k.",
+  },
+  {
+    position: "Platform Engineer",
+    company: "InfraCore Tech",
+    jobPostingUrl: "https://infracore.tech/careers",
+    status: "interviewed",
+    notes:
+      "Kubernetes, Docker Swarm, Python. Culture fit interview pending. Salary: $125-155k.",
+  },
+];
