@@ -34,12 +34,14 @@ export default function ProfileForm() {
   return (
     <>
       <section id="section-job-form" className="p-4 md:p-6">
-        <div className="bg-base-100 border-base-300 mx-auto max-w-4xl space-y-3 rounded-xl border py-4 shadow-md max-sm:mb-4 md:py-6">
+        <div className="bg-base-100 border-base-300 mx-auto max-w-4xl space-y-3 rounded-xl border py-4 shadow-md md:py-6">
           <header className="border-b-base-300 space-y-1 border-b px-4 pb-3 md:px-6">
             <div className="badge badge-soft badge-primary badge-sm">
               Profile
             </div>
-            <h2 className="text-2xl font-semibold">Update Profile</h2>
+            <h2 className="text-2xl leading-relaxed font-semibold">
+              Update Profile
+            </h2>
             <p className="text-base-content/60 text-xs font-medium text-pretty md:text-sm">
               Change the details of your profile here.
             </p>
@@ -60,7 +62,7 @@ export default function ProfileForm() {
                       type="text"
                       id={field.name}
                       name={field.name}
-                      className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
+                      className="input max-sm:input-sm focus-within:outline-primary/20 focus-within:border-primary/50 w-full"
                       placeholder="John Doe"
                       value={field.state.value}
                       onBlur={field.handleBlur}
@@ -128,7 +130,7 @@ export default function ProfileForm() {
                     <legend className="fieldset-legend">
                       Current Password
                     </legend>
-                    <label className="input focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
+                    <label className="input max-sm:input-sm focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
                       <span>
                         <LuKeyRound className="text-base-content/50 size-4" />
                       </span>
@@ -181,7 +183,7 @@ export default function ProfileForm() {
                 return (
                   <fieldset className="fieldset col-span-2 md:col-span-1">
                     <legend className="fieldset-legend">New Password</legend>
-                    <label className="input focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
+                    <label className="input max-sm:input-sm focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
                       <span>
                         <LuKeyRound className="text-base-content/50 size-4" />
                       </span>
@@ -242,9 +244,9 @@ export default function ProfileForm() {
                             <button
                               key={id}
                               type="button"
-                              id="fAvatar"
-                              name="fAvatar"
-                              className={`btn btn-lg btn-circle ${isSelected ? "outline-primary outline-3" : "outline-primary/30 hover:outline-3"}`}
+                              id={field.name}
+                              name={field.name}
+                              className={`btn btn-lg max-sm:btn-md btn-circle ${isSelected ? "outline-primary outline-3" : "outline-primary/30 hover:outline-3"}`}
                               onClick={() => {
                                 field.handleChange(file);
                               }}
@@ -292,6 +294,8 @@ export default function ProfileForm() {
                 {([isSubmitting, canSubmit]) => (
                   <button
                     type="submit"
+                    name="action"
+                    value={"edit-profile"}
                     disabled={isSubmitting || !canSubmit}
                     className="btn btn-primary"
                   >

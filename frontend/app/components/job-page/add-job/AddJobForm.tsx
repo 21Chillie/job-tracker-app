@@ -16,12 +16,14 @@ export default function AddJobForm() {
   return (
     <>
       <section id="section-job-form" className="p-4 md:p-6">
-        <div className="bg-base-100 border-base-300 max-w-4xl space-y-3 rounded-xl border py-4 shadow-md max-sm:mb-4 md:py-6 mx-auto">
+        <div className="bg-base-100 border-base-300 mx-auto max-w-4xl space-y-3 rounded-xl border py-4 shadow-md max-sm:mb-4 md:py-6">
           <header className="border-b-base-300 space-y-1 border-b px-4 pb-3 md:px-6">
             <div className="badge badge-soft badge-primary badge-sm">
               New Entry
             </div>
-            <h2 className="text-2xl font-semibold">Curate Opportunity</h2>
+            <h2 className="text-2xl leading-relaxed font-semibold">
+              Curate Opportunity
+            </h2>
             <p className="text-base-content/60 text-xs font-medium text-pretty md:text-sm">
               Keep your momentum going. Enter the role details to start tracking
               your progress.
@@ -284,7 +286,7 @@ export default function AddJobForm() {
             </Field>
 
             <div className="col-span-2 mt-6 flex flex-wrap justify-end gap-4">
-              <button type="reset" className="btn btn-ghost max-sm:btn-sm">
+              <button type="reset" className="btn btn-ghost">
                 Clear
               </button>
 
