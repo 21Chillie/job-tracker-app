@@ -1,11 +1,11 @@
 import { useFetcher } from "react-router";
-import { LuEye, LuEyeOff, LuKeyRound } from "react-icons/lu";
 import { useState } from "react";
+import { Eye, EyeOff, KeyRound } from "lucide-react";
 
-export function DangerousZone() {
+export default function DangerZone() {
   const [viewPassword, setViewNewPassword] = useState(false);
   const fetcher = useFetcher();
-  const busy = fetcher.state !== "idle";
+  // const busy = fetcher.state !== "idle";
 
   return (
     <>
@@ -20,7 +20,7 @@ export function DangerousZone() {
             </h2>
             <p className="text-base-content/60 text-xs font-medium text-pretty md:text-sm">
               Once you delete your account, there is no going back. This will
-              permanently all your data, including your job applications, notes,
+              permanently remove all your data, including your job applications
               and profile information. Please be certain.
             </p>
           </header>
@@ -31,9 +31,9 @@ export function DangerousZone() {
           >
             <fieldset className="fieldset col-span-2 md:col-span-1">
               <legend className="fieldset-legend">Password</legend>
-              <label className="input max-sm:input-sm focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
+              <div className="input max-sm:input-sm focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
                 <span>
-                  <LuKeyRound className="text-base-content/50 size-4" />
+                  <KeyRound className="text-base-content/50 size-4" />
                 </span>
                 <input
                   className="grow"
@@ -47,9 +47,13 @@ export function DangerousZone() {
                   type="button"
                   onClick={() => setViewNewPassword(!viewPassword)}
                 >
-                  {viewPassword ? <LuEyeOff /> : <LuEye />}
+                  {viewPassword ? (
+                    <EyeOff className="text-base-content/50 size-4" />
+                  ) : (
+                    <Eye className="text-base-content/50 size-4" />
+                  )}
                 </button>
-              </label>
+              </div>
 
               <p className="label whitespace-normal">Required</p>
             </fieldset>
