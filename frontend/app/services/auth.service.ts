@@ -94,6 +94,17 @@ const authService = {
 
     return data;
   },
+  deleteAccount: async (password: string) => {
+    const { error, data } = await authClient.deleteUser({
+      password,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  },
 };
 
 export default authService;
