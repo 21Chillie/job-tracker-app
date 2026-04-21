@@ -1,29 +1,28 @@
-import { LuTableOfContents, LuUser, LuHouse } from "react-icons/lu";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import { CirclePlus, House, TableOfContents, User } from "lucide-react";
 import { NavLink } from "react-router";
 
 const dockNavLink = [
-  { id: "home", link: "home", path: "/", icon: <LuHouse /> },
+  { id: "home", link: "home", path: "/", icon: <House /> },
   {
     id: "job-list",
     link: "job list",
     path: "/jobs",
-    icon: <LuTableOfContents />,
+    icon: <TableOfContents />,
   },
   {
     id: "add-job",
     link: "add job",
     path: "/add-job",
-    icon: <IoIosAddCircleOutline />,
+    icon: <CirclePlus />,
   },
 
-  { id: "profile", link: "profile", path: "/profile", icon: <LuUser /> },
+  { id: "profile", link: "profile", path: "/profile", icon: <User /> },
 ];
 
 export default function Dock() {
   return (
     <>
-      <aside className="block md:hidden mt-12 sm:mt-16">
+      <aside className="mt-12 block sm:mt-16 md:hidden">
         <nav className="dock dock-md">
           {dockNavLink.map((item) => {
             const { id, link, path, icon } = item;
