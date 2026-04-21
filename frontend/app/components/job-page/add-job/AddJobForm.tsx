@@ -1,17 +1,11 @@
-import { LuLink2, LuChevronDown } from "react-icons/lu";
 import { useJobForm } from "@hooks/job/useJobFom.hook";
+import { ChevronDown, Link2 } from "lucide-react";
+import { useFetcher } from "react-router";
 import { statusList } from "./statusList";
 
 export default function AddJobForm() {
   const { handleSubmit, Field, Subscribe } = useJobForm();
-
-  const handleFormSubmit = (e: React.SubmitEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    handleSubmit();
-  };
-
-  //
+  const fetcher = useFetcher();
 
   return (
     <>
@@ -31,9 +25,9 @@ export default function AddJobForm() {
           </header>
 
           {/* NOTE: `f` in id and name input mean is `form` */}
-          <form
+          <fetcher.Form
             className="grid grid-cols-2 gap-3 px-4 md:px-6"
-            onSubmit={handleFormSubmit}
+            onSubmit={handleSubmit}
           >
             <Field name="position">
               {({ state, name, handleBlur, handleChange }) => {
@@ -116,7 +110,7 @@ export default function AddJobForm() {
                   <fieldset className="fieldset col-span-2 md:col-span-1">
                     <legend className="fieldset-legend">Job Posting URL</legend>
                     <label className="input input-sm md:input-md focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
-                      <LuLink2 className="text-base-content/50" />
+                      <Link2 className="text-base-content/50 size-4" />
                       <input
                         type="text"
                         id={name}
@@ -163,7 +157,7 @@ export default function AddJobForm() {
                       >
                         <span className="capitalize">{state.value}</span>
                         <span>
-                          <LuChevronDown />
+                          <ChevronDown className="size-4 text-base-content/50" />
                         </span>
                       </button>
 
@@ -307,7 +301,7 @@ export default function AddJobForm() {
                 )}
               </Subscribe>
             </div>
-          </form>
+          </fetcher.Form>
         </div>
       </section>
     </>
