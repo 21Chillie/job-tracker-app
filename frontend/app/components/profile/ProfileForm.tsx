@@ -1,13 +1,13 @@
+import { ModalBody, ModalButton } from "@components/reuse-ui/Modal";
 import { useAppDispatch } from "@configs/store.config";
 import { sessionQueryOption } from "@hooks/auth/useSession.hook";
 import { useEditProfile } from "@hooks/user/useEditProfile.hook";
+import authService from "@services/auth.service";
 import { useQuery } from "@tanstack/react-query";
+import { Eye, EyeOff, KeyRound } from "lucide-react";
 import { useState } from "react";
-import { LuEye, LuEyeOff, LuKeyRound } from "react-icons/lu";
 import { useNavigate } from "react-router";
 import avatarProfileImg from "./avatar-profile";
-import authService from "@services/auth.service";
-import { ModalBody, ModalButton } from "@components/reuse-ui/Modal";
 
 export default function ProfileForm() {
   const { data: session } = useQuery(sessionQueryOption());
@@ -130,9 +130,9 @@ export default function ProfileForm() {
                     <legend className="fieldset-legend">
                       Current Password
                     </legend>
-                    <label className="input max-sm:input-sm focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
+                    <div className="input max-sm:input-sm focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
                       <span>
-                        <LuKeyRound className="text-base-content/50 size-4" />
+                        <KeyRound className="text-base-content/50 size-4" />
                       </span>
                       <input
                         className="grow"
@@ -151,9 +151,13 @@ export default function ProfileForm() {
                           setViewCurrentPassword(!viewCurrentPassword)
                         }
                       >
-                        {viewCurrentPassword ? <LuEyeOff /> : <LuEye />}
+                        {viewCurrentPassword ? (
+                          <EyeOff className="text-base-content/50 size-4" />
+                        ) : (
+                          <Eye className="text-base-content/50 size-4" />
+                        )}
                       </button>
-                    </label>
+                    </div>
 
                     {errors.length > 0 ? (
                       <div className="space-y-1">
@@ -183,9 +187,9 @@ export default function ProfileForm() {
                 return (
                   <fieldset className="fieldset col-span-2 md:col-span-1">
                     <legend className="fieldset-legend">New Password</legend>
-                    <label className="input max-sm:input-sm focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
+                    <div className="input max-sm:input-sm focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
                       <span>
-                        <LuKeyRound className="text-base-content/50 size-4" />
+                        <KeyRound className="text-base-content/50 size-4" />
                       </span>
                       <input
                         className="grow"
@@ -202,9 +206,13 @@ export default function ProfileForm() {
                         type="button"
                         onClick={() => setViewNewPassword(!viewNewPassword)}
                       >
-                        {viewNewPassword ? <LuEyeOff /> : <LuEye />}
+                        {viewNewPassword ? (
+                          <EyeOff className="text-base-content/50 size-4" />
+                        ) : (
+                          <Eye className="text-base-content/50 size-4" />
+                        )}
                       </button>
-                    </label>
+                    </div>
 
                     {errors.length > 0 ? (
                       <div className="space-y-1">
