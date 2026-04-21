@@ -1,3 +1,5 @@
+import type { FormJobDataType } from "~/hooks/job/useJobFom.hook";
+
 export interface JobsDataType {
   id: string;
   user_id: string;
@@ -17,7 +19,33 @@ export interface JobsDataType {
   updated_at: string;
 }
 
-export type JobsApiResponse = {
+export type JobDataResponse = {
   success: true;
-  data: JobsDataType;
+  data: {
+    job: JobsDataType;
+  };
+};
+
+export type JobsDataResponse = {
+  success: true;
+  data: {
+    jobs: JobsDataType[];
+    meta: {
+      total: number;
+      page: number;
+      limit: number;
+      maxPages: number;
+      hasNextPage: boolean;
+      hasPrevPage: boolean;
+    };
+  };
+};
+
+export type QueryJobsParams = {
+  search: string;
+  status: FormJobDataType["status"] | "all";
+  sortBy: "created_at" | "job_title" | "applied_date";
+  order: "asc" | "desc";
+  page: number;
+  limit: number;
 };
