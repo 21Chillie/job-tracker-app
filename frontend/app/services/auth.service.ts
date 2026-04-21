@@ -47,6 +47,7 @@ const authService = {
       const { data, error } = await authClient.signIn.social({
         provider: "google",
         callbackURL: `${origin}/`,
+        disableRedirect: true,
       });
 
       if (error) {
@@ -55,6 +56,8 @@ const authService = {
             "An unexpected error occurred when trying to login with Google",
         );
       }
+
+      window.open(data?.url, "_blank", "noreferrer");
 
       return data;
     },
@@ -83,6 +86,17 @@ const authService = {
       name: value.name,
       email: value.email,
       password: value.password,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  },
+  deleteAccount: async (password: string) => {
+    const { error, data } = await authClient.deleteUser({
+      password,
     });
 
     if (error) {

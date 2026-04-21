@@ -1,16 +1,10 @@
-import {
-  LuUserPlus,
-  LuMail,
-  LuKeyRound,
-  LuEye,
-  LuEyeOff,
-} from "react-icons/lu";
-import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
-import { useState } from "react";
-import { useRegisterForm } from "@hooks/auth/useRegister.hook";
 import { useAppDispatch } from "@configs/store.config";
+import { useRegisterForm } from "@hooks/auth/useRegister.hook";
 import authService from "@services/auth.service";
+import { Eye, EyeOff, KeyRound, Mail, UserPlus } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router";
+import googleIcon from "~/assets/icons/google-color.svg";
 
 function RegisterForm() {
   const [viewPassword, setViewpassword] = useState<boolean>(false);
@@ -28,7 +22,7 @@ function RegisterForm() {
       <article className="bg-base-100 border-base-300 card mx-auto w-full max-w-md border shadow-lg max-sm:fixed max-sm:inset-0">
         <header className="border-base-300 flex items-start gap-2 border-b p-6">
           <div>
-            <LuUserPlus className="size-6" />
+            <UserPlus className="size-6" />
           </div>
 
           <div>
@@ -84,7 +78,7 @@ function RegisterForm() {
                     <legend className="fieldset-legend">Email</legend>
                     <label className="input focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
                       <span>
-                        <LuMail className="text-base-content/50 size-4" />
+                        <Mail className="text-base-content/50 size-4" />
                       </span>
                       <input
                         name={field.name}
@@ -120,7 +114,7 @@ function RegisterForm() {
                     <legend className="fieldset-legend">Password</legend>
                     <label className="input focus-within:outline-primary/20 focus-within:border-primary/50 w-full">
                       <span>
-                        <LuKeyRound className="text-base-content/50 size-4" />
+                        <KeyRound className="text-base-content/50 size-4" />
                       </span>
                       <input
                         name={field.name}
@@ -136,7 +130,11 @@ function RegisterForm() {
                         type="button"
                         onClick={() => setViewpassword(!viewPassword)}
                       >
-                        {viewPassword ? <LuEyeOff /> : <LuEye />}
+                        {viewPassword ? (
+                          <EyeOff className="text-base-content/50 size-4" />
+                        ) : (
+                          <Eye className="text-base-content/50 size-4" />
+                        )}
                       </button>
                     </label>
 
@@ -191,7 +189,11 @@ function RegisterForm() {
               onClick={() => dispatch(authService.loginGoogle())}
             >
               <span>
-                <FcGoogle />
+                <img
+                  className="size-4"
+                  src={googleIcon}
+                  alt="google logo icon"
+                />
               </span>
               Register with Google account
             </button>

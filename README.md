@@ -2,46 +2,45 @@
 
 ##### Project start: 2026-04-11
 
-- [x] setup the design system (colors, layout,  etc) ✅ 2026-04-11
+- [x] setup the design system (colors, layout, etc) ✅ 2026-04-11
 - [x] authentication page: ✅ 2026-04-13
-	- [x] create register page ✅ 2026-04-11
-	- [x] create login page ✅ 2026-04-11
-	- [x] implement form validation both page for better ux ✅ 2026-04-12
-	- [x] implement better auth on server side ✅ 2026-04-13
-	- [x] implement better auth on client side ✅ 2026-04-13
+  - [x] create register page ✅ 2026-04-11
+  - [x] create login page ✅ 2026-04-11
+  - [x] implement form validation both page for better ux ✅ 2026-04-12
+  - [x] implement better auth on server side ✅ 2026-04-13
+  - [x] implement better auth on client side ✅ 2026-04-13
 - [x] dashboard layout: ✅ 2026-04-14
-	- [x] dashboard layout (shared ui) ✅ 2026-04-14
-	- [x] check if there is session user data. If not re-route back to login page ✅ 2026-04-14
-	- [x] create navbar component ✅ 2026-04-14
-	- [x] create sidebar component ✅ 2026-04-14
-	- [x] function to signout account ✅ 2026-04-14
+  - [x] dashboard layout (shared ui) ✅ 2026-04-14
+  - [x] check if there is session user data. If not re-route back to login page ✅ 2026-04-14
+  - [x] create navbar component ✅ 2026-04-14
+  - [x] create sidebar component ✅ 2026-04-14
+  - [x] function to signout account ✅ 2026-04-14
 - [x] Refactor the code (authentication): ✅ 2026-04-16
-	- [x] implement redux toolkit in authentication flow for centralize auth action and state (apply what I learn about redux toolkit) ✅ 2026-04-16
-	- [x] centralize all authentication function/login for improving maintainability and code consistency ✅ 2026-04-16
-	- [x] fix some layouts and styles in authentication and dashboard page (UI only) ✅ 2026-04-16
+  - [x] implement redux toolkit in authentication flow for centralize auth action and state (apply what I learn about redux toolkit) ✅ 2026-04-16
+  - [x] centralize all authentication function/login for improving maintainability and code consistency ✅ 2026-04-16
+  - [x] fix some layouts and styles in authentication and dashboard page (UI only) ✅ 2026-04-16
 - [ ] home route
-- [ ] job list route⏫ 
-- [ ] add new jobs route⏫ 
-	- [x] create UI form component ✅ 2026-04-16
-	- [x] add logic to handle form data (client) ✅ 2026-04-16
-	- [x] add backend POST route to handle form data and insert that data into database ✅ 2026-04-16
-	- [ ] refactor client code to use useMutation from tanstack query
-	- [ ] postpone this, need to working on job list route
-- [x] profile route  ✅ 2026-04-18
-	- [x] create ui form component ✅ 2026-04-18
-	- [x] add logic to handle profile form data ✅ 2026-04-18
-	- [x] make sure to validate the profile form data ✅ 2026-04-18
-	- [x] test the form (for catching error) ✅ 2026-04-18
+- [ ] job list route⏫
+- [ ] add new jobs route⏫
+  - [x] create UI form component ✅ 2026-04-16
+  - [x] add logic to handle form data (client) ✅ 2026-04-16
+  - [x] add backend POST route to handle form data and insert that data into database ✅ 2026-04-16
+  - [ ] refactor client code to use useMutation from tanstack query
+  - [ ] postpone this, need to working on job list route
+- [x] profile route ✅ 2026-04-18
+  - [x] create ui form component ✅ 2026-04-18
+  - [x] add logic to handle profile form data ✅ 2026-04-18
+  - [x] make sure to validate the profile form data ✅ 2026-04-18
+  - [x] test the form (for catching error) ✅ 2026-04-18
 - [x] More refactor for client side: ✅ 2026-04-18
-	- [x] simplify error handling for axios interceptors ✅ 2026-04-18
-	- [x] simplify auth service error handling ✅ 2026-04-18
-	- [x] add error catching in action/clientAction and loader and this will handle the error ✅ 2026-04-18
-	- [x] finally user data is caching and not spam backend server for getting user data from backend server by using tanstack query ✅ 2026-04-18
+  - [x] simplify error handling for axios interceptors ✅ 2026-04-18
+  - [x] simplify auth service error handling ✅ 2026-04-18
+  - [x] add error catching in action/clientAction and loader and this will handle the error ✅ 2026-04-18
+  - [x] finally user data is caching and not spam backend server for getting user data from backend server by using tanstack query ✅ 2026-04-18
 - [x] More refactor and add features for server side: ✅ 2026-04-18
-	- [x] add rate limiter (for auth and general) for avoid spam ✅ 2026-04-18
-	- [x] rate limiter for auth of course will be use in auth route and general limiter will be use for job route ✅ 2026-04-18
-	- [x] limiter key for authentication will set as anonymous ✅ 2026-04-18
-	- [x] and general limiter key will set by user id or ip address ✅ 2026-04-18
-	- [x] fix big big bugs in database side, because typo in user schema files (spend whole day to debug ts) ✅ 2026-04-18
-	- [x] accessing job route now require to check user session data and will throw error 401 if no session found ✅ 2026-04-18
-  
+  - [x] add rate limiter (for auth and general) for avoid spam ✅ 2026-04-18
+  - [x] rate limiter for auth of course will be use in auth route and general limiter will be use for job route ✅ 2026-04-18
+  - [x] limiter key for authentication will set as anonymous ✅ 2026-04-18
+  - [x] and general limiter key will set by user id or ip address ✅ 2026-04-18
+  - [x] fix big big bugs in database side, because typo in user schema files (spend whole day to debug ts) ✅ 2026-04-18
+  - [x] accessing job route now require to check user session data and will throw error 401 if no session found ✅ 2026-04-18

@@ -41,8 +41,6 @@ api.interceptors.response.use(
         }
       }
 
-      if (import.meta.env.DEV) console.error(error);
-
       throw new Response(errorMessage, {
         status: status,
         statusText: data?.error.type || "Error",

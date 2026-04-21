@@ -1,12 +1,12 @@
-import { Outlet, redirect, useNavigation } from "react-router";
-import Sidebar from "@components/sidebar/Sidebar";
-import Navbar from "@components/navbar/Navbar";
 import Dock from "@components/dock/Dock";
-import type { Route } from "./+types/dashboard-layout";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { sessionQueryOption, useSession } from "@hooks/auth/useSession.hook";
-import axios from "axios";
+import Navbar from "@components/navbar/Navbar";
+import Sidebar from "@components/sidebar/Sidebar";
 import { getQueryClient } from "@configs/query-client.config";
+import { sessionQueryOption, useSession } from "@hooks/auth/useSession.hook";
+import { dehydrate, HydrationBoundary, useQuery } from "@tanstack/react-query";
+import { Outlet, redirect, useNavigation } from "react-router";
+import type { Route } from "./+types/dashboard-layout";
+import { LoadingSpinner } from "~/components/reuse-ui/LoadingSpinner";
 
 /**
  * Fix bug data keep refetching when navigate the page
@@ -17,12 +17,12 @@ export async function loader({ request }: Route.LoaderArgs) {
   const cookie = request.headers.get("cookie") || "";
   const queryClient = getQueryClient();
 
-  const session = await queryClient.fetchQuery(sessionQueryOption(cookie));
-
-  if (!session || !cookie) {
+  if (!cookie) {
     getQueryClient().clear();
     return redirect("/login");
   }
+
+  await queryClient.prefetchQuery(sessionQueryOption(cookie));
 
   return {
     dehydratedState: dehydrate(queryClient),
@@ -47,7 +47,9 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
   const isNavigating = Boolean(navigation.location);
   const { dehydratedState } = loaderData;
 
-  const { data: session } = useSession();
+  const { data: session } = useQuery(sessionQueryOption());
+
+  if (!session) redirect("/login");
 
   return (
     <HydrationBoundary state={dehydratedState}>
@@ -60,13 +62,9 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
 
           <main className="bg-base-200 relative m-0 flex-1 overflow-y-auto rounded-xl md:m-4 md:mt-0 md:ml-0">
             {isNavigating ? (
-              <div className="absolute inset-100 grid place-items-center">
-                <span className="loading loading-spinner text-primary"></span>
-              </div>
+              <LoadingSpinner />
             ) : (
-              <div className="mx-auto max-w-6xl space-y-6">
-                <Outlet context={{ session }}></Outlet>
-              </div>
+              <Outlet context={{ session }}></Outlet>
             )}
           </main>
 

@@ -73,7 +73,7 @@ export function useEditProfile({
       onSubmit: profileSchema,
     },
     onSubmit: async ({ value }) => {
-      submit(value, { method: "POST" });
+      submit({ ...value, action: "edit-profile" }, { method: "POST" });
     },
   });
 

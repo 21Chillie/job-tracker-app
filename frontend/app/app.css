@@ -36,6 +36,32 @@
   --noise: 0;
 }
 
+@layer components {
+  .status-applied {
+    @apply border-blue-800/50 bg-blue-900/30 text-blue-300;
+  }
+
+  .status-tested {
+    @apply border-purple-800/50 bg-purple-900/30 text-purple-300;
+  }
+
+  .status-interviewed {
+    @apply border-amber-800/50 bg-amber-900/30 text-amber-300;
+  }
+
+  .status-offer {
+    @apply border-emerald-800/50 bg-emerald-900/30 text-emerald-300;
+  }
+
+  .status-accepted {
+    @apply border-green-500/40 bg-green-500/20 text-green-400;
+  }
+
+  .status-rejected {
+    @apply border-red-800/50 bg-red-900/30 text-red-300;
+  }
+}
+
 button {
   cursor: pointer;
 }
