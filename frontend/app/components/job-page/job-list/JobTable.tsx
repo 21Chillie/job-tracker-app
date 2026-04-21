@@ -1,7 +1,13 @@
+import type { JobsDataResponse } from "~/types/job.type";
 import { dataJobsPlaceholder } from "./dataPlaceholder";
 import { TableRow } from "./TableRow";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 
-export function JobTable() {
+export default function JobTable({ data }: JobsDataResponse) {
+  const { jobs, meta } = data;
+
+  const { total, page, limit, maxPages, hasNextPage, hasPrevPage } = meta;
+
   return (
     <>
       <section id="job-table-section" className="p-4 max-sm:mb-4 md:p-6">
@@ -11,27 +17,22 @@ export function JobTable() {
               {/* table head */}
               <thead>
                 <tr>
-                  <th>
+                  {/*<th>
                     <label>
                       <input type="checkbox" className="checkbox" />
                     </label>
-                  </th>
+                  </th>*/}
                   <th>Position</th>
                   <th>Company</th>
                   <th>Status</th>
                   <th>Date Applied</th>
-                  <th>Recently Added</th>
                   <th>Action</th>
                 </tr>
               </thead>
 
               {/* table body */}
               <tbody>
-                {dataJobsPlaceholder.map((job, i) => {
-                  if (i > 14) {
-                    return null;
-                  }
-
+                {jobs.map((job, i) => {
                   return <TableRow key={i} {...job} />;
                 })}
               </tbody>
@@ -39,14 +40,37 @@ export function JobTable() {
           </div>
 
           {/* TODO: change this later */}
-          <div className="flex items-center justify-between px-4 py-3 md:px-6">
-            <p className="text-sm">15 of 100 results</p>
+          {dataJobsPlaceholder.length > 0 ? (
+            <div className="flex items-center justify-between px-4 py-3 md:px-6">
+              <p className="label text-sm whitespace-normal">
+                {`${jobs.length}  of ${total} results`}
+              </p>
 
-            <div className="btn-group">
-              <button className="btn btn-sm">Previous</button>
-              <button className="btn btn-sm">Next</button>
+              <div className="join">
+                <button type="button" className="join-item btn btn-sm btn-soft">
+                  <span>
+                    <ChevronLeft className="text-base-content/60 size-4" />
+                  </span>
+                </button>
+
+                <button type="button" className="join-item btn btn-sm btn-soft">
+                  <p>{`${page} / ${maxPages}`}</p>
+                </button>
+
+                <button type="button" className="join-item btn btn-sm btn-soft">
+                  <span>
+                    <ChevronRight className="text-base-content/60 size-4" />
+                  </span>
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="px-4 py-3 text-center md:px-6">
+              <p className="label text-sm whitespace-normal">
+                No data has been added yet
+              </p>
+            </div>
+          )}
         </article>
       </section>
     </>

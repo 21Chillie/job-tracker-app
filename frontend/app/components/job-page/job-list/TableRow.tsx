@@ -1,26 +1,27 @@
+import type { JobsDataType } from "~/types/job.type";
+import formatRelativeTime from "~/utils/convetTimestamp";
+
 export function TableRow({
-  position,
+  id,
+  job_title: position,
   company,
-  jobPostingUrl,
-  status,
+  job_url,
+  job_status: status,
+  applied_date: appliedDate,
   notes,
-}: {
-  position: string;
-  company: string;
-  jobPostingUrl: string;
-  status: string;
-  notes: string;
-}) {
+  created_at: createdAt,
+  updated_at: updatedAt,
+}: JobsDataType) {
   const todayDate = new Date().toISOString().split("T")[0];
 
   return (
     <>
       <tr className="hover:bg-base-content/20 transition-colors duration-200">
-        <th>
+        {/*<th>
           <label>
             <input type="checkbox" className="checkbox" />
           </label>
-        </th>
+        </th>*/}
 
         <td>
           <p className="font-medium">{position}</p>
@@ -39,11 +40,7 @@ export function TableRow({
         </td>
 
         <td>
-          <p>{todayDate}</p>
-        </td>
-
-        <td>
-          <p>{todayDate}</p>
+          <p className="capitalize">{formatRelativeTime(appliedDate)}</p>
         </td>
 
         <td>
