@@ -1,12 +1,11 @@
-import { Outlet, redirect, useNavigation } from "react-router";
-import Sidebar from "@components/sidebar/Sidebar";
-import Navbar from "@components/navbar/Navbar";
 import Dock from "@components/dock/Dock";
-import type { Route } from "./+types/dashboard-layout";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { sessionQueryOption, useSession } from "@hooks/auth/useSession.hook";
-import axios from "axios";
+import Navbar from "@components/navbar/Navbar";
+import Sidebar from "@components/sidebar/Sidebar";
 import { getQueryClient } from "@configs/query-client.config";
+import { sessionQueryOption, useSession } from "@hooks/auth/useSession.hook";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { Outlet, redirect, useNavigation } from "react-router";
+import type { Route } from "./+types/dashboard-layout";
 
 /**
  * Fix bug data keep refetching when navigate the page
@@ -64,7 +63,7 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
                 <span className="loading loading-spinner text-primary"></span>
               </div>
             ) : (
-              <div className="space-y-6">
+              <div>
                 <Outlet context={{ session }}></Outlet>
               </div>
             )}
