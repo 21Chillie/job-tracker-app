@@ -1,5 +1,5 @@
-import { LuTableOfContents, LuUser, LuHouse } from "react-icons/lu";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import { House, TableOfContents, CirclePlus, User } from "lucide-react";
+
 import { NavLink } from "react-router";
 
 const navLinks = [
@@ -10,13 +10,13 @@ const navLinks = [
         id: "job-list",
         link: "job list",
         path: "/jobs",
-        icon: <LuTableOfContents className="size-4" />,
+        icon: <TableOfContents className="size-4" />,
       },
       {
         id: "add-job",
         link: "add job",
         path: "/add-job",
-        icon: <IoIosAddCircleOutline className="size-4" />,
+        icon: <CirclePlus className="size-4" />,
       },
     ],
   },
@@ -28,7 +28,7 @@ const navLinks = [
         id: "profile",
         link: "profile",
         path: "/profile",
-        icon: <LuUser className="size-4" />,
+        icon: <User className="size-4" />,
       },
     ],
   },
@@ -47,7 +47,7 @@ export function SidebarNavLinks() {
               to={"/"}
             >
               <span>
-                <LuHouse />
+                <House className="size-4" />
               </span>
               <span className="font-medium">Home</span>
             </NavLink>
@@ -57,7 +57,7 @@ export function SidebarNavLinks() {
             const { title, links } = link;
             return (
               <li key={title} className="space-y-1">
-                <p className="text-base-content/60 font-medium text-sm capitalize">
+                <p className="text-base-content/60 text-sm font-medium capitalize">
                   {title}
                 </p>
 
