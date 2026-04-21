@@ -11,7 +11,9 @@ export default function ProfileDropdownMenu() {
   const navigate = useNavigate();
   const { data: session } = useQuery(sessionQueryOption());
 
-  if (!session) return;
+  if (!session) {
+    return null;
+  }
 
   const { name, email, image } = session.user;
 
