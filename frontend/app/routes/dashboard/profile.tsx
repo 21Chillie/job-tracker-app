@@ -1,19 +1,28 @@
-import { DangerousZone } from "@components/profile/DangerZone";
-import ProfileForm from "@components/profile/ProfileForm";
+import { DangerZoneSkeleton } from "@components/profile/skeleton/DangerZoneSkeleton";
+import { ProfileFormSkeleton } from "@components/profile/skeleton/ProfileFormSkeleton";
 import { getQueryClient } from "@configs/query-client.config";
 import { sessionQueryOption } from "@hooks/auth/useSession.hook";
 import type { profileFormDataType } from "@hooks/user/useEditProfile.hook";
 import authService from "@services/auth.service";
 import profileService from "@services/profile.service";
+import { lazy, Suspense } from "react";
 import toast from "react-hot-toast";
 import { redirect } from "react-router";
 import type { Route } from "./+types/profile";
 
+const ProfileForm = lazy(() => import("@components/profile/ProfileForm"));
+const DangerZone = lazy(() => import("@components/profile/DangerZone"));
+
 export default function Profile() {
   return (
     <>
-      <ProfileForm></ProfileForm>
-      <DangerousZone></DangerousZone>
+      <Suspense fallback={<ProfileFormSkeleton />}>
+        <ProfileForm></ProfileForm>
+      </Suspense>
+
+      <Suspense fallback={<DangerZoneSkeleton />}>
+        <DangerZone></DangerZone>
+      </Suspense>
     </>
   );
 }
@@ -22,7 +31,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   const queryClient = getQueryClient();
   const formData = await request.formData();
 
-  // This will decide which action will do:O
+  // This will decide which action will run:
   // It's either `edit-profile` and `delete-account`
   const actionIntent = formData.get("action");
 
@@ -65,9 +74,10 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 
         if (deleteSuccess.success) {
           toast.success("Account deleted successfully");
-          await queryClient.invalidateQueries(sessionQueryOption());
-          return redirect("/login");
         }
+
+        await queryClient.invalidateQueries(sessionQueryOption());
+        return redirect("/login");
       }
     }
   } catch (err) {
