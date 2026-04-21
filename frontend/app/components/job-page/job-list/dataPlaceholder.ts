@@ -1,4 +1,10 @@
-export const dataJobsPlaceholder = [
+export const dataJobsPlaceholder: {
+  position: string;
+  company: string;
+  jobPostingUrl: string;
+  status: string;
+  notes: string;
+}[] = [
   {
     position: "Frontend Developer",
     company: "TechCorp Inc.",
