@@ -37,10 +37,10 @@ const jobsModel = {
 		userId,
 		search,
 		status = "all",
-		sortBy = "created_at",
-		order = "asc",
+		sortBy = "applied_date",
+		order = "desc",
 		page = "1",
-		limit = "15",
+		limit = "14",
 	}: QueryJobType) => {
 		// pagination
 		const currentPage = Math.max(1, parseInt(page));
@@ -49,8 +49,8 @@ const jobsModel = {
 
 		// sorting
 		const allowedSortFields = ["job_title", "created_at", "applied_date"];
-		const sortField = allowedSortFields.includes(sortBy) ? sortBy : "created_at";
-		const sortDir = order.toLowerCase() === "asc" ? "ASC" : "DESC";
+		const sortField = allowedSortFields.includes(sortBy) ? sortBy : "applied_date";
+		const sortDir = order.toLowerCase() === "desc" ? "DESC" : "ASC";
 
 		// base query
 		let baseQuery = `FROM job WHERE user_id = ?`;
