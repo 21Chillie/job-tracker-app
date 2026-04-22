@@ -26,6 +26,7 @@ const authService = {
   },
 
   logout: createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
+    const queryClient = getQueryClient();
     const { data, error } = await authClient.signOut();
 
     if (error) {
@@ -34,8 +35,7 @@ const authService = {
       );
     }
 
-    getQueryClient().clear();
-
+    queryClient.clear();
     return data;
   }),
 
