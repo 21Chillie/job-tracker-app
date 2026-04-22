@@ -15,6 +15,7 @@ export async function loader({ request }: Route.LoaderArgs) {
     return redirect("/login");
   }
 
+  // Prefetch user jobs data with cookie, to prevent failed to check user session
   await queryClient.prefetchQuery(jobsDataOption(cookie, undefined));
 
   return {
@@ -36,28 +37,10 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
 clientLoader.hydrate = true as const;
 
 export default function JobList({ loaderData }: Route.ComponentProps) {
-  const { isFetching, data } = useQuery(jobsDataOption());
-
-  if (!data) {
-    return null;
-  }
-
   return (
     <>
       <HydrationBoundary state={loaderData.dehydratedState}>
-        <Suspense
-          fallback={
-            <div className="relative">
-              <div className="absolute inset-y-100 flex w-full items-center justify-center">
-                <p className="skeleton skeleton-text w-fit font-medium">
-                  Getting job data from server, please be patient...
-                </p>
-              </div>
-            </div>
-          }
-        >
-          <JobTable {...data} />
-        </Suspense>
+        <JobTable />
       </HydrationBoundary>
     </>
   );
