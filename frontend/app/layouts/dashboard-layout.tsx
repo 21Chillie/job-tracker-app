@@ -17,12 +17,12 @@ export async function loader({ request }: Route.LoaderArgs) {
   const cookie = request.headers.get("cookie") || "";
   const queryClient = getQueryClient();
 
-  if (!cookie) {
+  const session = await queryClient.fetchQuery(sessionQueryOption(cookie));
+
+  if (!cookie || !session) {
     getQueryClient().clear();
     return redirect("/login");
   }
-
-  await queryClient.prefetchQuery(sessionQueryOption(cookie));
 
   return {
     dehydratedState: dehydrate(queryClient),
