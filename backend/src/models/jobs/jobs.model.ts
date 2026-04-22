@@ -40,7 +40,7 @@ const jobsModel = {
 		sortBy = "applied_date",
 		order = "desc",
 		page = "1",
-		limit = "14",
+		limit = "13",
 	}: QueryJobType) => {
 		// pagination
 		const currentPage = Math.max(1, parseInt(page));
