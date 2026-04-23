@@ -1,13 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import authService from "@services/auth.service";
 import toast from "react-hot-toast";
 
 type AuthState = {
+  userId: string;
   isError: boolean;
   errorMessage: string;
 };
 
 const initialState: AuthState = {
+  userId: "",
   isError: false,
   errorMessage: "",
 };
@@ -17,8 +19,11 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     clearAuthState: (state) => {
-      state.isError = false;
-      state.errorMessage = "";
+      return initialState;
+    },
+
+    setUserId: (state, action: PayloadAction<string>) => {
+      state.userId = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -52,6 +57,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearAuthState } = authSlice.actions;
+export const { clearAuthState, setUserId } = authSlice.actions;
 
 export default authSlice.reducer;
