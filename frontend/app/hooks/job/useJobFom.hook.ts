@@ -1,4 +1,8 @@
+import { getQueryClient } from "@configs/query-client.config";
+import jobService from "@services/job.service";
 import { useForm } from "@tanstack/react-form";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useSubmit } from "react-router";
 import z from "zod";
 
@@ -42,7 +46,7 @@ export function useJobForm() {
     notes: "",
   };
 
-  const { handleSubmit, Field, Subscribe } = useForm({
+  const { handleSubmit, Field, Subscribe, reset } = useForm({
     defaultValues: formDefaultValues,
     validators: {
       onSubmit: formJobSchema,
@@ -52,5 +56,67 @@ export function useJobForm() {
     },
   });
 
-  return { handleSubmit, Field, Subscribe };
+  return { handleSubmit, Field, Subscribe, reset };
+}
+
+export function useEditJobForm({
+  id,
+  userId,
+  position,
+  company,
+  jobUrl,
+  status,
+  appliedDate,
+  notes,
+}: FormJobDataType & { id: string; userId: string }) {
+  const submit = useSubmit();
+
+  const formDefaultValues: FormJobDataType & { id: string; userId: string } = {
+    id,
+    userId,
+    position,
+    company,
+    jobUrl,
+    status,
+    appliedDate,
+    notes,
+  };
+
+  const { handleSubmit, Field, Subscribe, reset } = useForm({
+    defaultValues: formDefaultValues,
+    validators: {
+      onSubmit: formJobSchema.extend({
+        id: z.string().min(1, { message: "Job id is required to edit job" }),
+        userId: z
+          .string()
+          .min(1, { message: "user id is required to edit job" }),
+      }),
+    },
+    onSubmit: async ({ value }) => {
+      submit(value, { method: "POST" });
+    },
+  });
+
+  return { handleSubmit, Field, Subscribe, reset };
+}
+
+export function useJobDelete({
+  userId,
+  jobId,
+}: {
+  userId: string;
+  jobId: string;
+}) {
+  const queryClient = getQueryClient();
+
+  return useMutation({
+    mutationFn: () => jobService.deleteJob({ userId, jobId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      toast.success("Job deleted successfully");
+    },
+    onError: (err) => {
+      toast.error(`Delete failed: ${err.message}`);
+    },
+  });
 }
