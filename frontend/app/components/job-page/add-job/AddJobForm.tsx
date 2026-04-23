@@ -1,6 +1,6 @@
-import { useJobForm } from "@hooks/job/useJobFom.hook";
 import { ChevronDown, Link2 } from "lucide-react";
 import { useFetcher } from "react-router";
+import { useJobForm } from "~/hooks/job/useJobForm.hook";
 import { statusList } from "./statusList";
 
 export default function AddJobForm() {
