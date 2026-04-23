@@ -1,8 +1,8 @@
 import { statusList } from "@components/job-page/add-job/statusList";
-import { useEditJobForm } from "@hooks/job/useJobFom.hook";
 import { ChevronDown, Link2 } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useFetcher } from "react-router";
+import { useEditJobForm } from "@hooks/job/useJobForm.hook";
 import type { JobsDataType } from "~/types/job.type";
 
 export function ModalEditButton({ buttonModalId }: { buttonModalId: string }) {
@@ -68,7 +68,14 @@ export function ModalEditBody({
 
         <fetcher.Form
           className="grid grid-cols-2 gap-3 max-md:max-h-96 max-md:overflow-y-auto max-md:pr-4"
-          onSubmit={handleSubmit}
+          onSubmit={() => {
+            handleSubmit();
+
+            const modal = document.getElementById(modalId) as HTMLDialogElement;
+            if (modal) {
+              modal.close();
+            }
+          }}
         >
           <Field name="position">
             {({ state, name, handleBlur, handleChange }) => {
