@@ -42,4 +42,19 @@ export const jobsController = {
 
 		return c.json({ success: true, data: { job: data } }, 200);
 	},
+
+	updateJobData: async (c: Context<{ Variables: Variables }>) => {
+		const user = c.get("user");
+		const formData = await c.req.json<JobApplicationFormDataType & { id: string }>();
+
+		if (user.id !== formData.userId) {
+			throw new HTTPException(400, {
+				message: "user id from client does not match with user id in server",
+			});
+		}
+
+		const data = await jobsModel.updateJob(formData);
+
+		return c.json({ success: true, data: { job: data } }, 200);
+	},
 };
