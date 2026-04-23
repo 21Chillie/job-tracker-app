@@ -1,7 +1,7 @@
 import { ModalBody, ModalButton } from "~/components/reuse-ui/Modal";
-import { useJobDelete } from "~/hooks/job/useJobFom.hook";
+import { useJobDelete } from "@hooks/job/useJobForm.hook";
 import type { JobsDataType } from "~/types/job.type";
-import formatRelativeTime from "~/utils/convetTimestamp";
+import formatRelativeTime from "@utils/convetTimestamp";
 import { ModalEditBody, ModalEditButton } from "./ModalEditForm";
 
 export function TableRow({ job }: { job: JobsDataType }) {
