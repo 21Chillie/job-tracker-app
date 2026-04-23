@@ -51,9 +51,7 @@ export default function SortFilter() {
                     (document.activeElement as HTMLElement).blur();
                   }}
                 >
-                  {sort === "created_at"
-                    ? "Recently Added"
-                    : sort.replace("_", " ")}
+                  {sort.replace("_", " ")}
                 </button>
               </li>
             );
