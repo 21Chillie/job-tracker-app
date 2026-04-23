@@ -60,7 +60,7 @@ export default function JobTable() {
                 {/* table body */}
                 <tbody>
                   {jobs.map((job, i) => {
-                    return <TableRow key={i} {...job} />;
+                    return <TableRow key={i} job={job} />;
                   })}
                 </tbody>
               </table>
