@@ -1,10 +1,11 @@
-import { Link, useNavigate } from "react-router";
+import avatarProfileImg from "@components/profile/avatar-profile";
 import { ModalBody, ModalButton } from "@components/reuse-ui/Modal";
 import { useAppDispatch } from "@configs/store.config";
+import { clearAuthState } from "@features/auth/authSlice";
+import { sessionQueryOption } from "@hooks/auth/useSession.hook";
 import authService from "@services/auth.service";
 import { useQuery } from "@tanstack/react-query";
-import { sessionQueryOption } from "@hooks/auth/useSession.hook";
-import avatarProfileImg from "@components/profile/avatar-profile";
+import { Link, useNavigate } from "react-router";
 
 export default function ProfileDropdownMenu() {
   const dispatch = useAppDispatch();
@@ -46,6 +47,7 @@ export default function ProfileDropdownMenu() {
               </Link>
 
               <ModalButton
+                buttonModalId="modalConfirmSignout"
                 buttonName="Log Out"
                 buttonGhost={true}
                 buttonBlock={true}
@@ -58,12 +60,15 @@ export default function ProfileDropdownMenu() {
       </div>
 
       <ModalBody
-        title="Confirm Sign Out"
+        modalId="modalConfirmSignout"
+        title="Confirm Log out"
+        actionName="Log out"
         message="Are you sure you want to sign out? this will end your current session. You will need to re-authenticate to access your account data"
         action={{
           danger: true,
           method: () => {
             dispatch(authService.logout());
+            dispatch(clearAuthState());
             navigate("/login");
           },
         }}
