@@ -4,7 +4,7 @@ import type { QueryJobsParams } from "~/types/job.type";
 const initialState: QueryJobsParams = {
   search: "",
   status: "all",
-  sortBy: "applied_date",
+  sortBy: "created_at",
   order: "desc",
   page: 1,
   limit: 13,
