@@ -4,7 +4,7 @@ import { useFetcher } from "react-router";
 import { statusList } from "./statusList";
 
 export default function AddJobForm() {
-  const { handleSubmit, Field, Subscribe } = useJobForm();
+  const { handleSubmit, Field, Subscribe, reset } = useJobForm();
   const fetcher = useFetcher();
 
   return (
@@ -157,7 +157,7 @@ export default function AddJobForm() {
                       >
                         <span className="capitalize">{state.value}</span>
                         <span>
-                          <ChevronDown className="size-4 text-base-content/50" />
+                          <ChevronDown className="text-base-content/50 size-4" />
                         </span>
                       </button>
 
@@ -280,7 +280,11 @@ export default function AddJobForm() {
             </Field>
 
             <div className="col-span-2 mt-6 flex flex-wrap justify-end gap-4">
-              <button type="reset" className="btn btn-ghost">
+              <button
+                type="button"
+                onClick={() => reset()}
+                className="btn btn-ghost"
+              >
                 Clear
               </button>
 
