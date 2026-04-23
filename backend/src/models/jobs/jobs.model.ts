@@ -1,6 +1,7 @@
 import logger from "@config/logger";
 import db from "@db/db-client";
 import { randomUUIDv7 } from "bun";
+import { HTTPException } from "hono/http-exception";
 import { QueryJobType } from "~/types/global.types";
 import { JobApplicationFormDataType, JobDataType } from "~/types/jobs.types";
 
@@ -29,7 +30,8 @@ const jobsModel = {
 
 			return result;
 		} catch (err) {
-			throw new Error((err as Error).message);
+			// logger.error(`Database Error: ${(err as Error).message}`);
+			throw new Error(`${(err as Error).message}. [DATABASE_ERROR]`);
 		}
 	},
 
@@ -93,8 +95,8 @@ const jobsModel = {
 		} catch (err) {
 			const errorMessage = err instanceof Error ? err.message : "Something went wrong when trying to get user job data";
 
-			logger.error(`Database error: ${errorMessage}`);
-			throw new Error((err as Error).message);
+			// logger.error(`Database error: ${errorMessage}`);
+			throw new Error(`${errorMessage}. [DATABASE_ERROR]`);
 		}
 	},
 
@@ -102,7 +104,7 @@ const jobsModel = {
 		const currentJob = db.prepare("SELECT * FROM job WHERE id = ? AND user_id = ?").get(jobId, userId) as JobDataType;
 
 		if (!currentJob) {
-			throw new Error("Job not found or you don't have permission to delete this job");
+			throw new HTTPException(404, { message: "Job not found or you don't have permission to delete this job data" });
 		}
 
 		try {
@@ -114,7 +116,42 @@ const jobsModel = {
 
 			return deleteJob;
 		} catch (err) {
-			throw new Error((err as Error).message);
+			// logger.error(`Database error: ${(err as Error).message}`);
+			throw new Error(`${(err as Error).message}. [DATABASE_ERROR]`);
+		}
+	},
+
+	updateJob: async (formData: JobApplicationFormDataType & { id: string }) => {
+		const currentJob = db
+			.prepare("SELECT * FROM job WHERE id = ? AND user_id = ?")
+			.get(formData.id, formData.userId) as JobDataType;
+
+		if (!currentJob) {
+			throw new HTTPException(404, { message: "Job not found or you don't have permission to update this job data" });
+		}
+
+		try {
+			const updateJob = db
+				.query(
+					"UPDATE job SET job_title = $job_title, company = $company, job_url = $job_url, job_status = $job_status, applied_date = $applied_date, notes = $notes, updated_at = CURRENT_TIMESTAMP WHERE id = $id AND user_id = $user_id RETURNING *;",
+				)
+				.get({
+					job_title: formData.position,
+					company: formData.company,
+					job_url: formData.jobUrl || null,
+					job_status: formData.status,
+					applied_date: formData.appliedDate || null,
+					notes: formData.notes || null,
+					id: formData.id,
+					user_id: formData.userId,
+				}) as JobDataType;
+
+			logger.info(`Job updated successfully. [${formData.id}, ${formData.userId.slice(0, 10)}...]`);
+
+			return updateJob;
+		} catch (err) {
+			// logger.error(`Database error: ${(err as Error).message}`);
+			throw new Error(`${(err as Error).message}. [DATABASE_ERROR]`);
 		}
 	},
 };
