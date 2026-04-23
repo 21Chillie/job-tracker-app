@@ -1,11 +1,12 @@
 import { getQueryClient } from "@configs/query-client.config";
 import { jobsDataOption } from "@hooks/job/useJobData.hook";
-import { dehydrate, HydrationBoundary, useQuery } from "@tanstack/react-query";
+import type { FormJobDataType } from "@hooks/job/useJobForm.hook";
+import jobService from "@services/job.service";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { lazy } from "react";
+import toast from "react-hot-toast";
 import { redirect } from "react-router";
 import type { Route } from "./+types/job-list";
-import { lazy, Suspense } from "react";
-import type { FormJobDataType } from "~/hooks/job/useJobFom.hook";
-import toast from "react-hot-toast";
 
 const JobTable = lazy(() => import("@components/job-page/job-list/JobTable"));
 
@@ -49,9 +50,33 @@ export default function JobList({ loaderData }: Route.ComponentProps) {
 }
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
+  const queryClient = getQueryClient();
   const formData = await request.formData();
-  const payload = Object.fromEntries(formData) as unknown as FormJobDataType;
+  const payload = Object.fromEntries(formData) as unknown as FormJobDataType & {
+    id: string;
+    userId: string;
+  };
 
-  console.log(payload);
-  toast.success("Job updated successfully");
+  if (!payload.id || !payload.userId) {
+    return toast.error("User ID or Job ID not found for updating job data");
+  }
+
+  try {
+    const updateJob = await jobService.updateJob(payload);
+
+    if (updateJob.success) {
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      toast.success("Job update successfully");
+    }
+
+    return { data: updateJob };
+  } catch (err) {
+    const errorMessage =
+      err instanceof Error
+        ? err.message
+        : "Something went wrong while trying to update job data";
+
+    toast.error(errorMessage);
+    return { error: errorMessage };
+  }
 }
