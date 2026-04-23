@@ -1,8 +1,8 @@
-import db from "@db/db-client";
 import logger from "@config/logger";
-import { JobApplicationFormDataType } from "~/types/jobs.types";
+import db from "@db/db-client";
 import { randomUUIDv7 } from "bun";
 import { QueryJobType } from "~/types/global.types";
+import { JobApplicationFormDataType, JobDataType } from "~/types/jobs.types";
 
 const jobsModel = {
 	create: async (data: JobApplicationFormDataType) => {
@@ -23,7 +23,7 @@ const jobsModel = {
 				job_status: status,
 				applied_date: appliedDate || null,
 				notes: notes || null,
-			});
+			}) as JobDataType;
 
 			logger.info(`Job created successfully. [${id}, ${userId.slice(0, 10)}...]`);
 
@@ -33,7 +33,7 @@ const jobsModel = {
 		}
 	},
 
-	getUserJob: async ({
+	getUserJobs: async ({
 		userId,
 		search,
 		status = "all",
@@ -77,7 +77,7 @@ const jobsModel = {
 
 			const jobs = db.prepare(jobsDataQuery).all(...params, pageSize, offset);
 
-			logger.info("Getting job data successfully");
+			logger.info(`Getting job data successfully. [${userId.slice(0, 10)}..., total: ${total}]`);
 
 			return {
 				jobs,
@@ -94,6 +94,26 @@ const jobsModel = {
 			const errorMessage = err instanceof Error ? err.message : "Something went wrong when trying to get user job data";
 
 			logger.error(`Database error: ${errorMessage}`);
+			throw new Error((err as Error).message);
+		}
+	},
+
+	deleteJob: async ({ userId, jobId }: { userId: string; jobId: string }) => {
+		const currentJob = db.prepare("SELECT * FROM job WHERE id = ? AND user_id = ?").get(jobId, userId) as JobDataType;
+
+		if (!currentJob) {
+			throw new Error("Job not found or you don't have permission to delete this job");
+		}
+
+		try {
+			const deleteJob = db
+				.query("DELETE FROM job WHERE id = $id AND user_id = $user_id RETURNING *;")
+				.get({ id: jobId, user_id: userId }) as JobDataType;
+
+			logger.info(`Job deleted successfully. [${jobId}, ${userId.slice(0, 10)}...]`);
+
+			return deleteJob;
+		} catch (err) {
 			throw new Error((err as Error).message);
 		}
 	},
