@@ -4,6 +4,8 @@ import { dehydrate, HydrationBoundary, useQuery } from "@tanstack/react-query";
 import { redirect } from "react-router";
 import type { Route } from "./+types/job-list";
 import { lazy, Suspense } from "react";
+import type { FormJobDataType } from "~/hooks/job/useJobFom.hook";
+import toast from "react-hot-toast";
 
 const JobTable = lazy(() => import("@components/job-page/job-list/JobTable"));
 
@@ -44,4 +46,12 @@ export default function JobList({ loaderData }: Route.ComponentProps) {
       </HydrationBoundary>
     </>
   );
+}
+
+export async function clientAction({ request }: Route.ClientActionArgs) {
+  const formData = await request.formData();
+  const payload = Object.fromEntries(formData) as unknown as FormJobDataType;
+
+  console.log(payload);
+  toast.success("Job updated successfully");
 }
