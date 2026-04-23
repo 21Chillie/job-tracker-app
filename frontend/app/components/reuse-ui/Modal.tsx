@@ -68,7 +68,16 @@ export function ModalBody({
             <button
               type="button"
               className={`btn ${action.danger ? "btn-error" : "btn-primary"}`}
-              onClick={action.method}
+              onClick={() => {
+                action.method();
+
+                const modal = document.getElementById(
+                  modalId,
+                ) as HTMLDialogElement;
+                if (modal) {
+                  modal.close();
+                }
+              }}
             >
               {actionName || "Action"}
             </button>
