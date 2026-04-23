@@ -42,6 +42,23 @@ const jobService = {
 
     return response.data;
   },
+
+  deleteJob: async ({ userId, jobId }: { userId: string; jobId: string }) => {
+    if (!userId || !jobId)
+      throw new Response("User ID or Job ID not found", {
+        status: 400,
+        statusText: "Bad Request",
+      });
+
+    const response = await api.delete<JobDataResponse>("/api/jobs/delete", {
+      data: {
+        userId,
+        jobId,
+      },
+    });
+
+    return response.data;
+  },
 };
 
 export default jobService;
