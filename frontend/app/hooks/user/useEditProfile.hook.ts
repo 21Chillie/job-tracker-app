@@ -1,5 +1,5 @@
 import { useForm } from "@tanstack/react-form";
-import { useSubmit } from "react-router";
+import { useFetcher } from "react-router";
 import z from "zod";
 
 export const profileSchema = z
@@ -57,7 +57,7 @@ export function useEditProfile({
   email: string;
   avatar: string;
 }) {
-  const submit = useSubmit();
+  const fetcher = useFetcher();
 
   const formDefaultValues: profileFormDataType = {
     name,
@@ -73,7 +73,7 @@ export function useEditProfile({
       onSubmit: profileSchema,
     },
     onSubmit: async ({ value }) => {
-      submit({ ...value, action: "edit-profile" }, { method: "POST" });
+      fetcher.submit({ ...value, action: "edit-profile" }, { method: "POST" });
     },
   });
 

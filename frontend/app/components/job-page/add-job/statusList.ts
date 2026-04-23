@@ -1,4 +1,4 @@
-import type { FormJobDataType } from "~/hooks/job/useJobFom.hook";
+import type { FormJobDataType } from "~/hooks/job/useJobForm.hook";
 
 export const statusList: FormJobDataType["status"][] = [
   "applied",

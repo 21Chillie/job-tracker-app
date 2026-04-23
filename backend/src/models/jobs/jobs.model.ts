@@ -1,8 +1,9 @@
-import db from "@db/db-client";
 import logger from "@config/logger";
-import { JobApplicationFormDataType } from "~/types/jobs.types";
+import db from "@db/db-client";
 import { randomUUIDv7 } from "bun";
+import { HTTPException } from "hono/http-exception";
 import { QueryJobType } from "~/types/global.types";
+import { JobApplicationFormDataType, JobDataType } from "~/types/jobs.types";
 
 const jobsModel = {
 	create: async (data: JobApplicationFormDataType) => {
@@ -23,24 +24,25 @@ const jobsModel = {
 				job_status: status,
 				applied_date: appliedDate || null,
 				notes: notes || null,
-			});
+			}) as JobDataType;
 
 			logger.info(`Job created successfully. [${id}, ${userId.slice(0, 10)}...]`);
 
 			return result;
 		} catch (err) {
-			throw new Error((err as Error).message);
+			// logger.error(`Database Error: ${(err as Error).message}`);
+			throw new Error(`${(err as Error).message}. [DATABASE_ERROR]`);
 		}
 	},
 
-	getUserJob: async ({
+	getUserJobs: async ({
 		userId,
 		search,
 		status = "all",
 		sortBy = "applied_date",
 		order = "desc",
 		page = "1",
-		limit = "14",
+		limit = "13",
 	}: QueryJobType) => {
 		// pagination
 		const currentPage = Math.max(1, parseInt(page));
@@ -77,7 +79,7 @@ const jobsModel = {
 
 			const jobs = db.prepare(jobsDataQuery).all(...params, pageSize, offset);
 
-			logger.info("Getting job data successfully");
+			logger.info(`Getting job data successfully. [${userId.slice(0, 10)}..., total: ${total}]`);
 
 			return {
 				jobs,
@@ -93,8 +95,63 @@ const jobsModel = {
 		} catch (err) {
 			const errorMessage = err instanceof Error ? err.message : "Something went wrong when trying to get user job data";
 
-			logger.error(`Database error: ${errorMessage}`);
-			throw new Error((err as Error).message);
+			// logger.error(`Database error: ${errorMessage}`);
+			throw new Error(`${errorMessage}. [DATABASE_ERROR]`);
+		}
+	},
+
+	deleteJob: async ({ userId, jobId }: { userId: string; jobId: string }) => {
+		const currentJob = db.prepare("SELECT * FROM job WHERE id = ? AND user_id = ?").get(jobId, userId) as JobDataType;
+
+		if (!currentJob) {
+			throw new HTTPException(404, { message: "Job not found or you don't have permission to delete this job data" });
+		}
+
+		try {
+			const deleteJob = db
+				.query("DELETE FROM job WHERE id = $id AND user_id = $user_id RETURNING *;")
+				.get({ id: jobId, user_id: userId }) as JobDataType;
+
+			logger.info(`Job deleted successfully. [${jobId}, ${userId.slice(0, 10)}...]`);
+
+			return deleteJob;
+		} catch (err) {
+			// logger.error(`Database error: ${(err as Error).message}`);
+			throw new Error(`${(err as Error).message}. [DATABASE_ERROR]`);
+		}
+	},
+
+	updateJob: async (formData: JobApplicationFormDataType & { id: string }) => {
+		const currentJob = db
+			.prepare("SELECT * FROM job WHERE id = ? AND user_id = ?")
+			.get(formData.id, formData.userId) as JobDataType;
+
+		if (!currentJob) {
+			throw new HTTPException(404, { message: "Job not found or you don't have permission to update this job data" });
+		}
+
+		try {
+			const updateJob = db
+				.query(
+					"UPDATE job SET job_title = $job_title, company = $company, job_url = $job_url, job_status = $job_status, applied_date = $applied_date, notes = $notes, updated_at = CURRENT_TIMESTAMP WHERE id = $id AND user_id = $user_id RETURNING *;",
+				)
+				.get({
+					job_title: formData.position,
+					company: formData.company,
+					job_url: formData.jobUrl || null,
+					job_status: formData.status,
+					applied_date: formData.appliedDate || null,
+					notes: formData.notes || null,
+					id: formData.id,
+					user_id: formData.userId,
+				}) as JobDataType;
+
+			logger.info(`Job updated successfully. [${formData.id}, ${formData.userId.slice(0, 10)}...]`);
+
+			return updateJob;
+		} catch (err) {
+			// logger.error(`Database error: ${(err as Error).message}`);
+			throw new Error(`${(err as Error).message}. [DATABASE_ERROR]`);
 		}
 	},
 };

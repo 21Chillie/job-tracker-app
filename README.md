@@ -19,14 +19,31 @@
   - [x] implement redux toolkit in authentication flow for centralize auth action and state (apply what I learn about redux toolkit) ✅ 2026-04-16
   - [x] centralize all authentication function/login for improving maintainability and code consistency ✅ 2026-04-16
   - [x] fix some layouts and styles in authentication and dashboard page (UI only) ✅ 2026-04-16
-- [ ] home route
-- [ ] job list route⏫
-- [ ] add new jobs route⏫
+- [ ] home route⏫
+- [x] job list route ✅ 2026-04-23
+  - [x] design the table component ✅ 2026-04-22
+  - [x] design search, filter, and sort ✅ 2026-04-22
+  - [x] make route in server to get user jobs data ✅ 2026-04-22
+  - [x] make job model function to get user jobs data from database with search, filter, sort, and pagination ✅ 2026-04-22
+  - [x] test the route ✅ 2026-04-22
+  - [x] implement service for client side to get user jobs data ✅ 2026-04-22
+  - [x] implement react query hook for managing user jobs data state ✅ 2026-04-22
+  - [x] create redux toolkit slice for managing jobs filter query paramaters ✅ 2026-04-22
+  - [x] implement jobs filter slice to the table and button in job list route ✅ 2026-04-22
+  - [x] test all the function ✅ 2026-04-22
+  - [x] make server route to handle update and delete the user job data ✅ 2026-04-23
+  - [x] create job model function to handle delete and update user job data in database ✅ 2026-04-23
+  - [x] implement update and delete user job data features in client side ✅ 2026-04-23
+  - [x] make modal for edit form data ✅ 2026-04-23
+  - [x] add modal for confirm delete job data ✅ 2026-04-23
+  - [x] test the features ✅ 2026-04-23
+- [x] add new jobs route ✅ 2026-04-22
   - [x] create UI form component ✅ 2026-04-16
   - [x] add logic to handle form data (client) ✅ 2026-04-16
   - [x] add backend POST route to handle form data and insert that data into database ✅ 2026-04-16
-  - [ ] refactor client code to use useMutation from tanstack query
-  - [ ] postpone this, need to working on job list route
+  - [x] refactor client code to use useMutation from tanstack query ✅ 2026-04-22
+  - [x] postpone this, need to working on job list route ✅ 2026-04-22
+  - [x] fix bug after updating the job list table not updated ✅ 2026-04-22
 - [x] profile route ✅ 2026-04-18
   - [x] create ui form component ✅ 2026-04-18
   - [x] add logic to handle profile form data ✅ 2026-04-18

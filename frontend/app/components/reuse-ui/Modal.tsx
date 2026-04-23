@@ -1,12 +1,14 @@
 import { createPortal } from "react-dom";
 
 export function ModalButton({
+  buttonModalId,
   buttonGhost,
   buttonSmall,
   buttonBlock,
   buttonName,
   textLeft,
 }: {
+  buttonModalId: string;
   buttonGhost: boolean;
   buttonSmall: boolean;
   buttonBlock: boolean;
@@ -15,7 +17,7 @@ export function ModalButton({
 }) {
   const handleOpen = () => {
     const modalSelect = document.getElementById(
-      "my_modal",
+      buttonModalId,
     ) as HTMLDialogElement | null;
 
     if (modalSelect) {
@@ -37,12 +39,16 @@ export function ModalButton({
 }
 
 export function ModalBody({
+  modalId,
   title,
   message,
+  actionName,
   action,
 }: {
+  modalId: string;
   title: string;
   message: string;
+  actionName: string;
   action: {
     danger: boolean;
     method: () => void;
@@ -51,7 +57,7 @@ export function ModalBody({
   if (typeof document === "undefined") return null;
 
   return createPortal(
-    <dialog id={"my_modal"} className="modal">
+    <dialog id={modalId} className="modal">
       <div className="modal-box">
         <h3 className="text-lg font-bold">{title || "Modal Title"}</h3>
         <p className="py-4">
@@ -62,9 +68,18 @@ export function ModalBody({
             <button
               type="button"
               className={`btn ${action.danger ? "btn-error" : "btn-primary"}`}
-              onClick={action.method}
+              onClick={() => {
+                action.method();
+
+                const modal = document.getElementById(
+                  modalId,
+                ) as HTMLDialogElement;
+                if (modal) {
+                  modal.close();
+                }
+              }}
             >
-              Signout
+              {actionName || "Action"}
             </button>
           ) : null}
 

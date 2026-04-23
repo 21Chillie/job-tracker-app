@@ -1,12 +1,15 @@
 import Dock from "@components/dock/Dock";
 import Navbar from "@components/navbar/Navbar";
+import { LoadingSpinner } from "@components/reuse-ui/LoadingSpinner";
 import Sidebar from "@components/sidebar/Sidebar";
 import { getQueryClient } from "@configs/query-client.config";
-import { sessionQueryOption, useSession } from "@hooks/auth/useSession.hook";
+import { useAppDispatch } from "@configs/store.config";
+import { sessionQueryOption } from "@hooks/auth/useSession.hook";
 import { dehydrate, HydrationBoundary, useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { Outlet, redirect, useNavigation } from "react-router";
+import { setUserId } from "~/features/auth/authSlice";
 import type { Route } from "./+types/dashboard-layout";
-import { LoadingSpinner } from "~/components/reuse-ui/LoadingSpinner";
 
 /**
  * Fix bug data keep refetching when navigate the page
@@ -17,12 +20,12 @@ export async function loader({ request }: Route.LoaderArgs) {
   const cookie = request.headers.get("cookie") || "";
   const queryClient = getQueryClient();
 
-  if (!cookie) {
+  const session = await queryClient.fetchQuery(sessionQueryOption(cookie));
+
+  if (!cookie || !session) {
     getQueryClient().clear();
     return redirect("/login");
   }
-
-  await queryClient.prefetchQuery(sessionQueryOption(cookie));
 
   return {
     dehydratedState: dehydrate(queryClient),
@@ -46,10 +49,12 @@ export default function DashboardLayout({ loaderData }: Route.ComponentProps) {
   const navigation = useNavigation();
   const isNavigating = Boolean(navigation.location);
   const { dehydratedState } = loaderData;
-
+  const dispatch = useAppDispatch();
   const { data: session } = useQuery(sessionQueryOption());
 
-  if (!session) redirect("/login");
+  useEffect(() => {
+    dispatch(setUserId(session?.user.id || ""));
+  }, []);
 
   return (
     <HydrationBoundary state={dehydratedState}>

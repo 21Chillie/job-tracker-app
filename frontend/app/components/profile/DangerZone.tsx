@@ -40,7 +40,7 @@ export default function DangerZone() {
                   type={viewPassword ? "text" : "password"}
                   id="password"
                   name="password"
-                  placeholder="Type your new password here"
+                  placeholder="Type your password here"
                 />
 
                 <button

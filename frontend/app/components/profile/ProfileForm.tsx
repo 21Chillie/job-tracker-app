@@ -1,5 +1,6 @@
 import { ModalBody, ModalButton } from "@components/reuse-ui/Modal";
 import { useAppDispatch } from "@configs/store.config";
+import { clearAuthState } from "@features/auth/authSlice";
 import { sessionQueryOption } from "@hooks/auth/useSession.hook";
 import { useEditProfile } from "@hooks/user/useEditProfile.hook";
 import authService from "@services/auth.service";
@@ -289,6 +290,7 @@ export default function ProfileForm() {
 
             <div className="col-span-2 mt-6 flex flex-wrap justify-end gap-4">
               <ModalButton
+                buttonModalId="modalLogout"
                 buttonName="Log Out"
                 buttonGhost={true}
                 buttonBlock={false}
@@ -320,12 +322,15 @@ export default function ProfileForm() {
       </section>
 
       <ModalBody
-        title="Confirm Sign Out"
+        modalId="modalLogout"
+        actionName="Log out"
+        title="Confirm Logout"
         message="Are you sure you want to sign out? this will end your current session. You will need to re-authenticate to access your account data"
         action={{
           danger: true,
           method: () => {
             dispatch(authService.logout());
+            dispatch(clearAuthState());
             navigate("/login");
           },
         }}

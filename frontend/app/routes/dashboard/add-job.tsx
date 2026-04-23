@@ -1,8 +1,7 @@
 import { AddJobFormSkeleton } from "@components/job-page/add-job/AddJobFormSkeleton";
 import { getQueryClient } from "@configs/query-client.config";
 import { sessionQueryOption } from "@hooks/auth/useSession.hook";
-import { jobsDataOption } from "@hooks/job/useJobData.hook";
-import type { FormJobDataType } from "@hooks/job/useJobFom.hook";
+import type { FormJobDataType } from "@hooks/job/useJobForm.hook";
 import jobService from "@services/job.service";
 import { Suspense, lazy } from "react";
 import toast from "react-hot-toast";
@@ -42,7 +41,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   if (result.success) {
     toast.success("Job added successfully");
 
-    queryClient.invalidateQueries(jobsDataOption());
+    await queryClient.invalidateQueries({ queryKey: ["jobs"] });
   }
 
   return { data: payload };

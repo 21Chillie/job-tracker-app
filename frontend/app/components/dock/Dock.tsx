@@ -2,21 +2,21 @@ import { CirclePlus, House, TableOfContents, User } from "lucide-react";
 import { NavLink } from "react-router";
 
 const dockNavLink = [
-  { id: "home", link: "home", path: "/", icon: <House /> },
+  { id: "home", link: "home", path: "/", icon: <House className="size-4 text-base-content"/> },
   {
     id: "job-list",
     link: "job list",
     path: "/jobs",
-    icon: <TableOfContents />,
+    icon: <TableOfContents className="size-4 text-base-content"/>,
   },
   {
     id: "add-job",
     link: "add job",
     path: "/add-job",
-    icon: <CirclePlus />,
+    icon: <CirclePlus className="size-4 text-base-content"/>,
   },
 
-  { id: "profile", link: "profile", path: "/profile", icon: <User /> },
+  { id: "profile", link: "profile", path: "/profile", icon: <User className="size-4 text-base-content"/> },
 ];
 
 export default function Dock() {

@@ -55,7 +55,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
           });
         }
 
-        await queryClient.invalidateQueries(sessionQueryOption());
+        await queryClient.invalidateQueries({ queryKey: ["user"] });
 
         toast.success("Profile updated successfully");
         return redirect("/profile");
@@ -76,7 +76,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
           toast.success("Account deleted successfully");
         }
 
-        await queryClient.invalidateQueries(sessionQueryOption());
+        queryClient.clear();
         return redirect("/login");
       }
     }
