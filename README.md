@@ -20,20 +20,24 @@
   - [x] centralize all authentication function/login for improving maintainability and code consistency ✅ 2026-04-16
   - [x] fix some layouts and styles in authentication and dashboard page (UI only) ✅ 2026-04-16
 - [ ] home route⏫
-- [ ] job list route⏫
-	- [x] design the table component ✅ 2026-04-22
-	- [x] design search, filter, and sort ✅ 2026-04-22
-	- [x] make route in server to get user jobs data ✅ 2026-04-22
-	- [x] make job model function to get user jobs data from database with search, filter, sort, and pagination ✅ 2026-04-22
-	- [x] test the route ✅ 2026-04-22
-	- [x] implement service for client side to get user jobs data ✅ 2026-04-22
-	- [x] implement react query hook for managing user jobs data state ✅ 2026-04-22
-	- [x] create redux toolkit slice for managing jobs filter query paramaters ✅ 2026-04-22
-	- [x] implement jobs filter slice to the table and button in job list route ✅ 2026-04-22
-	- [x] test all the function ✅ 2026-04-22
-	- [ ] make server route to handle update and delete the user job data
-	- [ ] create job model function to handle delete and update user job data in database
-- [x] add new jobs route  ✅ 2026-04-22
+- [x] job list route ✅ 2026-04-23
+  - [x] design the table component ✅ 2026-04-22
+  - [x] design search, filter, and sort ✅ 2026-04-22
+  - [x] make route in server to get user jobs data ✅ 2026-04-22
+  - [x] make job model function to get user jobs data from database with search, filter, sort, and pagination ✅ 2026-04-22
+  - [x] test the route ✅ 2026-04-22
+  - [x] implement service for client side to get user jobs data ✅ 2026-04-22
+  - [x] implement react query hook for managing user jobs data state ✅ 2026-04-22
+  - [x] create redux toolkit slice for managing jobs filter query paramaters ✅ 2026-04-22
+  - [x] implement jobs filter slice to the table and button in job list route ✅ 2026-04-22
+  - [x] test all the function ✅ 2026-04-22
+  - [x] make server route to handle update and delete the user job data ✅ 2026-04-23
+  - [x] create job model function to handle delete and update user job data in database ✅ 2026-04-23
+  - [x] implement update and delete user job data features in client side ✅ 2026-04-23
+  - [x] make modal for edit form data ✅ 2026-04-23
+  - [x] add modal for confirm delete job data ✅ 2026-04-23
+  - [x] test the features ✅ 2026-04-23
+- [x] add new jobs route ✅ 2026-04-22
   - [x] create UI form component ✅ 2026-04-16
   - [x] add logic to handle form data (client) ✅ 2026-04-16
   - [x] add backend POST route to handle form data and insert that data into database ✅ 2026-04-16
