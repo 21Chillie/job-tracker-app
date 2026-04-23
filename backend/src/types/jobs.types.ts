@@ -13,3 +13,21 @@ export const JobFormSchema = z.object({
 });
 
 export type JobApplicationFormDataType = z.infer<typeof JobFormSchema>;
+
+export interface JobDataType {
+	id: string;
+	user_id: string;
+	job_title: string;
+	company: string;
+	job_url: string | null;
+	job_status: "applied" | "tested" | "interviewed" | "offer" | "accepted" | "rejected";
+	applied_date: string;
+	notes: string | null;
+	created_at: string;
+	updated_at: string;
+}
+
+export const deleteFormSchema = z.object({
+	userId: z.string().min(1, { error: "You must provide user id" }),
+	jobId: z.string().min(1, { error: "You must provide job id" }),
+});
