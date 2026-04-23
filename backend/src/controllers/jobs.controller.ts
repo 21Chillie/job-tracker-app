@@ -19,12 +19,27 @@ export const jobsController = {
 
 		return c.json({ success: true, data: { job: data } }, 201);
 	},
-	getJobData: async (c: Context<{ Variables: Variables }>) => {
+	getJobsData: async (c: Context<{ Variables: Variables }>) => {
 		const user = c.get("user");
 		const query = c.req.query() as QueryJobType;
 
-		const data = await jobsModel.getUserJob({ ...query, userId: user.id });
+		const data = await jobsModel.getUserJobs({ ...query, userId: user.id });
 
-		return c.json({ success: true, data }, 200);
+		return c.json({ success: true, data: { jobs: data.jobs, meta: data.meta } }, 200);
+	},
+
+	deleteJobData: async (c: Context<{ Variables: Variables }>) => {
+		const user = c.get("user");
+		const { userId, jobId } = await c.req.json<{ userId: string; jobId: string }>();
+
+		if (user.id !== userId) {
+			throw new HTTPException(400, {
+				message: "user id from client does not match with user id in server",
+			});
+		}
+
+		const data = await jobsModel.deleteJob({ userId, jobId });
+
+		return c.json({ success: true, data: { job: data } }, 200);
 	},
 };
