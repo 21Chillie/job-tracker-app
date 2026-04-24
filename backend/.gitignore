@@ -5,3 +5,4 @@ logs
 database.sqlite
 database.sqlite-*
 backups
+job-tracker.sql
