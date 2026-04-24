@@ -108,4 +108,23 @@ export const statsModel = {
 			throw new Error(`${(err as Error).message}. [DATABASE_ERROR_STATS]`);
 		}
 	},
+
+	monthlyStatsChart: async (userId: string) => {
+		try {
+			const result = db
+				.query(
+					`
+					SELECT job_status, applied_date
+					FROM job
+					WHERE user_id = $user_id
+						AND applied_date >= DATE('now', '-28 days');
+					`,
+				)
+				.all({ user_id: userId }) as { job_status: string; applied_date: string }[];
+
+			return result;
+		} catch (err) {
+			throw new Error(`${(err as Error).message}. [DATABASE_ERROR_STATS]`);
+		}
+	},
 };
