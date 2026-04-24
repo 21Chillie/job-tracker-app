@@ -1,8 +1,8 @@
 import {
-  formatDistanceToNow,
-  format,
-  parseISO,
   differenceInDays,
+  format,
+  formatDistanceToNow,
+  parseISO,
 } from "date-fns";
 
 /**
@@ -10,7 +10,10 @@ import {
  * Threshold: If older than 7 days, returns the full date.
  */
 export default function formatRelativeTime(dateInput: string | Date): string {
-  const date = typeof dateInput === "string" ? parseISO(dateInput) : dateInput;
+  const date =
+    typeof dateInput === "string"
+      ? parseISO(dateInput.endsWith("Z") ? dateInput : `${dateInput}Z`)
+      : dateInput;
   const now = new Date();
 
   const daysDiff = differenceInDays(now, date);
