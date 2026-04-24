@@ -1,7 +1,8 @@
-import { ModalBody, ModalButton } from "~/components/reuse-ui/Modal";
 import { useJobDelete } from "@hooks/job/useJobForm.hook";
-import type { JobsDataType } from "~/types/job.type";
+import formatDate from "@utils/convertDate";
 import formatRelativeTime from "@utils/convetTimestamp";
+import { ModalBody, ModalButton } from "~/components/reuse-ui/Modal";
+import type { JobsDataType } from "~/types/job.type";
 import { ModalEditBody, ModalEditButton } from "./ModalEditForm";
 
 export function TableRow({ job }: { job: JobsDataType }) {
@@ -12,6 +13,7 @@ export function TableRow({ job }: { job: JobsDataType }) {
     company,
     job_status: status,
     applied_date: appliedDate,
+    created_at,
   } = job;
 
   const { mutate } = useJobDelete({ userId: user_id, jobId: id });
@@ -29,17 +31,21 @@ export function TableRow({ job }: { job: JobsDataType }) {
 
         <td>
           <div
-            className={`status-${status} w-fit rounded-full px-3 py-1 text-center text-xs font-bold`}
+            className={`status-${status} w-fit rounded-full px-3 py-1 text-center text-xs max-sm:text-[11px] font-bold`}
           >
             <p className="capitalize">{status}</p>
           </div>
         </td>
 
         <td>
-          <p className="capitalize">{formatRelativeTime(appliedDate)}</p>
+          <p className="capitalize">{formatDate(appliedDate)}</p>
         </td>
 
-        <td className="space-x-3">
+        <td>
+          <p className="capitalize">{formatRelativeTime(created_at)}</p>
+        </td>
+
+        <td className="flex gap-2">
           <ModalEditButton buttonModalId={`modal-edit-${id}`} />
 
           <ModalButton
