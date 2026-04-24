@@ -1,6 +1,6 @@
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
-import jobsModel from "~/models/jobs/jobs.model";
+import jobsModel from "~/models/jobs.model";
 import { QueryJobType, Variables } from "~/types/global.types";
 import type { JobApplicationFormDataType } from "~/types/jobs.types";
 
