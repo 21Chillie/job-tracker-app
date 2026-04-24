@@ -8,6 +8,8 @@ const statsRoute = new Hono<{ Variables: Variables }>();
 
 statsRoute.use("/*", checkAuth, generalLimiter);
 
-statsRoute.get("/", statsController.totalJobsPerWeek);
+statsRoute.get("/", statsController.getTotalJobsPerWeek);
+
+statsRoute.get("/monthly-chart", statsController.getMonthlyChartData);
 
 export default statsRoute;
