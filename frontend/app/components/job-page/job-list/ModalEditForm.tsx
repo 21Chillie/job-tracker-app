@@ -1,8 +1,8 @@
 import { statusList } from "@components/job-page/add-job/statusList";
+import { useEditJobForm } from "@hooks/job/useJobForm.hook";
 import { ChevronDown, Link2 } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useFetcher } from "react-router";
-import { useEditJobForm } from "@hooks/job/useJobForm.hook";
 import type { JobsDataType } from "~/types/job.type";
 
 export function ModalEditButton({ buttonModalId }: { buttonModalId: string }) {
@@ -256,7 +256,7 @@ export function ModalEditBody({
               const { errors } = state.meta;
 
               return (
-                <fieldset className="fieldset col-span-2 md:col-span-1">
+                <fieldset className="fieldset col-span-2">
                   <legend className="fieldset-legend">Applications Date</legend>
                   <input
                     id={name}
