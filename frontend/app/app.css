@@ -38,27 +38,27 @@
 
 @layer components {
   .status-applied {
-    @apply border-blue-800/50 bg-blue-900/30 text-blue-300;
+    @apply border-accent/50 bg-accent/20 text-accent;
   }
 
   .status-tested {
-    @apply border-purple-800/50 bg-purple-900/30 text-purple-300;
+    @apply text-warning border-warning/50 bg-amber-700/30;
   }
 
   .status-interviewed {
-    @apply border-amber-800/50 bg-amber-900/30 text-amber-300;
+    @apply border-fuchsia-800/50 bg-fuchsia-900/30 text-fuchsia-300;
   }
 
   .status-offer {
-    @apply border-emerald-800/50 bg-emerald-900/30 text-emerald-300;
+    @apply border-indigo-800/50 bg-indigo-900/30 text-indigo-300;
   }
 
   .status-accepted {
-    @apply border-green-500/40 bg-green-500/20 text-green-400;
+    @apply border-primary/40 bg-primary/20 text-primary;
   }
 
   .status-rejected {
-    @apply border-red-800/50 bg-red-900/30 text-red-300;
+    @apply border-error/50 text-error bg-red-700/20;
   }
 }
 

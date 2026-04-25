@@ -19,7 +19,9 @@ export default function SortFilter() {
           <p className="uppercase">
             Sort By:{" "}
             <span className="text-primary font-medium capitalize">
-              {sortBy.replace("_", " ")}
+              {sortBy === "created_at"
+                ? "Recently Added"
+                : sortBy.replace("_", " ")}
             </span>
           </p>
           <span>
@@ -44,14 +46,16 @@ export default function SortFilter() {
               <li key={sort}>
                 <button
                   type="button"
-                  className="btn btn-ghost flex justify-start font-normal capitalize"
+                  className={`btn flex justify-start font-normal capitalize ${sort === sortBy ? "btn-active" : "btn-ghost"}`}
                   onClick={() => {
                     dispatch(setSortBy(sort));
                     dispatch(setSortOrder());
                     (document.activeElement as HTMLElement).blur();
                   }}
                 >
-                  {sort.replace("_", " ")}
+                  {sort === "created_at"
+                    ? "Recently Added"
+                    : sort.replace("_", " ")}
                 </button>
               </li>
             );

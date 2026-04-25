@@ -1,8 +1,8 @@
 import { Search } from "lucide-react";
-import StatusFilter from "./filter/StatusFilter";
-import SortFilter from "./filter/SortFilter";
 import { useAppDispatch } from "~/configs/store.config";
 import { setSearch } from "~/features/job/jobFilterSlice";
+import SortFilter from "./filter/SortFilter";
+import StatusFilter from "./filter/StatusFilter";
 
 export default function Filter() {
   const dispatch = useAppDispatch();
@@ -16,7 +16,7 @@ export default function Filter() {
           </span>
           <input
             type="search"
-            placeholder="Search"
+            placeholder="Search position or company"
             onChange={(e) => dispatch(setSearch(e.target.value))}
           />
         </label>

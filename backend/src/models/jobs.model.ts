@@ -31,7 +31,7 @@ const jobsModel = {
 			return result;
 		} catch (err) {
 			// logger.error(`Database Error: ${(err as Error).message}`);
-			throw new Error(`${(err as Error).message}. [DATABASE_ERROR]`);
+			throw new Error(`${(err as Error).message}. [DATABASE_ERROR_JOB]`);
 		}
 	},
 
@@ -96,7 +96,7 @@ const jobsModel = {
 			const errorMessage = err instanceof Error ? err.message : "Something went wrong when trying to get user job data";
 
 			// logger.error(`Database error: ${errorMessage}`);
-			throw new Error(`${errorMessage}. [DATABASE_ERROR]`);
+			throw new Error(`${errorMessage}. [DATABASE_ERROR_JOB]`);
 		}
 	},
 
@@ -117,7 +117,7 @@ const jobsModel = {
 			return deleteJob;
 		} catch (err) {
 			// logger.error(`Database error: ${(err as Error).message}`);
-			throw new Error(`${(err as Error).message}. [DATABASE_ERROR]`);
+			throw new Error(`${(err as Error).message}. [DATABASE_ERROR_JOB]`);
 		}
 	},
 
@@ -151,7 +151,7 @@ const jobsModel = {
 			return updateJob;
 		} catch (err) {
 			// logger.error(`Database error: ${(err as Error).message}`);
-			throw new Error(`${(err as Error).message}. [DATABASE_ERROR]`);
+			throw new Error(`${(err as Error).message}. [DATABASE_ERROR_JOB]`);
 		}
 	},
 };

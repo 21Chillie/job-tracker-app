@@ -45,15 +45,16 @@ export default function JobTable() {
             className={`${isPlaceholderData ? "opacity-50" : "opacity-100"} border-base-300 bg-base-100 rounded-box border shadow-xl`}
           >
             <div className="overflow-x-auto pb-4">
-              <table className="table-sm md:table-md table min-w-4xl max-sm:min-w-3xl">
+              <table className="table-sm md:table-md table min-w-5xl max-md:min-w-3xl">
                 {/* table head */}
                 <thead>
                   <tr>
-                    <th>Position</th>
-                    <th>Company</th>
-                    <th>Status</th>
-                    <th>Date Applied</th>
-                    <th>Action</th>
+                    <th className="text-[13px]">Position</th>
+                    <th className="text-[13px]">Company</th>
+                    <th className="text-[13px]">Status</th>
+                    <th className="text-[13px]">Date Applied</th>
+                    <th className="text-[13px]">Recently Added</th>
+                    <th className="text-[13px]">Action</th>
                   </tr>
                 </thead>
 
