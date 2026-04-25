@@ -9,3 +9,11 @@ export default function formatDate(dateInput: string) {
 
   return formattedDate;
 }
+
+export const formatMonthly = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    month: "short", // "Feb"
+    year: "numeric", // "2026"
+  });
+};
