@@ -19,7 +19,13 @@
   - [x] implement redux toolkit in authentication flow for centralize auth action and state (apply what I learn about redux toolkit) ✅ 2026-04-16
   - [x] centralize all authentication function/login for improving maintainability and code consistency ✅ 2026-04-16
   - [x] fix some layouts and styles in authentication and dashboard page (UI only) ✅ 2026-04-16
-- [ ] home route⏫
+- [x] home route ✅ 2026-04-25
+  - [x] make function model to get user stats (count jobs for each job status) ✅ 2026-04-25
+  - [x] make function model and calculate the trend stats compare last week ✅ 2026-04-25
+  - [x] make function model to get user stats (monthly) and calculate the data for monthly chart data ✅ 2026-04-25
+  - [x] design the layout for home dashboard ✅ 2026-04-25
+  - [x] make bar chart for monthly user stats data ✅ 2026-04-25
+  - [x] make card for user count jobs data and make sure the trend up/down show ✅ 2026-04-25
 - [x] job list route ✅ 2026-04-23
   - [x] design the table component ✅ 2026-04-22
   - [x] design search, filter, and sort ✅ 2026-04-22
@@ -61,3 +67,10 @@
   - [x] and general limiter key will set by user id or ip address ✅ 2026-04-18
   - [x] fix big big bugs in database side, because typo in user schema files (spend whole day to debug ts) ✅ 2026-04-18
   - [x] accessing job route now require to check user session data and will throw error 401 if no session found ✅ 2026-04-18
+
+> All the features are finish and need to test again all the function to make sure the apps run stable.
+
+- [ ] testing the apps
+- [ ] tidy up some code and refactor if needed
+- [ ] make notes/comment in code if necessary
+- [ ] make docs about the project
