@@ -1,22 +1,36 @@
-FROM bun:1.3-alpine AS development-dependencies-env
-COPY . /app
-WORKDIR /app
-RUN npm ci
+# /frontend/Dockerfile
 
-FROM bun:1.3-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
+FROM oven/bun:1.3-alpine AS base
 WORKDIR /app
-RUN npm ci --omit=dev
 
-FROM bun:1.3-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
-RUN npm run build
+# Stage 1: Install dependencies
+FROM base AS deps
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
-FROM bun:1.3-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
-WORKDIR /app
-CMD ["npm", "run", "start"]
+# Stage 2: Build the application
+FROM base AS builder
+COPY . .
+COPY --from=deps /app/node_modules ./node_modules
+
+# Expose Vite variable to the build process
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+
+RUN bun run build
+
+# Stage 3: Production runner
+FROM base AS runner
+ENV NODE_ENV=production
+
+# Install only production dependencies to keep the image small
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile --production
+
+COPY --from=builder /app/build ./build
+
+# Run as a non-root user for security
+USER bun
+
+EXPOSE 3000
+CMD ["bun", "run", "start"]
