@@ -152,7 +152,6 @@ export default function AddJobForm() {
                       <button
                         type="button"
                         tabIndex={0}
-                        role="button"
                         className="btn btn-sm md:btn-md border-base-content/20 bg-base-100 flex w-full justify-between font-normal"
                       >
                         <span className="capitalize">{state.value}</span>
