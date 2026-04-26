@@ -5,10 +5,22 @@ import jobService from "@services/job.service";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { lazy } from "react";
 import toast from "react-hot-toast";
-import { redirect } from "react-router";
+import { redirect, type MetaFunction } from "react-router";
 import type { Route } from "./+types/job-list";
 
 const JobTable = lazy(() => import("@components/job-page/job-list/JobTable"));
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "All Applications | Job Tracker" },
+    {
+      name: "description",
+      content:
+        "View and filter all your active job applications. Keep track of companies, roles, and job  status in one place.",
+    },
+    { name: "robots", content: "noindex, follow" }, // Keep personal data out of public search if necessary
+  ];
+};
 
 export async function loader({ request }: Route.LoaderArgs) {
   const queryClient = getQueryClient();
