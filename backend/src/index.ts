@@ -65,7 +65,7 @@ process.on("SIGINT", dbShutdown);
 process.on("SIGTERM", dbShutdown);
 
 export default {
-	port: process.env.PORT || 3000,
+	port: 3001,
 	hostname: "0.0.0.0",
 	fetch: app.fetch,
 };
