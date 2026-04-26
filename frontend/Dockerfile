@@ -1,22 +1,26 @@
-FROM bun:1.3-alpine AS development-dependencies-env
-COPY . /app
+# /frontend/Dockerfile
+FROM oven/bun:1.3-alpine AS base
 WORKDIR /app
-RUN npm ci
 
-FROM bun:1.3-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
+# Stage 1: Install dependencies
+FROM base AS deps
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
-FROM bun:1.3-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
-RUN npm run build
+# Stage 2: Build the application
+FROM base AS builder
+COPY . .
+COPY --from=deps /app/node_modules ./node_modules
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+RUN bun run build
 
-FROM bun:1.3-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
+# Stage 3: Production runner - minimal
+FROM node:24-alpine AS runner
 WORKDIR /app
-CMD ["npm", "run", "start"]
+ENV NODE_ENV=production
+# Only install react-router for the serve binary
+RUN npm install -g @react-router/serve
+COPY --from=builder /app/build ./build
+EXPOSE 3000
+CMD ["react-router-serve", "./build/server/index.js"]

@@ -36,7 +36,7 @@ const jobService = {
       },
       headers: {
         // Forward the user's cookie to the backend
-        Cookie: cookie,
+        ...(cookie && { Cookie: cookie }),
       },
     });
 

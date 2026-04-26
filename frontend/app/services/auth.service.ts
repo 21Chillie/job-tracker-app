@@ -14,7 +14,7 @@ const authService = {
         {
           headers: {
             // Forward the user's cookie to the backend
-            Cookie: cookie,
+            ...(cookie && { Cookie: cookie }),
           },
         },
       );
@@ -25,7 +25,7 @@ const authService = {
     }
   },
 
-  logout: createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
+  logout: createAsyncThunk("/auth/logout", async (_, { rejectWithValue }) => {
     const queryClient = getQueryClient();
     const { data, error } = await authClient.signOut();
 
