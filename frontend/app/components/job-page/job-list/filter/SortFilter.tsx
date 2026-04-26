@@ -13,7 +13,6 @@ export default function SortFilter() {
         <button
           type="button"
           tabIndex={0}
-          role="button"
           className="flex items-center gap-1 text-sm"
         >
           <p className="uppercase">

@@ -1,5 +1,5 @@
-import { ChevronDown } from "lucide-react";
 import { statusList } from "@components/job-page/add-job/statusList";
+import { ChevronDown } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "~/configs/store.config";
 import { setStatus } from "~/features/job/jobFilterSlice";
 
@@ -13,7 +13,6 @@ export default function StatusFilter() {
         <button
           type="button"
           tabIndex={0}
-          role="button"
           className="btn btn-sm md:btn-md border-base-content/20 bg-base-100 flex w-full justify-between font-normal"
         >
           <span className="capitalize">
