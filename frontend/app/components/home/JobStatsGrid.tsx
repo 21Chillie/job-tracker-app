@@ -1,5 +1,3 @@
-import { statsQueryOption } from "@hooks/stat/useStats.hook";
-import { useQuery } from "@tanstack/react-query";
 import {
   Briefcase,
   Code,
@@ -9,10 +7,13 @@ import {
   Users,
   XCircle,
 } from "lucide-react";
+import type { UserStatsDataResponse } from "~/types/stat.type";
 
-export default function JobStatsGrid() {
-  const { data } = useQuery(statsQueryOption());
-
+export default function JobStatsGrid({
+  data,
+}: {
+  data: UserStatsDataResponse;
+}) {
   // Direct mapping from your JSON keys to UI properties
   const countJobs = data?.data.countJobs;
   const stats = data?.data.stats;
@@ -80,7 +81,7 @@ export default function JobStatsGrid() {
                 </dd>
 
                 {stat.label === "Total" ? null : (
-                  <span className="text-base-content/60 tracking-wider text-xs capitalize">
+                  <span className="text-base-content/60 text-xs tracking-wider capitalize">
                     Total
                   </span>
                 )}
