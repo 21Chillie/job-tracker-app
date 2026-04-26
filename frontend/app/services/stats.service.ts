@@ -9,7 +9,7 @@ const statsService = {
     const response = await api.get<UserStatsDataResponse>("/api/stats", {
       headers: {
         // Forward the user's cookie to the backend
-        Cookie: cookie,
+        Cookie: cookie || "",
       },
     });
     return response.data;
@@ -21,7 +21,7 @@ const statsService = {
       {
         headers: {
           // Forward the user's cookie to the backend
-          Cookie: cookie,
+          Cookie: cookie || "",
         },
       },
     );
