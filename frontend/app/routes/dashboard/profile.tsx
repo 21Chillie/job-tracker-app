@@ -1,17 +1,28 @@
 import { DangerZoneSkeleton } from "@components/profile/skeleton/DangerZoneSkeleton";
 import { ProfileFormSkeleton } from "@components/profile/skeleton/ProfileFormSkeleton";
 import { getQueryClient } from "@configs/query-client.config";
-import { sessionQueryOption } from "@hooks/auth/useSession.hook";
 import type { profileFormDataType } from "@hooks/user/useEditProfile.hook";
 import authService from "@services/auth.service";
 import profileService from "@services/profile.service";
 import { lazy, Suspense } from "react";
 import toast from "react-hot-toast";
-import { redirect } from "react-router";
+import { redirect, type MetaFunction } from "react-router";
 import type { Route } from "./+types/profile";
 
 const ProfileForm = lazy(() => import("@components/profile/ProfileForm"));
 const DangerZone = lazy(() => import("@components/profile/DangerZone"));
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Account Settings | Job Tracker" },
+    {
+      name: "description",
+      content:
+        "Manage your Job Journey account settings and profile information.",
+    },
+    { name: "robots", content: "noindex, nofollow" }, // Essential for private user pages
+  ];
+};
 
 export default function Profile() {
   return (

@@ -8,15 +8,15 @@ import {
   ScrollRestoration,
 } from "react-router";
 
-import type { Route } from "./+types/root";
-import "~/app.css";
-import { Toaster } from "react-hot-toast";
-import { Provider } from "react-redux";
+import { getQueryClient } from "@configs/query-client.config";
 import { store } from "@configs/store.config";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { getQueryClient } from "@configs/query-client.config";
 import { useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
+import "~/app.css";
+import type { Route } from "./+types/root";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

@@ -1,5 +1,3 @@
-import { monthlyChartQueryOption } from "@hooks/stat/useStats.hook";
-import { useQuery } from "@tanstack/react-query";
 import {
   Bar,
   BarChart,
@@ -9,6 +7,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import type { MonthlyChartDataResponse } from "~/types/stat.type";
 
 const STATUS_CONFIG = [
   {
@@ -33,8 +32,13 @@ const STATUS_CONFIG = [
   },
 ];
 
-function MonthlyBarChart({ isAnimationActive = true }) {
-  const { data: chart } = useQuery(monthlyChartQueryOption());
+function MonthlyBarChart({
+  isAnimationActive = true,
+  chart,
+}: {
+  isAnimationActive?: boolean;
+  chart: MonthlyChartDataResponse;
+}) {
   const chartData = chart?.data.monthlyChart || [];
 
   const date = new Date();

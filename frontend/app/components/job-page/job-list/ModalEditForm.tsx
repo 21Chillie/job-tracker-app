@@ -36,7 +36,6 @@ export function ModalEditBody({
   modalId: string;
   data: JobsDataType;
 }) {
-  if (typeof document === "undefined") return null;
   const {
     id,
     user_id: userId,
@@ -47,7 +46,7 @@ export function ModalEditBody({
     applied_date: appliedDate,
     notes,
   } = data;
-  const fetcher = useFetcher();
+
   const { handleSubmit, Field, Subscribe, reset } = useEditJobForm({
     id,
     userId,
@@ -59,6 +58,16 @@ export function ModalEditBody({
     notes: notes || "",
   });
 
+  const fetcher = useFetcher();
+
+  if (typeof document === "undefined") return null;
+
+  const handleFormSubmit = () => {
+    handleSubmit();
+    const modal = document.getElementById(modalId) as HTMLDialogElement;
+    if (modal) modal.close();
+  };
+
   return createPortal(
     <dialog id={modalId} className="modal">
       <div className="modal-box">
@@ -68,14 +77,7 @@ export function ModalEditBody({
 
         <fetcher.Form
           className="grid grid-cols-2 gap-3 max-md:max-h-96 max-md:overflow-y-auto max-md:pr-4"
-          onSubmit={() => {
-            handleSubmit();
-
-            const modal = document.getElementById(modalId) as HTMLDialogElement;
-            if (modal) {
-              modal.close();
-            }
-          }}
+          onSubmit={handleFormSubmit}
         >
           <Field name="position">
             {({ state, name, handleBlur, handleChange }) => {
@@ -200,7 +202,6 @@ export function ModalEditBody({
                     <button
                       type="button"
                       tabIndex={0}
-                      role="button"
                       className="btn btn-sm md:btn-md border-base-content/20 bg-base-100 flex w-full justify-between font-normal"
                     >
                       <span className="capitalize">{state.value}</span>

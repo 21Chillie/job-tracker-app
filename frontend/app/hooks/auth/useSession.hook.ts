@@ -1,5 +1,5 @@
-import { queryOptions, useQuery } from "@tanstack/react-query";
 import authService from "@services/auth.service";
+import { queryOptions } from "@tanstack/react-query";
 
 export function sessionQueryOption(cookie?: string) {
   return queryOptions({
@@ -12,9 +12,4 @@ export function sessionQueryOption(cookie?: string) {
     refetchOnWindowFocus: false,
     retry: false,
   });
-}
-
-// Helper function to access sessionQueryOption
-export function useSession() {
-  return useQuery(sessionQueryOption());
 }

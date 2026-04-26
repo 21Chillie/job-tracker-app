@@ -5,11 +5,22 @@ import type { FormJobDataType } from "@hooks/job/useJobForm.hook";
 import jobService from "@services/job.service";
 import { Suspense, lazy } from "react";
 import toast from "react-hot-toast";
+import type { MetaFunction } from "react-router";
 import type { Route } from "./+types/add-job";
 
 const AddJobForm = lazy(
   () => import("@components/job-page/add-job/AddJobForm"),
 );
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Add New Application | Job Tracker" },
+    {
+      name: "description",
+      content: "Add new curated opportunity to your personal tracker.",
+    },
+  ];
+};
 
 export default function AddJob() {
   return (
