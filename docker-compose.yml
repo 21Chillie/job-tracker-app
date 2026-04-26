@@ -1,0 +1,31 @@
+services:
+  backend:
+    image: 21chillie/job-tracker-backend:latest
+    restart: always
+    ports:
+      - "3002:3001"
+    volumes:
+      - /srv/docker/volumes/job-tracker/db:/app/src/db
+    env_file:
+      - .env
+    environment:
+      - PORT=3001
+      - BUN_APP_ENV=production
+    networks:
+      - dokploy-network
+
+  frontend:
+    image: 21chillie/job-tracker-frontend:latest
+    restart: always
+    ports:
+      - "3003:3000"
+    depends_on:
+      - backend
+    env_file:
+      - .env
+    networks:
+      - dokploy-network
+
+networks:
+  dokploy-network:
+    external: true

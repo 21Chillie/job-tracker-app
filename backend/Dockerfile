@@ -1,0 +1,18 @@
+FROM oven/bun:1.3-alpine AS base
+WORKDIR /app
+
+# Stage 1: Install dependencies
+FROM base AS deps
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile --production
+
+# Stage 2: Production runner
+FROM base AS release
+COPY --from=deps /app/node_modules ./node_modules
+# Only copy necessary source files
+COPY src ./src
+COPY package.json ./
+# Run as a non-root user for security
+USER bun
+EXPOSE 3001
+CMD ["bun", "run", "src/index.ts"]
