@@ -12,7 +12,7 @@ interface ApiErrorResponse {
 }
 
 const api = axios.create({
-  baseURL: env.BACKEND_URL,
+  baseURL: env.BACKEND_URL || "http://localhost:3001",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -41,9 +41,10 @@ api.interceptors.response.use(
         }
       }
 
-      throw new Response(errorMessage, {
-        status: status,
-        statusText: data?.error.type || "Error",
+      return Promise.reject({
+        status,
+        message: errorMessage,
+        data: data,
       });
     }
 
