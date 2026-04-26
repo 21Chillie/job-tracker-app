@@ -2,10 +2,13 @@ import { ModalBody, ModalButton } from "@components/reuse-ui/Modal";
 import { useJobDelete } from "@hooks/job/useJobForm.hook";
 import { formatDate } from "@utils/convertDate";
 import formatRelativeTime from "@utils/convetTimestamp";
+import { getQueryClient } from "~/configs/query-client.config";
 import type { JobsDataType } from "~/types/job.type";
 import { ModalEditBody, ModalEditButton } from "./ModalEditForm";
 
 export function TableRow({ job }: { job: JobsDataType }) {
+  const queryClient = getQueryClient();
+
   const {
     id,
     user_id,
@@ -17,6 +20,15 @@ export function TableRow({ job }: { job: JobsDataType }) {
   } = job;
 
   const { mutate } = useJobDelete({ userId: user_id, jobId: id });
+
+  const handleDelete = async () => {
+    mutate();
+    await queryClient.invalidateQueries({ queryKey: ["jobs"] });
+    await queryClient.invalidateQueries({ queryKey: ["stat"] });
+    await queryClient.invalidateQueries({
+      queryKey: ["stat", "monthly-chart"],
+    });
+  };
 
   return (
     <>
@@ -68,7 +80,7 @@ export function TableRow({ job }: { job: JobsDataType }) {
         message="This will permanently remove the jobs and it's associated data from your jobs list."
         action={{
           danger: true,
-          method: () => mutate(),
+          method: () => handleDelete(),
         }}
       ></ModalBody>
     </>

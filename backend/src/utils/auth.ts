@@ -1,11 +1,12 @@
-import { betterAuth } from "better-auth";
-import db from "@db/db-client";
 import env from "@config/env";
+import db from "@db/db-client";
+import { betterAuth } from "better-auth";
+import { randomBytes } from "node:crypto";
 
 export const auth = betterAuth({
 	database: db,
 	baseURL: env.BETTER_AUTH_URL || "http://localhost:3000",
-	secret: env.BETTER_AUTH_SECRET,
+	secret: env.BETTER_AUTH_SECRET || randomBytes(32).toString("base64"),
 
 	emailAndPassword: {
 		enabled: true,

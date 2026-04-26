@@ -64,4 +64,8 @@ app.onError((err, c) => {
 process.on("SIGINT", dbShutdown);
 process.on("SIGTERM", dbShutdown);
 
-export default app;
+export default {
+	port: process.env.PORT || 3000,
+	hostname: "0.0.0.0",
+	fetch: app.fetch,
+};

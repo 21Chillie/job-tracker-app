@@ -70,7 +70,7 @@
 
 > All the features are finish and need to test again all the function to make sure the apps run stable.
 
-- [ ] testing the apps
-- [ ] tidy up some code and refactor if needed
-- [ ] make notes/comment in code if necessary
+- [x] testing the apps
+- [x] tidy up some code and refactor if needed
+- [x] make notes/comment in code if necessary
 - [ ] make docs about the project

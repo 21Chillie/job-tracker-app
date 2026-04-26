@@ -5,7 +5,7 @@ export function statsQueryOption(cookie?: string) {
   return queryOptions({
     queryKey: ["stat"],
     queryFn: async () => {
-      const response = await statsService.getUserStats();
+      const response = await statsService.getUserStats(cookie);
       return response;
     },
 
@@ -17,9 +17,9 @@ export function statsQueryOption(cookie?: string) {
 
 export function monthlyChartQueryOption(cookie?: string) {
   return queryOptions({
-    queryKey: ["stat", "monthly-cart"],
+    queryKey: ["stat", "monthly-chart"],
     queryFn: async () => {
-      const response = await statsService.getUserMonthlyChart();
+      const response = await statsService.getUserMonthlyChart(cookie);
       return response;
     },
 
