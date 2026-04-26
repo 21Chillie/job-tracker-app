@@ -1,5 +1,31 @@
-import { useNavigation } from "react-router";
-import { Outlet } from "react-router";
+import { Outlet, useNavigation, type MetaFunction } from "react-router";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Job Tracker App" },
+    {
+      name: "description",
+      content:
+        "Access your Job Journey account to manage job applications, and visualize your career progress.",
+    },
+
+    { property: "og:title", content: "Job Tracker App" },
+    {
+      property: "og:description",
+      content: "Dashboard for helping to track job application for job hunters.",
+    },
+    { property: "og:type", content: "website" },
+
+    // TODO: change this later
+    { tag: "link", rel: "canonical", href: "http://localhost:5173/" },
+
+    {
+      name: "keywords",
+      content:
+        "job tracker, career dashboard, application management, developer tools",
+    },
+  ];
+};
 
 export default function AuthLayout() {
   const navigation = useNavigation();
