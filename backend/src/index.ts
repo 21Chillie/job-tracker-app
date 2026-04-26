@@ -17,9 +17,9 @@ const app = new Hono();
 app.use(
 	"*",
 	cors({
-		origin: (env.FRONTEND_URL as string) || "http://localhost:5173",
+		origin: [env.FRONTEND_URL as string, "http://localhost:3000", "http://localhost:5173"],
 		allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-		allowHeaders: ["Content-Type", "Authorization", "x-better-auth-origin"],
+		allowHeaders: ["Content-Type", "Authorization", "x-better-auth-origin", "x-requested-with"],
 		exposeHeaders: ["Content-Length", "Set-Cookie"],
 		maxAge: 600,
 		credentials: true,
