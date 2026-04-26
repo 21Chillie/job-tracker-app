@@ -5,7 +5,7 @@ import { randomBytes } from "node:crypto";
 
 export const auth = betterAuth({
 	database: db,
-	baseURL: env.BETTER_AUTH_URL || "http://localhost:3000",
+	baseURL: env.BETTER_AUTH_URL || "http://localhost:3001",
 	secret: env.BETTER_AUTH_SECRET || randomBytes(32).toString("base64"),
 
 	emailAndPassword: {
@@ -25,5 +25,9 @@ export const auth = betterAuth({
 		},
 	},
 
-	trustedOrigins: [env.FRONTEND_URL as string, "http://localhost:5173"],
+	trustedOrigins: [env.FRONTEND_URL as string, "http://localhost:3000", "http://localhost:5173"],
+
+	advanced: {
+		useSecureCookies: process.env.NODE_ENV === "production",
+	},
 });
