@@ -1,0 +1,31 @@
+services:
+  backend:
+    image: 21chillie/job-tracker-backend:latest
+    restart: always
+    # Mapping 3001 (Server) to 3001 (Container)
+    ports:
+      - "3001:3001" 
+    env_file:
+      - .env
+    environment:
+      - PORT=3001
+      - BUN_APP_ENV=production
+    networks:
+      - dokploy-network
+
+  frontend:
+    image: 21chillie/job-tracker-frontend:latest
+    restart: always
+    # Mapping 3000 (Server) to 3000 (Container)
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    env_file:
+      - .env
+    networks:
+      - dokploy-network
+
+networks:
+  dokploy-network:
+    external: true
