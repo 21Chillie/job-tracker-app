@@ -53,6 +53,8 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     toast.success("Job added successfully");
 
     await queryClient.invalidateQueries({ queryKey: ["jobs"] });
+    await queryClient.invalidateQueries({ queryKey: ["stat"] });
+    await queryClient.invalidateQueries({ queryKey: ["stat", "monthly-chart"] });
   }
 
   return { data: payload };
