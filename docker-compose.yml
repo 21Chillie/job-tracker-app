@@ -2,9 +2,10 @@ services:
   backend:
     image: 21chillie/job-tracker-backend:latest
     restart: always
-    # Mapping 3001 (Server) to 3001 (Container)
     ports:
-      - "3001:3001" 
+      - "3002:3001"
+    volumes:
+      - /srv/docker/volumes/job-tracker/db:/app/src/db
     env_file:
       - .env
     environment:
@@ -16,9 +17,8 @@ services:
   frontend:
     image: 21chillie/job-tracker-frontend:latest
     restart: always
-    # Mapping 3000 (Server) to 3000 (Container)
     ports:
-      - "3000:3000"
+      - "3003:3000"
     depends_on:
       - backend
     env_file:
