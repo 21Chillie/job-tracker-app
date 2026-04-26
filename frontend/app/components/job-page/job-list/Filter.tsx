@@ -1,6 +1,6 @@
+import { useAppDispatch } from "@configs/store.config";
+import { setSearch } from "@features/job/jobFilterSlice";
 import { Search } from "lucide-react";
-import { useAppDispatch } from "~/configs/store.config";
-import { setSearch } from "~/features/job/jobFilterSlice";
 import SortFilter from "./filter/SortFilter";
 import StatusFilter from "./filter/StatusFilter";
 

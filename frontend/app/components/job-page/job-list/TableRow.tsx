@@ -1,7 +1,7 @@
+import { ModalBody, ModalButton } from "@components/reuse-ui/Modal";
 import { useJobDelete } from "@hooks/job/useJobForm.hook";
-import formatDate from "@utils/convertDate";
+import { formatDate } from "@utils/convertDate";
 import formatRelativeTime from "@utils/convetTimestamp";
-import { ModalBody, ModalButton } from "~/components/reuse-ui/Modal";
 import type { JobsDataType } from "~/types/job.type";
 import { ModalEditBody, ModalEditButton } from "./ModalEditForm";
 
@@ -31,7 +31,7 @@ export function TableRow({ job }: { job: JobsDataType }) {
 
         <td>
           <div
-            className={`status-${status} w-fit rounded-full px-3 py-1 text-center text-xs max-sm:text-[11px] font-bold`}
+            className={`status-${status} w-fit rounded-full px-3 py-1 text-center text-xs font-bold max-sm:text-[11px]`}
           >
             <p className="capitalize">{status}</p>
           </div>

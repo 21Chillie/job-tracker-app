@@ -1,9 +1,9 @@
+import { useAppDispatch, useAppSelector } from "@configs/store.config";
+import { setNextPage, setPrevPage } from "@features/job/jobFilterSlice";
+import { jobsDataOption } from "@hooks/job/useJobData.hook";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useDebounce } from "use-debounce";
-import { useAppDispatch, useAppSelector } from "~/configs/store.config";
-import { setNextPage, setPrevPage } from "~/features/job/jobFilterSlice";
-import { jobsDataOption } from "~/hooks/job/useJobData.hook";
 import Filter from "./Filter";
 import { TableRow } from "./TableRow";
 
