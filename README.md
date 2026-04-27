@@ -2,20 +2,14 @@
 
 Job Tracker App is a full-stack web application for job seekers to manage and track their job application process in one place. It provides a structured workflow for recording applications, updating progress, and reviewing outcomes through a dashboard interface.
 
-<figure style="text-align: center;">
-  <img src="./docs/images/home.webp" alt="Dashboard overview" />
-  <figcaption>Dashboard page showing monthly stats and job status summary</figcaption>
-</figure>
+![Dashboard overview](./docs/images/home.webp)
+_Dashboard page showing monthly stats and job status summary_
 
-<figure style="text-align: center;">
-  <img src="./docs/images/job-list.webp" alt="Dashboard overview" />
-  <figcaption>Dashboard page showing user job list</figcaption>
-</figure>
+![Dashboard overview](./docs/images/job-list.webp)
+_Dashboard page showing user job list_
 
-<figure style="text-align: center;">
-  <img src="./docs/images/add-job.webp" alt="Dashboard overview" />
-  <figcaption>Dashboard page showing add job form</figcaption>
-</figure>
+![Dashboard overview](./docs/images/add-job.webp)
+_Dashboard page showing add job form_
 
 ## Project Overview
 
@@ -333,4 +327,4 @@ docker compose down
 
 MIT License. See [LICENSE](./LICENSE).
 
-> *This project was built for learning and portfolio purposes. Feel free to use the code in any way you like.*
+> _This project was built for learning and portfolio purposes. Feel free to use the code in any way you like._
