@@ -1,5 +1,5 @@
+import db from "@config/db-client";
 import env from "@config/env";
-import db from "@db/db-client";
 import { betterAuth } from "better-auth";
 import { randomBytes } from "node:crypto";
 
