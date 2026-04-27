@@ -23,7 +23,6 @@ export async function loader({ request }: Route.LoaderArgs) {
   const session = await queryClient.fetchQuery(sessionQueryOption(cookie));
 
   if (!cookie && !session) {
-    getQueryClient().clear();
     return redirect("/login");
   }
 
