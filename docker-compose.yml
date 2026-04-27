@@ -6,7 +6,7 @@ services:
     image: 21chillie/job-tracker-backend:latest
     container_name: job-tracker-backend
     ports:
-      - "3001:3001"
+      - "3021:3001"
     environment:
       BUN_APP_ENV: ${BUN_APP_ENV:-production}
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-change-me-in-env}
@@ -27,7 +27,7 @@ services:
     image: 21chillie/job-tracker-frontend:latest
     container_name: job-tracker-frontend
     ports:
-      - "3000:3000"
+      - "3020:3000"
     environment:
       HOST: 0.0.0.0
       PORT: 3000
