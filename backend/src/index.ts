@@ -1,6 +1,6 @@
+import { dbShutdown } from "@config/db-client";
 import env from "@config/env";
 import logger from "@config/logger";
-import { dbShutdown } from "@db/db-client";
 import logMiddleware from "@middlewares/log.middleware";
 import authRoute from "@routes/auth.route";
 import jobsRoute from "@routes/jobs.route";
