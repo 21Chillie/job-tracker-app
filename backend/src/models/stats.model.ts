@@ -1,4 +1,5 @@
 import db from "@config/db-client";
+import { logger } from "better-auth";
 
 export const statsModel = {
 	comparePerWeek: async (userId: string) => {
@@ -9,6 +10,7 @@ export const statsModel = {
 				)
 				.get({ user_id: userId })) as { current_week: number; last_week: number };
 
+			logger.info(`Getting comparison per week data successfully. [${userId.slice(0, 10)}...,]`);
 			return result;
 		} catch (err) {
 			throw new Error(`${(err as Error).message}. [DATABASE_ERROR_STATS]`);
@@ -122,6 +124,7 @@ export const statsModel = {
 				)
 				.all({ user_id: userId }) as { job_status: string; applied_date: string }[];
 
+			logger.info(`Getting monthly chart data successfully. [${userId.slice(0, 10)}...,]`);
 			return result;
 		} catch (err) {
 			throw new Error(`${(err as Error).message}. [DATABASE_ERROR_STATS]`);
