@@ -1,9 +1,9 @@
 services:
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    image: job-tracker-backend:local
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    image: 21chillie/job-tracker-backend:latest
     container_name: job-tracker-backend
     ports:
       - "3001:3001"
@@ -19,12 +19,12 @@ services:
     restart: unless-stopped
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://localhost:3001}
-    image: job-tracker-frontend:local
+    # build:
+    #   context: ./frontend
+    #   dockerfile: Dockerfile
+    #   args:
+    #     VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://localhost:3001}
+    image: 21chillie/job-tracker-frontend:latest
     container_name: job-tracker-frontend
     ports:
       - "3000:3000"
