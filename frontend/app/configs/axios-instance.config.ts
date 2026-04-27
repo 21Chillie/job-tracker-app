@@ -12,7 +12,7 @@ interface ApiErrorResponse {
 }
 
 const api = axios.create({
-  baseURL: env.BACKEND_URL || "http://localhost:3001",
+  baseURL: env.BACKEND_URL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

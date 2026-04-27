@@ -21,7 +21,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   const queryClient = getQueryClient();
 
   if (!cookie) {
-    getQueryClient().clear();
+    queryClient.clear();
     return redirect("/login");
   }
 

@@ -1,5 +1,5 @@
+import db from "@config/db-client";
 import logger from "@config/logger";
-import db from "@db/db-client";
 import { randomUUIDv7 } from "bun";
 import { HTTPException } from "hono/http-exception";
 import { QueryJobType } from "~/types/global.types";
