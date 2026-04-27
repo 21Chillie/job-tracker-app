@@ -35,4 +35,4 @@ COPY --from=build --chown=bun:bun /app/package.json ./package.json
 USER bun
 EXPOSE 3000
 # Run using the React Router CLI handler
-CMD ["./node_modules/.bin/react-router-serve", "./build/server/index.js"]
+CMD ["bun", "run", "start"]
