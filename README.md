@@ -181,9 +181,9 @@ docker build -f frontend/Dockerfile \
 docker compose up --build
 ```
 
-Current compose mapping:
+Open in you browser:
 
-- Frontend: `http://localhost:3001`
+- Frontend: `http://localhost:3000`
 - Backend: `http://localhost:3001`
 
 Stop services:
