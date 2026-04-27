@@ -11,6 +11,32 @@ _Dashboard page showing user job list_
 ![Dashboard overview](./docs/images/add-job.webp)
 _Dashboard page showing add job form_
 
+## Table Of Content
+
+- [Job Tracker App](#job-tracker-app)
+  - [Table Of Content](#table-of-content)
+  - [Project Overview](#project-overview)
+    - [What the app helps users do](#what-the-app-helps-users-do)
+    - [Architecture summary](#architecture-summary)
+  - [Features](#features)
+  - [Tech Stack](#tech-stack)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+  - [Repository Structure](#repository-structure)
+  - [Environment Variables](#environment-variables)
+    - [Example files](#example-files)
+  - [Local Setup](#local-setup)
+    - [1. Clone repo](#1-clone-repo)
+    - [2. Install dependencies](#2-install-dependencies)
+    - [3. Configure environment](#3-configure-environment)
+    - [4. Run backend](#4-run-backend)
+    - [5. Run frontend](#5-run-frontend)
+  - [Docker Setup](#docker-setup)
+    - [Configure Environment](#configure-environment)
+    - [Build images manually](#build-images-manually)
+    - [Run with Docker Compose](#run-with-docker-compose)
+  - [License](#license)
+
 ## Project Overview
 
 Searching for jobs often involves many moving parts: multiple companies, different statuses, interview stages, and follow-up actions.  
@@ -133,6 +159,10 @@ bun run build && bun run start # or `bun run dev`
 Frontend default: `http://localhost:3000`
 
 ## Docker Setup
+
+### Configure Environment
+
+Configure environment variables in root folder.
 
 ### Build images manually
 
