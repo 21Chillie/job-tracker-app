@@ -1,4 +1,4 @@
-import db from "~/db/db-client";
+import db from "@config/db-client";
 
 export const statsModel = {
 	comparePerWeek: async (userId: string) => {
