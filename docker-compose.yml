@@ -5,8 +5,8 @@ services:
       dockerfile: Dockerfile
     image: 21chillie/job-tracker-backend:latest
     container_name: job-tracker-backend
-    ports:
-      - "3001:3001"
+    # ports:
+    #   - "3001:3001"
     environment:
       BUN_APP_ENV: ${BUN_APP_ENV:-production}
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-change-me-in-env}
@@ -26,8 +26,8 @@ services:
         VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://localhost:3001}
     image: 21chillie/job-tracker-frontend:latest
     container_name: job-tracker-frontend
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     environment:
       HOST: 0.0.0.0
       PORT: 3000
