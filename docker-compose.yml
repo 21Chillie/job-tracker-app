@@ -3,7 +3,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: 21chillie/job-tracker-backend:latest
+    image: 21chillie/job-tracker-backend:v1.0.0
     container_name: job-tracker-backend
     # ports:
     #   - "3001:3001"
@@ -24,7 +24,7 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://localhost:3001}
-    image: 21chillie/job-tracker-frontend:latest
+    image: 21chillie/job-tracker-frontend:v1.0.0
     container_name: job-tracker-frontend
     # ports:
     #   - "3000:3000"
