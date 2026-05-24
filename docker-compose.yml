@@ -6,8 +6,8 @@ services:
     image: 21chillie/job-tracker-backend:v1.0.0
     container_name: job-tracker-backend
     # Uncomment ports below to expose the backend on port 3001
-    ports:
-      - "3001:3001"
+    # ports:
+    #   - "3001:3001"
     environment:
       BUN_APP_ENV: ${BUN_APP_ENV:-production}
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-change-me-in-env}
@@ -30,8 +30,8 @@ services:
     image: 21chillie/job-tracker-frontend:v1.0.0
     container_name: job-tracker-frontend
     # Uncomment ports below to expose the frontend on port 3000
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     environment:
       HOST: 0.0.0.0
       PORT: 3000
