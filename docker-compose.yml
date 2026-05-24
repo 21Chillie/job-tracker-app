@@ -3,8 +3,9 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: 21chillie/job-tracker-backend:latest
+    image: 21chillie/job-tracker-backend:v1.0.0
     container_name: job-tracker-backend
+    # Uncomment ports below to expose the backend on port 3001
     ports:
       - "3001:3001"
     environment:
@@ -17,6 +18,8 @@ services:
     volumes:
       - backend_data:/app/src/db
     restart: unless-stopped
+    networks:
+      - job-tracker-net
 
   frontend:
     build:
@@ -24,8 +27,9 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://localhost:3001}
-    image: 21chillie/job-tracker-frontend:latest
+    image: 21chillie/job-tracker-frontend:v1.0.0
     container_name: job-tracker-frontend
+    # Uncomment ports below to expose the frontend on port 3000
     ports:
       - "3000:3000"
     environment:
@@ -34,6 +38,14 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+    networks:
+      - job-tracker-net
+
+networks:
+  job-tracker-net:
+    driver: bridge
+    name: job-tracker-net
 
 volumes:
   backend_data:
+    name: job-tracker-data

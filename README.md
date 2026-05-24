@@ -167,10 +167,10 @@ Configure environment variables in root folder.
 ### Build images manually
 
 ```bash
-docker build -f backend/Dockerfile -t job-tracker-backend:local ./backend
+docker build -f backend/Dockerfile -t 21chillie/job-tracker-app:v1.0.0 ./backend
 
 docker build -f frontend/Dockerfile \
-  -t job-tracker-frontend:local \
+  -t 21chillie/job-tracker-app:v1.0.0 \
   --build-arg VITE_BACKEND_URL=http://localhost:3001 \
   ./frontend
 ```
