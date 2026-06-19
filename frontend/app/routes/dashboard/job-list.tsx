@@ -3,6 +3,7 @@ import { jobsDataOption } from "@hooks/job/useJobData.hook";
 import type { FormJobDataType } from "@hooks/job/useJobForm.hook";
 import jobService from "@services/job.service";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import getSessionCookie from "@utils/cookie";
 import { lazy } from "react";
 import toast from "react-hot-toast";
 import { redirect, type MetaFunction } from "react-router";
@@ -23,8 +24,10 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: Route.LoaderArgs) {
+  const rawCookies = request.headers.get("cookie") || "";
+  const cookie = getSessionCookie(rawCookies);
+
   const queryClient = getQueryClient();
-  const cookie = request.headers.get("cookie") || "";
 
   if (!cookie) {
     return redirect("/login");
