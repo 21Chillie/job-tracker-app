@@ -4,30 +4,40 @@ import { betterAuth } from "better-auth";
 import { randomBytes } from "node:crypto";
 
 export const auth = betterAuth({
-	database: db,
-	baseURL: env.BETTER_AUTH_URL || "http://localhost:3001",
-	secret: env.BETTER_AUTH_SECRET || randomBytes(32).toString("base64"),
+  database: db,
+  baseURL: env.BETTER_AUTH_URL || "http://localhost:3001",
+  secret: env.BETTER_AUTH_SECRET || randomBytes(32).toString("base64"),
 
-	emailAndPassword: {
-		enabled: true,
-	},
+  emailAndPassword: {
+    enabled: true,
+  },
 
-	socialProviders: {
-		google: {
-			clientId: env.GOOGLE_CLIENT_ID as string,
-			clientSecret: env.GOOGLE_CLIENT_SECRET as string,
-		},
-	},
+  socialProviders: {
+    google: {
+      clientId: env.GOOGLE_CLIENT_ID as string,
+      clientSecret: env.GOOGLE_CLIENT_SECRET as string,
+    },
+  },
 
-	user: {
-		deleteUser: {
-			enabled: true,
-		},
-	},
+  user: {
+    deleteUser: {
+      enabled: true,
+    },
+  },
 
-	trustedOrigins: [env.FRONTEND_URL as string, "http://localhost:3000", "http://localhost:5173"],
+  trustedOrigins: [
+    env.FRONTEND_URL as string,
+    "http://localhost:3000",
+    "http://localhost:5173",
+  ],
 
-	advanced: {
-		useSecureCookies: process.env.NODE_ENV === "production",
-	},
+  advanced: {
+    useSecureCookies: process.env.NODE_ENV === "production",
+    cookiePrefix: "job-tracker",
+    cookies: {
+      sessionToken: {
+        name: "session_token",
+      },
+    },
+  },
 });
