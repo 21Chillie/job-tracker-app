@@ -5,6 +5,7 @@ import {
   statsQueryOption,
 } from "@hooks/stat/useStats.hook";
 import { dehydrate, useQuery } from "@tanstack/react-query";
+import getSessionCookie from "@utils/cookie";
 import { lazy } from "react";
 import { redirect, type MetaFunction } from "react-router";
 import type { Route } from "./+types/home";
@@ -23,7 +24,8 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const cookie = request.headers.get("cookie") || "";
+  const rawCookies = request.headers.get("cookie") || "";
+  const cookie = getSessionCookie(rawCookies);
   const queryClient = getQueryClient();
 
   if (!cookie) {
