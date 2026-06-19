@@ -4,11 +4,12 @@ import { LoadingSpinner } from "@components/reuse-ui/LoadingSpinner";
 import Sidebar from "@components/sidebar/Sidebar";
 import { getQueryClient } from "@configs/query-client.config";
 import { useAppDispatch } from "@configs/store.config";
+import { setUserId } from "@features/auth/authSlice";
 import { sessionQueryOption } from "@hooks/auth/useSession.hook";
 import { dehydrate, HydrationBoundary, useQuery } from "@tanstack/react-query";
+import getSessionCookie from "@utils/cookie";
 import { useEffect } from "react";
 import { Outlet, redirect, useNavigation } from "react-router";
-import { setUserId } from "~/features/auth/authSlice";
 import type { Route } from "./+types/dashboard-layout";
 
 /**
@@ -17,7 +18,9 @@ import type { Route } from "./+types/dashboard-layout";
  */
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const cookie = request.headers.get("cookie") || "";
+  const rawCookies = request.headers.get("cookie") || "";
+  const cookie = getSessionCookie(rawCookies);
+
   const queryClient = getQueryClient();
 
   if (!cookie) {
