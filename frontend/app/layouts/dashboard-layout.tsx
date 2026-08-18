@@ -2,14 +2,13 @@ import Dock from "@components/dock/Dock";
 import Navbar from "@components/navbar/Navbar";
 import { LoadingSpinner } from "@components/reuse-ui/LoadingSpinner";
 import Sidebar from "@components/sidebar/Sidebar";
-import { getQueryClient } from "@configs/query-client.config";
 import { useAppDispatch } from "@configs/store.config";
 import { setUserId } from "@features/auth/authSlice";
 import { sessionQueryOption } from "@hooks/auth/useSession.hook";
-import { dehydrate, HydrationBoundary, useQuery } from "@tanstack/react-query";
-import getSessionCookie from "@utils/cookie";
+import { HydrationBoundary, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { Outlet, redirect, useNavigation } from "react-router";
+import { Outlet, useNavigation } from "react-router";
+import { checkSession } from "~/utils/checkSession.server";
 import type { Route } from "./+types/dashboard-layout";
 
 /**
@@ -19,20 +18,8 @@ import type { Route } from "./+types/dashboard-layout";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const rawCookies = request.headers.get("cookie") || "";
-  const cookie = getSessionCookie(rawCookies);
-
-  const queryClient = getQueryClient();
-
-  if (!cookie) {
-    queryClient.clear();
-    return redirect("/login");
-  }
-
-  await queryClient.prefetchQuery(sessionQueryOption(cookie));
-
-  return {
-    dehydratedState: dehydrate(queryClient),
-  };
+  const sessionData = await checkSession(rawCookies);
+  return { dehydratedState: sessionData?.dehydratedState };
 }
 
 let isInitialRequest = true;
