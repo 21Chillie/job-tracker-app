@@ -10,14 +10,13 @@ export async function checkSession(rawCookies: string) {
 
   if (!cookie) {
     queryClient.clear();
-    return redirect("/login");
+    redirect("/login");
+    return;
   }
 
-  const session = await queryClient.ensureQueryData(sessionQueryOption(cookie));
+  await queryClient.prefetchQuery(sessionQueryOption(cookie));
 
   return {
     dehydratedState: dehydrate(queryClient),
-    session: session.user.id,
-    cookie
   };
 }
