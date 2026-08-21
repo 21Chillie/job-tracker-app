@@ -6,7 +6,7 @@ export default function LandingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col p-4 xl:p-0">
+    <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col p-4 xl:px-0">
       <header>
         <Navbar />
       </header>
