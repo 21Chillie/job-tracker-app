@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import ButtonLink from "@/components/navigation/button-link";
 
 export default function Hero() {
   return (
@@ -43,11 +43,23 @@ export default function Hero() {
       </p>
 
       {/* CTA */}
-      <Button
-        size="lg"
-        className="bg-foreground text-background hover:bg-foreground/80 mt-10">
-        Get Started
-      </Button>
+      <div className="mt-10 flex items-center justify-center gap-2">
+        <ButtonLink
+          className="bg-foreground! text-background! hover:bg-foreground/85! transition-colors"
+          size="lg"
+          href="/sign-up">
+          Get started
+        </ButtonLink>
+
+        <ButtonLink
+          className="hover:bg-background!"
+          variant="ghost"
+          size="lg"
+          href="https://github.com/21Chillie/job-tracker-app"
+          target="_blank">
+          Documentation
+        </ButtonLink>
+      </div>
     </section>
   );
 }
