@@ -1,0 +1,51 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: 21chillie/job-tracker-backend:v1.0.0
+    container_name: job-tracker-backend
+    # Uncomment ports below to expose the backend on port 3001
+    # ports:
+    #   - "3001:3001"
+    environment:
+      BUN_APP_ENV: ${BUN_APP_ENV:-production}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-change-me-in-env}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3001}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+    volumes:
+      - backend_data:/app/src/db
+    restart: unless-stopped
+    networks:
+      - job-tracker-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://localhost:3001}
+    image: 21chillie/job-tracker-frontend:v1.0.0
+    container_name: job-tracker-frontend
+    # Uncomment ports below to expose the frontend on port 3000
+    # ports:
+    #   - "3000:3000"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - job-tracker-net
+
+networks:
+  job-tracker-net:
+    driver: bridge
+    name: job-tracker-net
+
+volumes:
+  backend_data:
+    name: job-tracker-data
