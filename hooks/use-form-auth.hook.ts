@@ -46,7 +46,7 @@ export function useFormSignIn() {
       onDynamic: SignInFormSchema,
     },
 
-    // TODO: finish sign in form submission
+    // TODO: finish on submit logic
     onSubmit: async ({ value }) => {
       console.log(value);
     },
@@ -63,7 +63,7 @@ export function useFormSignUp() {
       onDynamic: SignUpFormSchema,
     },
 
-    // TODO: finish sign up form submission 
+    // TODO: finish on submit logic
     onSubmit: async ({ value }) => {
       console.log(value);
     },
