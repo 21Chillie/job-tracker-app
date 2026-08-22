@@ -1,8 +1,0 @@
-node_modules/
-.env
-.DS_Store
-logs
-database.sqlite
-database.sqlite-*
-backups
-job-tracker.sql

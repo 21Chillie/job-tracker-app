@@ -1,0 +1,6 @@
+- [ ] create server action to manage authentication (email)
+- [ ] create server action to manage authentication (social sign in)
+- [ ] finish auth hook functionality to handle submit
+- [ ] add email verification functionality (OTP only)
+- [ ] setup email service provider to send OTP code
+- [ ] setup rate limit and anti-bot

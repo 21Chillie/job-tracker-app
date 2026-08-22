@@ -2,6 +2,8 @@
 
 Job Tracker App is a full-stack web application for job seekers to manage and track their job application process in one place. It provides a structured workflow for recording applications, updating progress, and reviewing outcomes through a dashboard interface.
 
+> **Note:** This version (v2) is still in development. For now, only [v1](https://github.com/21Chillie/job-tracker-app/tree/v1) is the stable, please use this version until v2 is officially released.
+
 ![Dashboard overview](./docs/images/home.webp)
 _Dashboard page showing monthly stats and job status summary_
 
@@ -35,7 +37,9 @@ _Dashboard page showing add job form_
     - [Configure Environment](#configure-environment)
     - [Build images manually](#build-images-manually)
     - [Run with Docker Compose](#run-with-docker-compose)
-  - [License](#license)
+  - [Version](#version)
+    - [v1 (stable)](#v1-stable)
+    - [v2 (in development)](#v2-in-development)
 
 ## Project Overview
 
@@ -191,6 +195,11 @@ Stop services:
 ```bash
 docker compose down
 ```
+
+## Version
+
+- **v1** — Stable release (current). This is the version users can use for now.
+- **v2** — In development. Not yet marked as stable.
 
 ## License
 
