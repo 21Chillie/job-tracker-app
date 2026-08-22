@@ -1,6 +1,6 @@
 import Hero from "@/components/landing/hero";
 
-export default function LandingPage() {
+export default async function LandingPage() {
   return (
     <>
       <Hero />

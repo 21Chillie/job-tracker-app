@@ -1,7 +1,7 @@
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
-import { ButtonProps } from "@/types/global.type";
+import { ButtonLinkProps } from "@/types/global.type";
 import Link from "next/link";
 
 export default function ButtonLink({
@@ -10,7 +10,7 @@ export default function ButtonLink({
   variant = "default",
   size = "default",
   className,
-}: ButtonProps) {
+}: ButtonLinkProps) {
   return (
     <Link
       href={href}
