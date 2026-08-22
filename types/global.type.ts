@@ -1,3 +1,5 @@
+import { HTMLAttributeAnchorTarget } from "react";
+
 export type ButtonProps = {
   children: React.ReactNode;
   variant?:
@@ -8,6 +10,7 @@ export type ButtonProps = {
 };
 
 export type ButtonLinkProps = ButtonProps & {
+  target?: HTMLAttributeAnchorTarget;
   href: string;
 };
 

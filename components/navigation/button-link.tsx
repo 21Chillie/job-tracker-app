@@ -5,6 +5,7 @@ import { ButtonLinkProps } from "@/types/global.type";
 import Link from "next/link";
 
 export default function ButtonLink({
+  target,
   children,
   href,
   variant = "default",
@@ -13,6 +14,7 @@ export default function ButtonLink({
 }: ButtonLinkProps) {
   return (
     <Link
+      target={target}
       href={href}
       className={buttonVariants({ variant, size, className })}>
       {children}
