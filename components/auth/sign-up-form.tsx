@@ -7,8 +7,15 @@ import { Key, Mail } from "lucide-react";
 export default function SignUpForm() {
   const form = useFormSignUp();
 
+  const handleSubmit = (e: React.SubmitEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    form.handleSubmit();
+  };
+
   return (
-    <form onSubmit={() => form.handleSubmit()}>
+    <form onSubmit={handleSubmit}>
       <FieldGroup className="gap-4">
         <form.AppField name="fullName">
           {(field) => {

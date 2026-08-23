@@ -1,5 +1,5 @@
 import SignUpForm from "@/components/auth/sign-up-form";
-import SocialSignInButton from "@/components/auth/social-sign-button";
+import SocialAuthContainer from "@/components/auth/social-auth-container";
 import SeparatorText from "@/components/global/separator-text";
 import {
   Card,
@@ -9,11 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import GoogleIcon from "@/public/assets/icons/google-color.svg";
-import GithubIcon from "@icons-pack/react-simple-icons/icons/SiGithub";
-
-import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function SignUpCard() {
   return (
@@ -26,33 +23,16 @@ export default async function SignUpCard() {
       </CardHeader>
 
       <CardContent>
-        <div className="flex flex-wrap gap-4 sm:gap-2">
-          <SocialSignInButton
-            variant="outline"
-            className="flex-1">
-            <Image
-              src={GoogleIcon}
-              width={16}
-              height={16}
-              alt="google icon"
-            />{" "}
-            Continue with Google
-          </SocialSignInButton>
-
-          <SocialSignInButton
-            variant="outline"
-            className="flex-1">
-            <GithubIcon />
-            Continue with Github
-          </SocialSignInButton>
-        </div>
+        <Suspense>
+          <SocialAuthContainer className="flex flex-wrap gap-4 sm:gap-2" />
+        </Suspense>
 
         <SeparatorText className="my-6">Or continue with email</SeparatorText>
 
         <SignUpForm />
       </CardContent>
 
-      <CardAction className="w-full border-t text-center pt-6">
+      <CardAction className="w-full border-t pt-6 text-center">
         <p className="text-muted-foreground text-sm">
           Already have an account?{" "}
           <Link

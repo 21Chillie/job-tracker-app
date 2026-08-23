@@ -2,6 +2,7 @@ import { ButtonSubmit } from "@/components/form-input/button-submit";
 import InputPasswordField from "@/components/form-input/input-password";
 import InputTextField from "@/components/form-input/input-text-field";
 import { fieldContext, formContext } from "@/hooks/create-form.hook";
+import { emailSignUp } from "@/services/auth/email.auth.server";
 import {
   SignInFormSchema,
   SignInFormSchemaType,
@@ -22,10 +23,7 @@ export const { useAppForm, withForm } = createFormHook({
   },
 });
 
-const validationLogic = revalidateLogic({
-  mode: "blur",
-  modeAfterSubmission: "change",
-});
+const validationLogic = revalidateLogic();
 
 const signInDefaultValues: SignInFormSchemaType = {
   email: "",
@@ -43,6 +41,7 @@ export function useFormSignIn() {
     defaultValues: signInDefaultValues,
     validationLogic,
     validators: {
+      onDynamicAsyncDebounceMs: 500,
       onDynamic: SignInFormSchema,
     },
 
@@ -60,12 +59,13 @@ export function useFormSignUp() {
     defaultValues: signUpDefaultValues,
     validationLogic,
     validators: {
+      onDynamicAsyncDebounceMs: 500,
       onDynamic: SignUpFormSchema,
     },
 
     // TODO: finish on submit logic
     onSubmit: async ({ value }) => {
-      console.log(value);
+      emailSignUp(value);
     },
   });
 
