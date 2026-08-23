@@ -1,3 +1,4 @@
+import { type User } from "@/prisma/generated/prisma/client";
 import z from "zod";
 
 export const SignInFormSchema = z.object({
@@ -17,3 +18,23 @@ export const SignUpFormSchema = SignInFormSchema.extend({
 
 export type SignInFormSchemaType = z.infer<typeof SignInFormSchema>;
 export type SignUpFormSchemaType = z.infer<typeof SignUpFormSchema>;
+
+export type AuthServerResponseType = {
+  success: boolean;
+  message: string;
+  redirectURL: string;
+};
+
+export type AuthErrorStatusTextType =
+  | "access_denied"
+  | "invalid_request"
+  | "unauthorized_client"
+  | "invalid_scope"
+  | "server_error"
+  | "temporarily_unavailable"
+  | "redirect_uri_mismatch"
+  | "incorrect_client_credentials"
+  | "bad_verification_code"
+  | "unverified_user_email";
+
+export type UserRoleType = User["role"];
