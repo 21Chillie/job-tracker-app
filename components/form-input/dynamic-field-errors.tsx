@@ -15,10 +15,12 @@ export default function DynamicFieldDescription({
 
   if (isDirty && errors.length > 0) {
     return (
-      <div className="space-y-1">
+      <div className="flex flex-col gap-1">
         {errors.map(({ message }: ZodError) => {
           return (
-            <FieldDescription className="text-xs" key={`${name}-${message}`}>
+            <FieldDescription
+              className="text-xs"
+              key={`${name}-${message}`}>
               {message}
             </FieldDescription>
           );
@@ -28,7 +30,9 @@ export default function DynamicFieldDescription({
   }
 
   if (description) {
-    return <FieldDescription className="text-xs">{description}</FieldDescription>;
+    return (
+      <FieldDescription className="text-xs">{description}</FieldDescription>
+    );
   }
 
   return null;

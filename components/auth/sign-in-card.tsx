@@ -1,5 +1,5 @@
 import SignUpForm from "@/components/auth/sign-up-form";
-import SocialSignInButton from "@/components/auth/social-sign-button";
+import SocialAuthContainer from "@/components/auth/social-auth-container";
 import SeparatorText from "@/components/global/separator-text";
 import {
   Card,
@@ -9,12 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import GoogleIcon from "@/public/assets/icons/google-color.svg";
-import GithubIcon from "@icons-pack/react-simple-icons/icons/SiGithub";
-
-import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function SignInCard() {
   return (
@@ -28,26 +24,9 @@ export default async function SignInCard() {
       </CardHeader>
 
       <CardContent>
-        <div className="flex flex-wrap gap-4 sm:gap-2">
-          <SocialSignInButton
-            variant="outline"
-            className="flex-1">
-            <Image
-              src={GoogleIcon}
-              width={16}
-              height={16}
-              alt="google icon"
-            />{" "}
-            Continue with Google
-          </SocialSignInButton>
-
-          <SocialSignInButton
-            variant="outline"
-            className="flex-1">
-            <GithubIcon />
-            Continue with Github
-          </SocialSignInButton>
-        </div>
+        <Suspense>
+          <SocialAuthContainer className="flex flex-wrap gap-4 sm:gap-2"/>
+        </Suspense>
 
         <SeparatorText className="my-6">Or continue with email</SeparatorText>
 
