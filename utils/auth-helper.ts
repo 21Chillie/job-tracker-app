@@ -1,4 +1,8 @@
-import { AuthErrorStatusTextType } from "@/types/auth.type";
+import {
+  AuthErrorStatusTextType,
+  AuthServerResponseType,
+  OTPEmailType,
+} from "@/types/auth.type";
 
 // This error codes is based on OAuth 2.0 Error Codes and with some specific error codes by provider (Google & GitHub)
 export function getErrorMessage(statusText?: AuthErrorStatusTextType) {
@@ -27,3 +31,34 @@ export function getErrorMessage(statusText?: AuthErrorStatusTextType) {
       return statusText ? "An unexpected error occurred." : null;
   }
 }
+
+export function authErrorResponseHelper({
+  error,
+  redirectURL,
+}: {
+  error: unknown;
+  redirectURL: string;
+}): AuthServerResponseType & { statusText: string } {
+  if (error instanceof Error) {
+    return {
+      success: false,
+      statusText: "Auth Error",
+      message: error.message,
+      redirectURL,
+    };
+  }
+
+  return {
+    success: false,
+    statusText: "Unknown Error",
+    message: "An unknown error when trying authenticate with email",
+    redirectURL,
+  };
+}
+
+export const subjectMap: Record<OTPEmailType, string> = {
+  "email-verification": "Verify your email address",
+  "forget-password": "Reset your password",
+  "sign-in": "Your sign-in code",
+  "change-email": "Change your email address",
+};
