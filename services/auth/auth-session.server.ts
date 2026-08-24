@@ -10,7 +10,17 @@ export async function checkSession() {
   });
 
   if (!session) {
-    return redirect("/sign-in");
+    return null;
+  }
+
+  return session;
+}
+
+export async function checkSessionRedirect() {
+  const session = await checkSession();
+
+  if (!session) {
+    return redirect("/sign-up");
   }
 
   return session;
