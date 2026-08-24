@@ -1,5 +1,5 @@
 import BtnThemeToggle from "@/components/global/btn-theme-toggle";
-import ButtonLink from "@/components/navigation/button-link";
+import ButtonSignUp from "@/components/navigation/button-sign-up";
 import LogoLink from "@/components/navigation/logo-link";
 
 export default function Navbar() {
@@ -10,12 +10,11 @@ export default function Navbar() {
       </div>
 
       <div className="flex items-center gap-2">
-        <BtnThemeToggle
-          variant="outline"
-          size="icon"
-        />
+        <BtnThemeToggle variant="outline" size="icon" />
 
-        <ButtonLink href="/sign-up">Sign up</ButtonLink>
+        <ButtonSignUp targetURL="/dashboard" fallbackURL="/sign-up">
+          Sign up
+        </ButtonSignUp>
       </div>
     </nav>
   );
