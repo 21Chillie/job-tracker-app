@@ -9,10 +9,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { checkSession } from "@/services/auth/auth-session.server";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export default async function SignUpCard() {
+  const session = await checkSession();
+  if (session) {
+    return redirect("/dashboard");
+  }
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="border-b">
@@ -35,9 +42,7 @@ export default async function SignUpCard() {
       <CardAction className="w-full border-t pt-6 text-center">
         <p className="text-muted-foreground text-sm">
           Already have an account?{" "}
-          <Link
-            className="text-foreground hover:underline"
-            href="/sign-in">
+          <Link className="text-foreground hover:underline" href="/sign-in">
             Log in
           </Link>
         </p>

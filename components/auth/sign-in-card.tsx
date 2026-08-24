@@ -1,4 +1,4 @@
-import SignUpForm from "@/components/auth/sign-up-form";
+import SignInForm from "@/components/auth/sign-in-form";
 import SocialAuthContainer from "@/components/auth/social-auth-container";
 import SeparatorText from "@/components/global/separator-text";
 import {
@@ -9,10 +9,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { checkSession } from "@/services/auth/auth-session.server";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export default async function SignInCard() {
+  const session = await checkSession();
+  if (session) {
+    redirect("/dashboard");
+  }
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="border-b">
@@ -25,20 +32,18 @@ export default async function SignInCard() {
 
       <CardContent>
         <Suspense>
-          <SocialAuthContainer className="flex flex-wrap gap-4 sm:gap-2"/>
+          <SocialAuthContainer className="flex flex-wrap gap-4 sm:gap-2" />
         </Suspense>
 
         <SeparatorText className="my-6">Or continue with email</SeparatorText>
 
-        <SignUpForm />
+        <SignInForm />
       </CardContent>
 
       <CardAction className="w-full border-t pt-6 text-center">
         <p className="text-muted-foreground text-sm max-sm:mb-6">
           Dont have an account?{" "}
-          <Link
-            className="text-foreground hover:underline"
-            href="/sign-up">
+          <Link className="text-foreground hover:underline" href="/sign-up">
             Sign up
           </Link>
         </p>
