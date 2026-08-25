@@ -2,10 +2,21 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef, useState } from "react";
+import { resendOtpAction } from "@/services/auth/auth-email.server";
+import { Activity, useEffect, useRef, useState, useTransition } from "react";
+import { toast } from "sonner";
 
-export default function OTPResend({ className }: { className?: string }) {
-  const [resendCooldown, setResendCooldown] = useState(0);
+export default function OTPResend({
+  className,
+  email,
+}: {
+  className?: string;
+  email: string;
+}) {
+  const [limitResend, setLimitResend] = useState<number>(0);
+  const [resendCooldown, setResendCooldown] = useState<number>(0);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [isPending, startTransition] = useTransition();
   const cooldownRef = useRef<NodeJS.Timeout | null>(null);
 
   // Cooldown timer for resend button
@@ -28,19 +39,50 @@ export default function OTPResend({ className }: { className?: string }) {
     }, 1000);
   };
 
+  const handleResend = () => {
+    startTransition(async () => {
+      if (limitResend >= 3) return;
+      setLimitResend(limitResend + 1);
+      startCooldown(60);
+
+      const res = await resendOtpAction({ email });
+
+      if (!res.success) {
+        setIsError(true);
+
+        toast.error(res.statusText, {
+          description: res.message,
+          duration: 3000,
+        });
+      }
+    });
+  };
+
   return (
     <div className={cn("flex flex-col gap-3", className)}>
-      <p className="text-muted-foreground">
-        {resendCooldown > 0 ? (
-          `Please wait ${resendCooldown}s before resending.`
-        ) : (
-          <>Don&apos;t receive the OTP code?</>
-        )}
-      </p>
+      <Activity mode={isError ? "hidden" : "visible"}>
+        <p className="text-muted-foreground">
+          {resendCooldown > 0 ? (
+            `Please wait ${resendCooldown}s before resending.`
+          ) : (
+            <>
+              {limitResend >= 3
+                ? "You have reached the limit of resends."
+                : "Don't receive the OTP code?"}
+            </>
+          )}
+        </p>
+      </Activity>
+
+      <Activity mode={isError ? "visible" : "hidden"}>
+        <p className="text-destructive">
+          Something went wrong while resending the OTP code.
+        </p>
+      </Activity>
       <Button
         type="button"
-        onClick={() => startCooldown(30)}
-        isDisabled={resendCooldown > 0}
+        onClick={handleResend}
+        isDisabled={resendCooldown > 0 || limitResend >= 3 || isPending}
         size={"xs"}
         className="bg-foreground text-background hover:bg-foreground/85"
       >
