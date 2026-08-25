@@ -27,6 +27,8 @@ export function getErrorMessage(statusText?: AuthErrorStatusTextType) {
       return "Verification expired. Please try again.";
     case "unverified_user_email":
       return "Your GitHub email is not verified. Verify it first.";
+    case "account_not_linked":
+      return "Your account uses a different login provider. Sign in with the method you used to create your account and then you can link to OAuth provider.";
     default:
       return statusText ? "An unexpected error occurred." : null;
   }
@@ -59,6 +61,6 @@ export function authErrorResponseHelper({
 export const subjectMap: Record<OTPEmailType, string> = {
   "email-verification": "Verify your email address",
   "forget-password": "Reset your password",
-  "sign-in": "Your sign-in code",
+  "sign-in": "sign-in your account",
   "change-email": "Change your email address",
 };
