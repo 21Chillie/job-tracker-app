@@ -21,6 +21,7 @@ export type SignUpFormSchemaType = z.infer<typeof SignUpFormSchema>;
 
 export type AuthServerResponseType = {
   success: boolean;
+  statusText: string;
   message: string;
   redirectURL: string;
 };
@@ -35,6 +36,10 @@ export type AuthErrorStatusTextType =
   | "redirect_uri_mismatch"
   | "incorrect_client_credentials"
   | "bad_verification_code"
-  | "unverified_user_email";
+  | "unverified_user_email"
+  | "account_not_linked";
 
 export type UserRoleType = User["role"];
+
+export type OTPEmailType =
+  "sign-in" | "email-verification" | "forget-password" | "change-email";

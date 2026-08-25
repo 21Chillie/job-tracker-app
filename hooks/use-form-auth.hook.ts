@@ -2,7 +2,7 @@ import { ButtonSubmit } from "@/components/form-input/button-submit";
 import InputPasswordField from "@/components/form-input/input-password";
 import InputTextField from "@/components/form-input/input-text-field";
 import { fieldContext, formContext } from "@/hooks/create-form.hook";
-import { emailSignUp } from "@/services/auth/email.auth.server";
+import { emailSignIn, emailSignUp } from "@/services/auth/auth-email.server";
 import {
   SignInFormSchema,
   SignInFormSchemaType,
@@ -10,6 +10,8 @@ import {
   SignUpFormSchemaType,
 } from "@/types/auth.type";
 import { createFormHook, revalidateLogic } from "@tanstack/react-form-nextjs";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export const { useAppForm, withForm } = createFormHook({
   fieldContext,
@@ -37,6 +39,8 @@ const signUpDefaultValues: SignUpFormSchemaType = {
 };
 
 export function useFormSignIn() {
+  const router = useRouter();
+
   const form = useAppForm({
     defaultValues: signInDefaultValues,
     validationLogic,
@@ -45,9 +49,19 @@ export function useFormSignIn() {
       onDynamic: SignInFormSchema,
     },
 
-    // TODO: finish on submit logic
     onSubmit: async ({ value }) => {
-      console.log(value);
+      const res = await emailSignIn(value);
+
+      if (!res.success) {
+        toast.error(res.statusText, {
+          description: res.message,
+          duration: 3000,
+        });
+
+        router.push(res.redirectURL);
+      }
+
+      router.push(res.redirectURL);
     },
   });
 
@@ -63,9 +77,15 @@ export function useFormSignUp() {
       onDynamic: SignUpFormSchema,
     },
 
-    // TODO: finish on submit logic
     onSubmit: async ({ value }) => {
-      emailSignUp(value);
+      const res = await emailSignUp(value);
+
+      if (res && !res.success) {
+        toast.error(res.statusText, {
+          description: res.message,
+          duration: 3000,
+        });
+      }
     },
   });
 

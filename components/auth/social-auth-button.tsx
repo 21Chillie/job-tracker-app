@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { socialSignIn } from "@/services/auth/social-auth.server";
+import { socialSignIn } from "@/services/auth/auth-social.server";
 import { ButtonProps } from "@/types/global.type";
 import { type SocialProvider } from "better-auth";
 import { useTransition } from "react";
@@ -30,7 +30,8 @@ export default function SocialAuthButton({
       isDisabled={isPending}
       className={className}
       variant={variant}
-      size={size}>
+      size={size}
+    >
       {isPending ? (
         <>
           <Spinner /> Redirecting to{" "}
