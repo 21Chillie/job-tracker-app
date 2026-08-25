@@ -25,7 +25,10 @@ export default function SocialAuthContainer({
       const message = getErrorMessage(error);
 
       if (message) {
-        toast.error(message, { duration: 3000 });
+        toast.error(error.replace("_", " ").toUpperCase(), {
+          description: <p className="text-muted-foreground">{message}</p>,
+          duration: 6000,
+        });
       }
 
       // Clean the url, to prevent this side effect of showing the error message on every page load
@@ -39,13 +42,9 @@ export default function SocialAuthContainer({
         pathname={pathname}
         provider="google"
         variant="outline"
-        className="flex-1">
-        <Image
-          src={GoogleIcon}
-          width={16}
-          height={16}
-          alt="google icon"
-        />{" "}
+        className="flex-1"
+      >
+        <Image src={GoogleIcon} width={16} height={16} alt="google icon" />{" "}
         Continue with Google
       </SocialAuthButton>
 
@@ -53,7 +52,8 @@ export default function SocialAuthContainer({
         pathname={pathname}
         provider="github"
         variant="outline"
-        className="flex-1">
+        className="flex-1"
+      >
         <GithubIcon />
         Continue with Github
       </SocialAuthButton>
