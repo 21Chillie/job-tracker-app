@@ -49,7 +49,6 @@ export function useFormSignIn() {
       onDynamic: SignInFormSchema,
     },
 
-    // TODO: finish on submit logic
     onSubmit: async ({ value }) => {
       const res = await emailSignIn(value);
 
@@ -61,6 +60,8 @@ export function useFormSignIn() {
 
         router.push(res.redirectURL);
       }
+
+      router.push(res.redirectURL);
     },
   });
 
@@ -68,7 +69,6 @@ export function useFormSignIn() {
 }
 
 export function useFormSignUp() {
-  const router = useRouter();
   const form = useAppForm({
     defaultValues: signUpDefaultValues,
     validationLogic,
@@ -81,12 +81,11 @@ export function useFormSignUp() {
     onSubmit: async ({ value }) => {
       const res = await emailSignUp(value);
 
-      if (!res.success) {
+      if (res && !res.success) {
         toast.error(res.statusText, {
           description: res.message,
           duration: 3000,
         });
-        router.push(res.redirectURL);
       }
     },
   });
