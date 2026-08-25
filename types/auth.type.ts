@@ -36,8 +36,10 @@ export type AuthErrorStatusTextType =
   | "redirect_uri_mismatch"
   | "incorrect_client_credentials"
   | "bad_verification_code"
-  | "unverified_user_email";
+  | "unverified_user_email"
+  | "account_not_linked";
 
 export type UserRoleType = User["role"];
 
-export type OTPEmailType = "sign-in" | "email-verification" | "forget-password" | "change-email"
+export type OTPEmailType =
+  "sign-in" | "email-verification" | "forget-password" | "change-email";
