@@ -77,7 +77,6 @@ export function useFormSignUp() {
       onDynamic: SignUpFormSchema,
     },
 
-    // TODO: finish on submit logic
     onSubmit: async ({ value }) => {
       const res = await emailSignUp(value);
 
