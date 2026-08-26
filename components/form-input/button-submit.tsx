@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { useFormContext } from "@/hooks/create-form.hook";
+import { useFormContext } from "@/lib/hooks/create-form.hook";
 import { ButtonProps } from "@/types/global.type";
 
 export function ButtonSubmit({
@@ -22,7 +22,8 @@ export function ButtonSubmit({
           size={size}
           type="submit"
           className={className}
-          isDisabled={isSubmitting || !canSubmit}>
+          isDisabled={isSubmitting || !canSubmit}
+        >
           {isSubmitting ? (
             <>
               {loadingLabel}
@@ -51,7 +52,8 @@ export function ButtonReset({
       variant={variant}
       size={size}
       isDisabled={!form.state.canSubmit || form.state.isSubmitting}
-      onClick={() => form.reset()}>
+      onClick={() => form.reset()}
+    >
       {children}
     </Button>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { FieldGroup } from "@/components/ui/field";
-import { useFormSignUp } from "@/hooks/use-form-auth.hook";
+import { useFormSignUp } from "@/lib/hooks/use-form-auth.hook";
 import { Key, Mail } from "lucide-react";
 
 export default function SignUpForm() {
@@ -62,7 +62,8 @@ export default function SignUpForm() {
           <form.ButtonSubmit
             size="lg"
             className="mt-6 mb-2"
-            loadingLabel="Please wait trying to sign up">
+            loadingLabel="Please wait trying to sign up"
+          >
             Sign up with email
           </form.ButtonSubmit>
         </form.AppForm>
