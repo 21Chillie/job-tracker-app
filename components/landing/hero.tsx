@@ -30,7 +30,7 @@ export default function Hero() {
       />
 
       {/* Headline */}
-      <h1 className="text-foreground/90 mx-auto mt-12 max-w-4xl text-3xl tracking-tight text-pretty sm:text-4xl md:text-7xl">
+      <h1 className="text-foreground/90 mx-auto mt-12 max-w-4xl text-4xl tracking-tight text-pretty md:text-7xl">
         The simple way
         <strong className="from-foreground/90 via-foreground/70 block bg-linear-to-r to-[color-mix(in_oklch,var(--primary)_85%,var(--foreground))] bg-clip-text font-medium text-transparent">
           manage your applications
