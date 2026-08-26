@@ -35,17 +35,17 @@ export async function emailSignUp({
     };
   }
 
-  const isValidMx = await checkEmailMxRecord(validate.data.email);
-  if (!isValidMx) {
-    return {
-      success: false,
-      statusText: "Invalid Domain",
-      message: "This email domain does not appear to be valid.",
-      redirectURL: "/sign-up",
-    };
-  }
-  
   try {
+    const isValidMx = await checkEmailMxRecord(validate.data.email);
+    if (!isValidMx) {
+      return {
+        success: false,
+        statusText: "Invalid Domain",
+        message: "This email domain does not appear to be valid.",
+        redirectURL: "/sign-up",
+      };
+    }
+
     await auth.api.signUpEmail({
       body: {
         name: fullName,
