@@ -5,23 +5,36 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function checkSession() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-  if (!session) {
+    if (!session) return null;
+
+    return {
+      name: session.user.name,
+      id: session.user.id,
+      email: session.user.email,
+    };
+  } catch (error) {
+    console.error("Session Error:", error);
     return null;
   }
-
-  return session;
 }
 
 export async function checkSessionRedirect() {
-  const session = await checkSession();
-
-  if (!session) {
-    return redirect("/sign-up");
+  let session: { name: string; id: string; email: string } | null;
+  try {
+    session = await checkSession();
+  } catch (error) {
+    console.error("Session Error:", error);
+    session = null;
   }
 
-  return session;
+  if (!session) {
+    redirect("/sign-up");
+  }
+
+  return session
 }

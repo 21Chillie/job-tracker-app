@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import { AuthErrorStatusTextType } from "@/types/auth.type";
 import { type SocialProvider } from "better-auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -19,7 +20,7 @@ export async function socialSignIn({
       process.env.GOOGLE_CLIENT_SECRET) ||
     (provider === "github" &&
       process.env.GITHUB_CLIENT_ID &&
-      process.env.GITHUB_CLIENT_SECRET)
+      process.env.GITHUB_CLIENT_SECRET),
   );
 
   // If the OAuth secret is not available, redirect with an error query parameter
@@ -28,16 +29,28 @@ export async function socialSignIn({
     redirect(`${currentPathname}?error=incorrect_client_credentials`);
   }
 
-  const result = await auth.api.signInSocial({
-    body: {
-      provider,
-      callbackURL: "/dashboard",
-      errorCallbackURL: currentPathname,
-    },
-    headers: await headers(),
-  });
+  let redirectURL: string | undefined;
 
-  // redirect to dashboard if success
-  // otherwise, redirect to current pathname with error query parameter
-  redirect(result.url ?? currentPathname);
+  try {
+    const result = await auth.api.signInSocial({
+      body: {
+        provider,
+        callbackURL: "/dashboard",
+        errorCallbackURL: currentPathname,
+      },
+      headers: await headers(),
+    });
+
+    redirectURL = result.url ?? currentPathname;
+  } catch (error) {
+    const errorQuery: AuthErrorStatusTextType = "server_error";
+    console.error("Social sign-in failed:", error);
+    redirect(`${currentPathname}?error=${errorQuery}`);
+  }
+
+  // redirect to callbackURL if its success
+  // otherwise, redirect to errorCallbackURL when there is error, the client will display the error
+  if (redirectURL) {
+    redirect(redirectURL);
+  }
 }
