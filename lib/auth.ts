@@ -14,6 +14,11 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  advanced: {
+    ipAddress: {
+      ipAddressHeaders: ["x-forwarded-for", "cf-connecting-ip"],
+    },
+  },
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
@@ -38,12 +43,17 @@ export const auth = betterAuth({
   rateLimit: {
     enabled: true,
     storage: "database",
+    modelName: "rateLimit",
     window: 10,
     max: 100,
     customRules: {
       "/email-otp/send-verification-otp": {
         window: 600,
         max: 3,
+      },
+      "/sign-in/email": {
+        window: 60,
+        max: 5,
       },
     },
   },
