@@ -26,6 +26,5 @@ export async function updateUserRole({
     }
   } catch (err) {
     console.error("DATABASE ERROR:", err);
-    throw err;
   }
 }
