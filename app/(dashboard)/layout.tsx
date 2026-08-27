@@ -1,19 +1,24 @@
-import Navbar from "@/components/navigation/navbar";
+import SidebarContainer from "@/components/navigation/sidebar-container";
+import { checkSessionRedirect } from "@/services/auth/auth-session.server";
+import { Metadata } from "next";
 
-export default function LandingLayout({
-  children,
-}: {
+type Props = {
   children: React.ReactNode;
-}) {
+};
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://jobtracker.chillie.my.id"),
+  title: "Dashboard | Job Tracker App",
+};
+
+export default async function DashboardLayout({ children }: Props) {
+  const userSession = await checkSessionRedirect();
+
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col p-4 xl:px-0">
-      <header>
-        <Navbar />
-      </header>
-
-      <main className="my-6 flex-1">{children}</main>
-
-      <footer>Landing Footer</footer>
+    <div className="flex w-full flex-1 flex-col">
+      <SidebarContainer user={userSession} side="right">
+        {children}
+      </SidebarContainer>
     </div>
   );
 }
