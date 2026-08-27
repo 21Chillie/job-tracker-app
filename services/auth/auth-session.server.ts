@@ -16,6 +16,7 @@ export async function checkSession() {
       name: session.user.name,
       id: session.user.id,
       email: session.user.email,
+      image: session.user.image,
     };
   } catch (error) {
     console.error("Session Error:", error);
@@ -24,7 +25,12 @@ export async function checkSession() {
 }
 
 export async function checkSessionRedirect() {
-  let session: { name: string; id: string; email: string } | null;
+  let session: {
+    name: string;
+    id: string;
+    email: string;
+    image: string | null | undefined;
+  } | null;
   try {
     session = await checkSession();
   } catch (error) {
@@ -36,5 +42,5 @@ export async function checkSessionRedirect() {
     redirect("/sign-up");
   }
 
-  return session
+  return session;
 }
