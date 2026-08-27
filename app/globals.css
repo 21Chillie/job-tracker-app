@@ -197,7 +197,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-secondary/40 text-secondary-foreground;
+    @apply bg-background/30 text-foreground;
     letter-spacing: var(--tracking-normal);
   }
   button:not(:disabled),
