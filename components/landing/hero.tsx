@@ -3,14 +3,14 @@ import ButtonStarted from "@/components/landing/button-started";
 
 export default function Hero() {
   return (
-    <section className="bg-card relative isolate overflow-hidden rounded-3xl border px-6 pt-20 pb-32 text-center shadow-sm">
+    <section className="bg-card relative isolate overflow-hidden rounded-2xl px-6 pt-20 pb-32 text-center shadow-sm">
       {/* Grid pattern */}
       <div
         aria-hidden
         className="absolute inset-0 -z-20"
         style={{
           backgroundImage:
-            "linear-gradient(to right, color-mix(in oklch, var(--border) 35%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in oklch, var(--border) 35%, transparent) 1px, transparent 1px)",
+            "linear-gradient(to right, color-mix(in oklch, var(--border) 30%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in oklch, var(--border) 30%, transparent) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
       />
@@ -30,7 +30,7 @@ export default function Hero() {
       />
 
       {/* Headline */}
-      <h1 className="text-foreground/90 mx-auto mt-12 max-w-4xl text-4xl tracking-tight text-pretty md:text-7xl">
+      <h1 className="text-foreground/90 mx-auto mt-12 max-w-4xl text-4xl sm:text-6xl tracking-tight text-pretty md:text-7xl">
         The simple way
         <strong className="from-foreground/90 via-foreground/70 block bg-linear-to-r to-[color-mix(in_oklch,var(--primary)_85%,var(--foreground))] bg-clip-text font-medium text-transparent">
           manage your applications
