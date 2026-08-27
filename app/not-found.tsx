@@ -3,8 +3,8 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function NotFoundPage() {
   return (
-    <div className="p-2.5 bg-secondary/50 min-h-screen w-screen relative flex flex-col">
-      <Card className="ring-0! bg-background flex-1 grid place-items-center p-6">
+    <div className="relative flex min-h-screen w-screen flex-col p-2.5">
+      <Card className="bg-background grid flex-1 place-items-center p-6 ring-0!">
         <Card className="bg-card">
           <CardContent>
             <NotFoundGlitch
