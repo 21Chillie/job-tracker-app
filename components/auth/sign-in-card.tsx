@@ -9,19 +9,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { checkSession } from "@/services/auth/auth-session.server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-export default async function SignInCard() {
+export default async function SignInCard({
+  className,
+}: {
+  className?: string;
+}) {
   const session = await checkSession();
   if (session) {
     redirect("/dashboard");
   }
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className={cn("w-full", className)}>
       <CardHeader className="border-b">
         <CardTitle>Welcome back</CardTitle>
         <CardDescription>
