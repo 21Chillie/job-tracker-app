@@ -1,3 +1,4 @@
+import ButtonBackHome from "@/components/auth/button-back-home";
 import SignInForm from "@/components/auth/sign-in-form";
 import SocialAuthContainer from "@/components/auth/social-auth-container";
 import SeparatorText from "@/components/global/separator-text";
@@ -26,33 +27,37 @@ export default async function SignInCard({
   }
 
   return (
-    <Card className={cn("w-full", className)}>
-      <CardHeader className="border-b">
-        <CardTitle>Welcome back</CardTitle>
-        <CardDescription>
-          Ready to check and manage your job application? Please enter your
-          details below.
-        </CardDescription>
-      </CardHeader>
+    <div className="w-full space-y-4">
+      <ButtonBackHome />
 
-      <CardContent>
-        <Suspense>
-          <SocialAuthContainer className="flex flex-wrap gap-4 sm:gap-2" />
-        </Suspense>
+      <Card className={cn("w-full", className)}>
+        <CardHeader className="border-b">
+          <CardTitle>Welcome back</CardTitle>
+          <CardDescription>
+            Ready to check and manage your job application? Please enter your
+            details below.
+          </CardDescription>
+        </CardHeader>
 
-        <SeparatorText className="my-6">Or continue with email</SeparatorText>
+        <CardContent>
+          <Suspense>
+            <SocialAuthContainer className="flex flex-wrap gap-4 sm:gap-2" />
+          </Suspense>
 
-        <SignInForm />
-      </CardContent>
+          <SeparatorText className="my-6">Or continue with email</SeparatorText>
 
-      <CardAction className="w-full border-t pt-6 text-center">
-        <p className="text-muted-foreground text-sm max-sm:mb-6">
-          Dont have an account?{" "}
-          <Link className="text-foreground hover:underline" href="/sign-up">
-            Sign up
-          </Link>
-        </p>
-      </CardAction>
-    </Card>
+          <SignInForm />
+        </CardContent>
+
+        <CardAction className="w-full border-t pt-6 text-center">
+          <p className="text-muted-foreground text-sm max-sm:mb-6">
+            Dont have an account?{" "}
+            <Link className="text-foreground hover:underline" href="/sign-up" prefetch={"auto"}>
+              Sign up
+            </Link>
+          </p>
+        </CardAction>
+      </Card>
+    </div>
   );
 }
