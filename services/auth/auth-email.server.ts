@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 import {
   AuthServerResponseType,
   SignInFormSchema,
@@ -9,6 +10,7 @@ import {
   SignUpFormSchemaType,
 } from "@/types/auth.type";
 import { authErrorResponseHelper } from "@/utils/auth-helper";
+import { resolveMx } from "dns/promises";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import z from "zod";
@@ -23,14 +25,40 @@ export async function emailSignUp({
     ? `/verify-email?email=${encodeURIComponent(email)}`
     : "/dashboard";
 
-  try {
-    const validate = SignUpFormSchema.safeParse({ fullName, email, password });
+  const validate = SignUpFormSchema.safeParse({ fullName, email, password });
 
-    if (!validate.success) {
+  if (!validate.success) {
+    return {
+      success: false,
+      statusText: "Validate Error",
+      message: z.prettifyError(validate.error),
+      redirectURL: "/sign-up",
+    };
+  }
+
+  try {
+    const isValidMx = await checkEmailMxRecord(validate.data.email);
+    if (!isValidMx) {
       return {
         success: false,
-        statusText: "Validate Error",
-        message: z.prettifyError(validate.error),
+        statusText: "Invalid Domain",
+        message: "This email domain does not appear to be valid.",
+        redirectURL: "/sign-up",
+      };
+    }
+
+    const isUserExist = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+      select: { email: true },
+    });
+
+    if (isUserExist) {
+      return {
+        success: false,
+        statusText: "User Exists",
+        message: "This email is already registered.",
         redirectURL: "/sign-up",
       };
     }
@@ -183,5 +211,17 @@ export async function resendOtpAction({
   } catch (error: unknown) {
     console.error("Resend OTP Error:", error);
     return { success: false, message: "", statusText: "" };
+  }
+}
+
+export async function checkEmailMxRecord(email: string): Promise<boolean> {
+  try {
+    const domain = email.split("@")[1];
+    if (!domain) return false;
+
+    const mxRecords = await resolveMx(domain);
+    return mxRecords.length > 0;
+  } catch {
+    return false;
   }
 }

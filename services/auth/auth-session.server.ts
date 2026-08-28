@@ -1,10 +1,14 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import { cacheTag } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function checkSession() {
+  "use cache: private";
+  cacheTag("user-session");
+
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -16,6 +20,7 @@ export async function checkSession() {
       name: session.user.name,
       id: session.user.id,
       email: session.user.email,
+      image: session.user.image,
     };
   } catch (error) {
     console.error("Session Error:", error);
@@ -24,7 +29,12 @@ export async function checkSession() {
 }
 
 export async function checkSessionRedirect() {
-  let session: { name: string; id: string; email: string } | null;
+  let session: {
+    name: string;
+    id: string;
+    email: string;
+    image: string | null | undefined;
+  } | null;
   try {
     session = await checkSession();
   } catch (error) {
@@ -36,5 +46,5 @@ export async function checkSessionRedirect() {
     redirect("/sign-up");
   }
 
-  return session
+  return session;
 }

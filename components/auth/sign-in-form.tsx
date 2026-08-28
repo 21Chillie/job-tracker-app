@@ -1,7 +1,7 @@
 "use client";
 
 import { FieldGroup } from "@/components/ui/field";
-import { useFormSignIn } from "@/hooks/use-form-auth.hook";
+import { useFormSignIn } from "@/lib/hooks/use-form-auth.hook";
 import { Key, Mail } from "lucide-react";
 
 export default function SignInForm() {
@@ -48,7 +48,8 @@ export default function SignInForm() {
           <form.ButtonSubmit
             size="lg"
             className="mt-6 mb-2"
-            loadingLabel="Please wait trying to sign in">
+            loadingLabel="Please wait trying to sign in"
+          >
             Sign in with email
           </form.ButtonSubmit>
         </form.AppForm>

@@ -1,5 +1,3 @@
-"use client";
-
 import OTPInputCode from "@/components/auth/otp-input-code";
 import OTPResend from "@/components/auth/otp-resend";
 import {
@@ -40,7 +38,7 @@ export default function OTPCard({
         <OTPInputCode email={email} />
       </CardContent>
 
-      <CardFooter className="border-t bg-accent pb-6 grid place-items-center">
+      <CardFooter className="bg-accent grid place-items-center border-t pb-6">
         <OTPResend className="items-center" email={email} />
       </CardFooter>
     </Card>
