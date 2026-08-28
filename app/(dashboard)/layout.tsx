@@ -1,5 +1,4 @@
-import SidebarContainer from "@/components/navigation/sidebar-container";
-import { checkSessionRedirect } from "@/services/auth/auth-session.server";
+import Sidebar from "@/components/navigation/sidebar";
 import { Metadata } from "next";
 
 type Props = {
@@ -12,13 +11,9 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardLayout({ children }: Props) {
-  const userSession = await checkSessionRedirect();
-
   return (
     <div className="flex w-full flex-1 flex-col">
-      <SidebarContainer user={userSession} side="right">
-        {children}
-      </SidebarContainer>
+      <Sidebar side="right">{children}</Sidebar>
     </div>
   );
 }
