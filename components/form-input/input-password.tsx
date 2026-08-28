@@ -8,7 +8,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { useFieldContext } from "@/hooks/create-form.hook";
+import { useFieldContext } from "@/lib/hooks/create-form.hook";
 import { AnyInputFieldProps } from "@/types/global.type";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";

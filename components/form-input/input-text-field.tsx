@@ -7,7 +7,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { useFieldContext } from "@/hooks/create-form.hook";
+import { useFieldContext } from "@/lib/hooks/create-form.hook";
 import { TextInputFieldProps } from "@/types/global.type";
 
 export default function InputTextField({

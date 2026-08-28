@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 import {
   AuthServerResponseType,
   SignInFormSchema,
@@ -35,17 +36,33 @@ export async function emailSignUp({
     };
   }
 
-  const isValidMx = await checkEmailMxRecord(validate.data.email);
-  if (!isValidMx) {
-    return {
-      success: false,
-      statusText: "Invalid Domain",
-      message: "This email domain does not appear to be valid.",
-      redirectURL: "/sign-up",
-    };
-  }
-  
   try {
+    const isValidMx = await checkEmailMxRecord(validate.data.email);
+    if (!isValidMx) {
+      return {
+        success: false,
+        statusText: "Invalid Domain",
+        message: "This email domain does not appear to be valid.",
+        redirectURL: "/sign-up",
+      };
+    }
+
+    const isUserExist = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+      select: { email: true },
+    });
+
+    if (isUserExist) {
+      return {
+        success: false,
+        statusText: "User Exists",
+        message: "This email is already registered.",
+        redirectURL: "/sign-up",
+      };
+    }
+
     await auth.api.signUpEmail({
       body: {
         name: fullName,
