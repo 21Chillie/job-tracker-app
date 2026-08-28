@@ -1,10 +1,14 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import { cacheTag } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function checkSession() {
+  "use cache: private";
+  cacheTag("user-session");
+
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
