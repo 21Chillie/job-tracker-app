@@ -6,14 +6,16 @@ export default async function VerifyEmailPage({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
-  // Check if there is query params ?email=...
-  // Redirect to home if no email is provided
+  }) {
+
+  
+  // // Check if there is query params ?email=...
+  // // Redirect to home if no email is provided
   const { email } = (await searchParams) as { email: string | undefined };
   if (typeof email !== "string") redirect("/");
 
-  // Check if there is email but not verified in database
-  // Redirect to home if no email it's not exist
+  // // Check if there is email but not verified in database
+  // // Redirect to home if no email it's not exist
   const userEmailExist = await getUserEmail({ email, emailVerified: false });
   if (!userEmailExist.data) redirect("/");
 
@@ -21,3 +23,5 @@ export default async function VerifyEmailPage({
     <OTPCard type="email-verification" email={userEmailExist.data.email} />
   );
 }
+
+ export const instant = false; 
