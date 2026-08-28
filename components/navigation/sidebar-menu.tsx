@@ -12,11 +12,14 @@ import {
   AnimatedSidebarMenuSubButton,
   AnimatedSidebarMenuSubItem,
 } from "@/components/motion/animated-sidebar";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { destinations } from "./sidebar-menu-example";
+import { destinations } from "@/components/navigation/sidebar-menu-link";
 
 export default function SidebarMenu() {
-  const [active, setActive] = useState("People");
+  const router = useRouter();
+  const pathname = usePathname();
+  const [active, setActive] = useState(pathname);
   const [openSection, setOpenSection] = useState<string | null>(null);
 
   return (
@@ -25,35 +28,40 @@ export default function SidebarMenu() {
         <AnimatedSidebarGroupLabel>Platform</AnimatedSidebarGroupLabel>
         <AnimatedSidebarGroupContent>
           <AnimatedSidebarMenu>
-            {destinations.map(({ label, icon: Icon, children }) => (
+            {destinations.map(({ label, icon: Icon, href, children }) => (
               <AnimatedSidebarMenuItem key={label}>
                 <AnimatedSidebarMenuButton
                   isActive={
-                    active === label || children?.includes(active) === true
+                    active === label ||
+                    children?.some((child) => child.href === active) === true
                   }
                   ariaExpanded={children ? openSection === label : undefined}
                   icon={<Icon className="size-4" />}
                   onSelect={() => {
-                    setOpenSection((current) => {
-                      if (!children) {
-                        setActive(label);
-                        return null;
-                      }
-                      return current === label ? null : label;
-                    });
+                    if (children) {
+                      setOpenSection((current) =>
+                        current === label ? null : label,
+                      );
+                      return;
+                    }
+                    setActive(href);
+                    router.push(href);
                   }}
                 >
                   {label}
                 </AnimatedSidebarMenuButton>
                 {children ? (
                   <AnimatedSidebarMenuSub open={openSection === label}>
-                    {children.map((child) => (
-                      <AnimatedSidebarMenuSubItem key={child}>
+                    {children.map(({ href, label }) => (
+                      <AnimatedSidebarMenuSubItem key={label}>
                         <AnimatedSidebarMenuSubButton
-                          isActive={active === child}
-                          onSelect={() => setActive(child)}
+                          isActive={active === href}
+                          onSelect={() => {
+                            setActive(href);
+                            router.push(href);
+                          }}
                         >
-                          {child}
+                          {label}
                         </AnimatedSidebarMenuSubButton>
                       </AnimatedSidebarMenuSubItem>
                     ))}
