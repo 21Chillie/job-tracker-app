@@ -4,22 +4,18 @@ import {
   AnimatedSidebarRail,
 } from "@/components/motion/animated-sidebar";
 import { SidebarFooter } from "@/components/navigation/sidebar-footer";
+import { SidebarFooterSkeleton } from "@/components/navigation/sidebar-footer-skeleton";
 import SidebarHeader from "@/components/navigation/sidebar-header";
 import { SidebarInset } from "@/components/navigation/sidebar-inset";
 import SidebarMenu from "@/components/navigation/sidebar-menu";
+import { Suspense } from "react";
 
 type Props = {
   children: React.ReactNode;
   side?: "left" | "right";
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    image: string | null | undefined;
-  };
 };
 
-export default function SidebarContainer({ children, side, user }: Props) {
+export default function Sidebar({ children, side }: Props) {
   return (
     <AnimatedSidebarProvider className="min-h-0 flex-1 overflow-hidden">
       <AnimatedSidebar
@@ -31,7 +27,10 @@ export default function SidebarContainer({ children, side, user }: Props) {
       >
         <SidebarHeader />
         <SidebarMenu />
-        <SidebarFooter name={user.name} email={user.email} image={user.image} />
+        <Suspense fallback={<SidebarFooterSkeleton />}>
+          <SidebarFooter />
+        </Suspense>
+
         <AnimatedSidebarRail />
       </AnimatedSidebar>
 
