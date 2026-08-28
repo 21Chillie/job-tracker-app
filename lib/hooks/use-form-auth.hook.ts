@@ -53,7 +53,7 @@ export function useFormSignIn() {
       const res = await emailSignIn(value);
 
       if (!res.success) {
-        toast.error(res.statusText, {
+        toast.error(res.statusText.replaceAll("_", " "), {
           description: res.message,
           duration: 3000,
         });
@@ -81,7 +81,7 @@ export function useFormSignUp() {
       const res = await emailSignUp(value);
 
       if (res && !res.success) {
-        toast.error(res.statusText, {
+        toast.error(res.statusText.replaceAll("_", " "), {
           description: res.message,
           duration: 3000,
         });
