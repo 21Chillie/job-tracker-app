@@ -10,7 +10,9 @@ import {
   SignUpFormSchemaType,
 } from "@/types/auth.type";
 import { authErrorResponseHelper } from "@/utils/auth-helper";
+import { APIError } from "better-call";
 import { resolveMx } from "dns/promises";
+import { revalidateTag } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import z from "zod";
@@ -223,5 +225,38 @@ export async function checkEmailMxRecord(email: string): Promise<boolean> {
     return mxRecords.length > 0;
   } catch {
     return false;
+  }
+}
+
+export async function accountSignout() {
+  try {
+    await auth.api.signOut({ headers: await headers() });
+
+    revalidateTag("user-session", { expire: 0 });
+    revalidateTag("user-email", "max");
+
+    return {
+      success: true,
+      message: "Signed out successfully",
+      statusText: "Sign Out",
+    };
+  } catch (error: unknown) {
+    console.error("Signout Error:", error);
+    let errorMessage = "Something went wrong during sign out";
+    let errorStatusText = "Unknown Error";
+
+    if (error instanceof APIError) {
+      errorMessage = error.message;
+      errorStatusText = error.name;
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
+      errorStatusText = error.name;
+    }
+
+    return {
+      success: false,
+      message: errorMessage,
+      statusText: errorStatusText,
+    };
   }
 }
