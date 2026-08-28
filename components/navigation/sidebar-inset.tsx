@@ -18,7 +18,7 @@ export async function SidebarInset({ children, side = "left" }: Props) {
     <AnimatedSidebarInset
       className={cn(
         "bg-background mx-0 my-2.5 min-h-0 rounded-xl border shadow-md",
-        side === "left" ? "mr-2.5" : "ml-2.5",
+        side === "left" ? "mr-2.5 max-md:ml-2.5" : "ml-2.5 max-md:mr-2.5",
       )}
     >
       <header className="border-border flex h-16 shrink-0 items-center border-b px-4">
