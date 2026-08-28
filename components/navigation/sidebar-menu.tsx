@@ -32,7 +32,7 @@ export default function SidebarMenu() {
               <AnimatedSidebarMenuItem key={label}>
                 <AnimatedSidebarMenuButton
                   isActive={
-                    active === label ||
+                    active === href ||
                     children?.some((child) => child.href === active) === true
                   }
                   ariaExpanded={children ? openSection === label : undefined}
