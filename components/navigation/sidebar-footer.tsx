@@ -48,11 +48,11 @@ export async function SidebarFooter() {
           <DropdownMenuSeparator />
 
           <DropdownMenuGroup>
-            <DropdownMenuItem href="/account">
+            <DropdownMenuItem href="/dashboard/account">
               <User className="text-muted-foreground" /> Account
             </DropdownMenuItem>
 
-            <DropdownMenuItem>
+            <DropdownMenuItem href="/dashboard/settings">
               <Settings2 className="text-muted-foreground" /> Settings
             </DropdownMenuItem>
 
