@@ -1,5 +1,7 @@
 import ButtonLink from "@/components/global/button-link";
 import ButtonStarted from "@/components/landing/button-started";
+import { Suspense } from "react";
+import { Button } from "../ui/button";
 
 export default function Hero() {
   return (
@@ -30,7 +32,7 @@ export default function Hero() {
       />
 
       {/* Headline */}
-      <h1 className="text-foreground/90 mx-auto mt-12 max-w-4xl text-4xl sm:text-6xl tracking-tight text-pretty md:text-7xl">
+      <h1 className="text-foreground/90 mx-auto mt-12 max-w-4xl text-4xl tracking-tight text-pretty sm:text-6xl md:text-7xl">
         The simple way
         <strong className="from-foreground/90 via-foreground/70 block bg-linear-to-r to-[color-mix(in_oklch,var(--primary)_85%,var(--foreground))] bg-clip-text font-medium text-transparent">
           manage your applications
@@ -45,14 +47,25 @@ export default function Hero() {
 
       {/* CTA */}
       <div className="mt-10 flex items-center justify-center gap-2">
-        <ButtonStarted
-          className="bg-foreground! text-background! hover:bg-foreground/85! transition-colors"
-          size="lg"
-          targetURL="/dashboard"
-          fallbackURL="/sign-up"
+        <Suspense
+          fallback={
+            <Button
+              size={"lg"}
+              className="bg-foreground! text-background! hover:bg-foreground/85! transition-colors"
+            >
+              Get Started
+            </Button>
+          }
         >
-          Get started
-        </ButtonStarted>
+          <ButtonStarted
+            className="bg-foreground! text-background! hover:bg-foreground/85! transition-colors"
+            size="lg"
+            targetURL="/dashboard"
+            fallbackURL="/sign-up"
+          >
+            Get started
+          </ButtonStarted>
+        </Suspense>
 
         <ButtonLink
           className="hover:bg-background!"
