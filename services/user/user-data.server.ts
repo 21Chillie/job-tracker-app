@@ -16,6 +16,7 @@ export async function getUserEmail({
         email,
         emailVerified,
       },
+      select: { email: true, emailVerified: true },
     });
 
     if (!result) {
@@ -25,7 +26,7 @@ export async function getUserEmail({
     return {
       success: true,
       message: "User found",
-      data: { email: result.email, emailVerified: result.emailVerified },
+      data: result,
     };
   } catch (err) {
     if (err instanceof Error) {
