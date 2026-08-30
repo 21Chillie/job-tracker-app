@@ -22,13 +22,13 @@ export default function Sidebar({ children, side }: Props) {
         side={side}
         ariaLabel="Solace workspace"
         collapsible="icon"
-        className="min-h-0"
-        panelClassName="h-full border-r-0 border-l-0 bg-transparent"
+        className="min-h-0 md:relative md:w-full md:max-w-56"
+        panelClassName="h-svh border-r-0 border-l-0 bg-transparent"
       >
-        <SidebarHeader />
-        <SidebarMenu />
+        <SidebarHeader className="md:fixed md:top-0 md:w-full md:max-w-56" />
+        <SidebarMenu className="md:fixed md:top-16 md:w-full md:max-w-56" />
         <Suspense fallback={<SidebarFooterSkeleton />}>
-          <SidebarFooter />
+          <SidebarFooter className="md:fixed md:bottom-0 md:max-w-56" />
         </Suspense>
 
         <AnimatedSidebarRail />
