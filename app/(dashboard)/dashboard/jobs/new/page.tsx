@@ -1,3 +1,5 @@
-export default async function AddJobPage() {
-  return <div>Add Job</div>;
+import { JobsNewPrototype } from "@/components/test/jobs-new-prototype";
+
+export default function JobsNewPage() {
+  return <JobsNewPrototype />;
 }
