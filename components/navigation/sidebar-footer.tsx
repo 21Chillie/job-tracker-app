@@ -10,15 +10,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import { checkSessionRedirect } from "@/services/auth/auth-session.server";
 import { avatarImageFallback, getNameInitials } from "@/utils/user-helper";
 import { Settings2, User } from "lucide-react";
 
-export async function SidebarFooter() {
+type Props = {
+  className?: string;
+};
+
+export async function SidebarFooter({ className }: Props) {
   const session = await checkSessionRedirect();
 
   return (
-    <AnimatedSidebarFooter className="gap-3 border-none p-3">
+    <AnimatedSidebarFooter className={cn("gap-3 border-none p-3", className)}>
       <DropdownMenuTrigger>
         <SidebarFooterButton session={session} />
 
