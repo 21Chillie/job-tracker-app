@@ -29,6 +29,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  jobs          Job[]
 
   @@unique([email])
   @@map("user")
@@ -92,4 +93,43 @@ model RateLimit {
 
   @@unique([key])
   @@map("rateLimit")
+}
+
+enum PositionTypeOption {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  VOLUNTEER
+}
+
+enum ApplicationStatus {
+  APPLIED
+  SCREENING
+  INTERVIEWING
+  ASSESSMENT
+  OFFER
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+model Job {
+  id String @id @default(uuid())
+
+  jobTitle     String
+  positionType PositionTypeOption @default(FULL_TIME)
+  company      String
+  location     String?
+  jobUrl       String?
+  status       ApplicationStatus  @default(APPLIED)
+  dateApplied  DateTime?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  notes        String?
+  userId       String
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status, positionType, jobTitle])
+  @@map("job")
 }
