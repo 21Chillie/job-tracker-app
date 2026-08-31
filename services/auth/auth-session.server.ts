@@ -1,14 +1,12 @@
 "use server";
 
 import { auth } from "@/lib/auth";
-import { cacheTag } from "next/cache";
+import { APIError } from "better-auth";
+import { revalidateTag } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function checkSession() {
-  "use cache: private";
-  cacheTag("user-session");
-
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -47,4 +45,36 @@ export async function checkSessionRedirect() {
   }
 
   return session;
+}
+
+export async function accountSignout() {
+  try {
+    await auth.api.signOut({ headers: await headers() });
+
+    revalidateTag("user-email", "max");
+
+    return {
+      success: true,
+      message: "Signed out successfully",
+      statusText: "Sign Out",
+    };
+  } catch (error: unknown) {
+    console.error("Signout Error:", error);
+    let errorMessage = "Something went wrong during sign out";
+    let errorStatusText = "Unknown Error";
+
+    if (error instanceof APIError) {
+      errorMessage = error.message;
+      errorStatusText = error.name;
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
+      errorStatusText = error.name;
+    }
+
+    return {
+      success: false,
+      message: errorMessage,
+      statusText: errorStatusText,
+    };
+  }
 }
