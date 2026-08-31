@@ -15,15 +15,21 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { destinations } from "@/components/navigation/sidebar-menu-link";
+import { cn } from "@/lib/utils";
 
-export default function SidebarMenu() {
+
+type Props = {
+  className?: string;
+};
+
+export default function SidebarMenu({ className }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const [active, setActive] = useState(pathname);
   const [openSection, setOpenSection] = useState<string | null>(null);
 
   return (
-    <AnimatedSidebarContent className="px-2 pt-1">
+    <AnimatedSidebarContent className={cn("px-2 pt-1", className)}>
       <AnimatedSidebarGroup className="pt-4">
         <AnimatedSidebarGroupLabel>Platform</AnimatedSidebarGroupLabel>
         <AnimatedSidebarGroupContent>
@@ -32,7 +38,7 @@ export default function SidebarMenu() {
               <AnimatedSidebarMenuItem key={label}>
                 <AnimatedSidebarMenuButton
                   isActive={
-                    active === label ||
+                    active === href ||
                     children?.some((child) => child.href === active) === true
                   }
                   ariaExpanded={children ? openSection === label : undefined}

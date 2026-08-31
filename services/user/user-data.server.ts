@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { cacheLife, cacheTag } from "next/cache";
 
 // * Get user email verified or not
 export async function getUserEmail({
@@ -10,6 +11,10 @@ export async function getUserEmail({
   email: string;
   emailVerified: boolean;
 }) {
+  "use cache";
+  cacheLife("weeks");
+  cacheTag("user-email");
+
   try {
     const result = await prisma.user.findUnique({
       where: {

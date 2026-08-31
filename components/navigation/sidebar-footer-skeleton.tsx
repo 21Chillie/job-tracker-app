@@ -1,10 +1,17 @@
 import { AnimatedSidebarFooter } from "@/components/motion/animated-sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 
-export function SidebarFooterSkeleton() {
+type SidebarFooterSkeletonProps = {
+  className?: string;
+};
+
+export function SidebarFooterSkeleton({
+  className,
+}: SidebarFooterSkeletonProps) {
   return (
-    <AnimatedSidebarFooter className="gap-3 border-none p-3">
+    <AnimatedSidebarFooter className={cn("gap-3 border-none p-3", className)}>
       <div className="flex items-center justify-between">
         <div className="flex min-h-11 w-full items-center gap-3 overflow-hidden rounded-xl p-1">
           <div className="size-9">

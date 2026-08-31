@@ -1,4 +1,5 @@
 import {
+  Briefcase,
   CircleUserRound,
   FileText,
   LayoutGrid,
@@ -14,7 +15,7 @@ export const destinations = [
   },
   {
     label: "Manage Jobs",
-    icon: CircleUserRound,
+    icon: Briefcase,
     children: [
       { label: "Job list", href: "/dashboard/jobs" },
       { label: "Add jobs", href: "/dashboard/jobs/new" },

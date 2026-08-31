@@ -1,6 +1,7 @@
 import ButtonBackHome from "@/components/auth/button-back-home";
 import SignInForm from "@/components/auth/sign-in-form";
 import SocialAuthContainer from "@/components/auth/social-auth-container";
+import SocialAuthContainerFallback from "@/components/auth/social-auth-container-fallback";
 import SeparatorText from "@/components/global/separator-text";
 import {
   Card,
@@ -11,21 +12,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { checkSession } from "@/services/auth/auth-session.server";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-export default async function SignInCard({
-  className,
-}: {
-  className?: string;
-}) {
-  const session = await checkSession();
-  if (session) {
-    redirect("/dashboard");
-  }
-
+export default function SignInCard({ className }: { className?: string }) {
   return (
     <div className="w-full space-y-4">
       <ButtonBackHome />
@@ -40,7 +30,11 @@ export default async function SignInCard({
         </CardHeader>
 
         <CardContent>
-          <Suspense>
+          <Suspense
+            fallback={
+              <SocialAuthContainerFallback className="flex flex-wrap gap-4 sm:gap-2" />
+            }
+          >
             <SocialAuthContainer className="flex flex-wrap gap-4 sm:gap-2" />
           </Suspense>
 
@@ -52,7 +46,11 @@ export default async function SignInCard({
         <CardAction className="w-full border-t pt-6 text-center">
           <p className="text-muted-foreground text-sm max-sm:mb-6">
             Dont have an account?{" "}
-            <Link className="text-foreground hover:underline" href="/sign-up" prefetch={"auto"}>
+            <Link
+              className="text-foreground hover:underline"
+              href="/sign-up"
+              prefetch={"auto"}
+            >
               Sign up
             </Link>
           </p>

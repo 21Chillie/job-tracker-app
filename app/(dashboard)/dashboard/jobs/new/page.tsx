@@ -1,3 +1,5 @@
-export default async function AddJobPage() {
-  return <div>Add Job</div>;
+import AddJobContainer from "@/components/job/add-job-container";
+
+export default function JobsNewPage() {
+  return <AddJobContainer />;
 }
