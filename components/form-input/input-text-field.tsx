@@ -25,13 +25,9 @@ export default function InputTextField({
   const isInvalid = state.meta.isDirty && state.meta.errors.length > 0;
 
   return (
-    <Field
-      data-disabled={disabled}
-      data-invalid={isInvalid}>
+    <Field data-disabled={disabled} data-invalid={isInvalid}>
       {label && (
-        <FieldLabel
-          className="text-xs"
-          htmlFor={name}>
+        <FieldLabel className="text-xs" htmlFor={name}>
           {label} {required && <span className="text-destructive">*</span>}
         </FieldLabel>
       )}
