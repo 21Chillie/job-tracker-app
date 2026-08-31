@@ -19,7 +19,7 @@ type Props<T> = AnyInputFieldProps & {
   }[];
 };
 
-export default function SelectInput<T>({
+export default function SelectInputField<T>({
   data,
   disabled,
   label,
