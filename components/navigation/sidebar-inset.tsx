@@ -21,7 +21,7 @@ export async function SidebarInset({ children, side = "left" }: Props) {
         side === "left" ? "mr-2.5 max-md:ml-2.5" : "ml-2.5 max-md:mr-2.5",
       )}
     >
-      <header className="border-border flex h-16 shrink-0 items-center border-b px-4">
+      <header className="border-border flex h-16 shrink-0 items-center border-b px-3 sm:px-6">
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center gap-3">
             <Activity mode={side === "left" ? "visible" : "hidden"}>
@@ -44,10 +44,10 @@ export async function SidebarInset({ children, side = "left" }: Props) {
         </div>
       </header>
 
-      <div className="flex min-h-0 flex-1 flex-col justify-between overflow-hidden p-5 sm:p-7">
+      <div className="flex min-h-0 flex-1 flex-col justify-between overflow-hidden p-3 sm:p-6">
         <div>{children}</div>
 
-        <div className="border-border flex items-end justify-between border-t pt-4">
+        <div className="flex items-end justify-between pt-4">
           <div>
             <p className="text-muted-foreground text-[10px] tracking-[0.16em] uppercase">
               Build by{" "}
