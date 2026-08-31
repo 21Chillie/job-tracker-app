@@ -2,13 +2,18 @@
 
 import { Loader } from "@/components/motion/loader";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { accountSignout } from "@/services/auth/auth-email.server";
+import { cn } from "@/lib/utils";
+import { accountSignout } from "@/services/auth/auth-session.server";
 import { LogOutIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
-export function SidebarFooterLogout() {
+type Props = {
+  className?: string;
+};
+
+export function SidebarFooterLogout({ className }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -34,7 +39,11 @@ export function SidebarFooterLogout() {
   };
 
   return (
-    <DropdownMenuItem isDisabled={isPending} onClick={handleLogout}>
+    <DropdownMenuItem
+      isDisabled={isPending}
+      onClick={handleLogout}
+      className={cn("cursor-pointer", className)}
+    >
       {isPending ? (
         <Loader className="text-muted-foreground" variant="spinner" />
       ) : (
