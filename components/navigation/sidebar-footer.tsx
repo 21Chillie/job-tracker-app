@@ -13,7 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { checkSessionRedirect } from "@/services/auth/auth-session.server";
 import { avatarImageFallback, getNameInitials } from "@/utils/user-helper";
-import { Settings2, User } from "lucide-react";
+import { User } from "lucide-react";
 
 type Props = {
   className?: string;
@@ -53,15 +53,14 @@ export async function SidebarFooter({ className }: Props) {
           <DropdownMenuSeparator />
 
           <DropdownMenuGroup>
-            <DropdownMenuItem href="/dashboard/account">
+            <DropdownMenuItem
+              href="/dashboard/account"
+              className={"cursor-pointer"}
+            >
               <User className="text-muted-foreground" /> Account
             </DropdownMenuItem>
 
-            <DropdownMenuItem href="/dashboard/settings">
-              <Settings2 className="text-muted-foreground" /> Settings
-            </DropdownMenuItem>
-
-            <SidebarFooterLogout />
+            <SidebarFooterLogout className="cursor-pointer" />
           </DropdownMenuGroup>
         </DropdownMenu>
       </DropdownMenuTrigger>
