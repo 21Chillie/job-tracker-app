@@ -27,7 +27,11 @@ export default function Sidebar({ children, side }: Props) {
       >
         <SidebarHeader className="md:fixed md:top-0 md:w-full md:max-w-56" />
         <SidebarMenu className="md:fixed md:top-16 md:w-full md:max-w-56" />
-        <Suspense fallback={<SidebarFooterSkeleton />}>
+        <Suspense
+          fallback={
+            <SidebarFooterSkeleton className="md:fixed md:bottom-0 md:max-w-56 w-full" />
+          }
+        >
           <SidebarFooter className="md:fixed md:bottom-0 md:max-w-56" />
         </Suspense>
 
