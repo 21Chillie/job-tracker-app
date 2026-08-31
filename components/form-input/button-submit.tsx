@@ -51,7 +51,6 @@ export function ButtonReset({
       className={className}
       variant={variant}
       size={size}
-      isDisabled={!form.state.canSubmit || form.state.isSubmitting}
       onClick={() => form.reset()}
     >
       {children}
