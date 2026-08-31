@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { cacheTag } from "next/cache";
+import { cacheLife, cacheTag } from "next/cache";
 
 // * Get user email verified or not
 export async function getUserEmail({
@@ -12,6 +12,7 @@ export async function getUserEmail({
   emailVerified: boolean;
 }) {
   "use cache";
+  cacheLife("weeks");
   cacheTag("user-email");
 
   try {
