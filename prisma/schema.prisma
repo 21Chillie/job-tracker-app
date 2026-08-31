@@ -115,8 +115,7 @@ enum ApplicationStatus {
 }
 
 model Job {
-  id String @id @default(uuid())
-
+  id           String             @id @default(uuid())
   jobTitle     String
   positionType PositionTypeOption @default(FULL_TIME)
   company      String
