@@ -1,6 +1,7 @@
 import ButtonBackHome from "@/components/auth/button-back-home";
 import SignUpForm from "@/components/auth/sign-up-form";
 import SocialAuthContainer from "@/components/auth/social-auth-container";
+import SocialAuthContainerFallback from "@/components/auth/social-auth-container-fallback";
 import SeparatorText from "@/components/global/separator-text";
 import {
   Card,
@@ -11,21 +12,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { checkSession } from "@/services/auth/auth-session.server";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-export default async function SignUpCard({
-  className,
-}: {
-  className?: string;
-}) {
-  const session = await checkSession();
-  if (session) {
-    return redirect("/dashboard");
-  }
-
+export default function SignUpCard({ className }: { className?: string }) {
   return (
     <div className="w-full space-y-4">
       <ButtonBackHome />
@@ -39,7 +29,11 @@ export default async function SignUpCard({
         </CardHeader>
 
         <CardContent>
-          <Suspense>
+          <Suspense
+            fallback={
+              <SocialAuthContainerFallback className="flex flex-wrap gap-4 sm:gap-2" />
+            }
+          >
             <SocialAuthContainer className="flex flex-wrap gap-4 sm:gap-2" />
           </Suspense>
 
