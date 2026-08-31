@@ -1,5 +1,5 @@
-import { JobsNewPrototype } from "@/components/test/jobs-new-prototype";
+import AddJobContainer from "@/components/job/add-job-container";
 
 export default function JobsNewPage() {
-  return <JobsNewPrototype />;
+  return <AddJobContainer />;
 }
