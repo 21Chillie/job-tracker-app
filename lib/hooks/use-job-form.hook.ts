@@ -7,6 +7,7 @@ import InputTextField from "@/components/form-input/input-text-field";
 import SelectInputField from "@/components/form-input/select-input-field";
 import TextAreaField from "@/components/form-input/text-area-field";
 import { fieldContext, formContext } from "@/lib/hooks/create-form.hook";
+import { addUserJob } from "@/services/job/job.server";
 import { jobFormSchema, JobFormSchemaType } from "@/types/job.type";
 import { createFormHook, revalidateLogic } from "@tanstack/react-form-nextjs";
 import { toast } from "sonner";
@@ -29,6 +30,8 @@ export const { useAppForm, withForm } = createFormHook({
 const validationLogic = revalidateLogic();
 
 export function useFormAddJob() {
+  const defaultMeta: { userId: string | null } = { userId: null };
+
   const defaultValues: JobFormSchemaType = {
     jobTitle: "",
     positionType: "FULL_TIME",
@@ -48,12 +51,19 @@ export function useFormAddJob() {
       onDynamic: jobFormSchema,
     },
 
-    // TODO: finish the logic and remove console log
-    onSubmit: async (state) => {
-      if (state.value.jobTitle) {
-        console.log("ADD JOB: ", state.value);
+    onSubmitMeta: defaultMeta,
+    onSubmit: async ({ value, meta }) => {
+      if (!meta.userId) {
+        toast.error("User ID is required");
+        return;
+      }
 
-        toast.success("Job added successfully");
+      const res = await addUserJob({ userId: meta.userId, formData: value });
+
+      if (res.success) {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
       }
     },
   });
