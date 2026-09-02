@@ -13,10 +13,12 @@
 <br/>
 
 ### Dashboard:
+
 **Add job functionality:**
-- [x] Create add job form
-- [x] Testing the job form
-- [ ] create server action to add user job applications
-- [ ] implement the action in add job form hook
-- [ ] testing the job form again
-- [ ] create quick stats in add job page   
+
+- [x] ~~Create add job form~~
+- [x] ~~Testing the job form~~
+- [x] ~~create server action to add user job applications~~
+- [x] ~~implement the action in add job form hook~~
+- [ ] ~~testing the job form again~~. Need to test it further
+- [ ] create quick stats in add job page
