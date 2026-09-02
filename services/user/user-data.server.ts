@@ -72,6 +72,9 @@ export async function checkUserId(
       data: data,
     };
   } catch (error) {
-    return handleDatabaseErrorResponse({ error });
+    return handleDatabaseErrorResponse({
+      error,
+      customStatusText: "Check User ID Failed",
+    });
   }
 }
