@@ -1,22 +1,30 @@
 "use client";
 
 import { FieldContent, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Separator } from "@/components/ui/separator";
+import { authClient } from "@/lib/auth-client";
 import { useFormAddJob } from "@/lib/hooks/use-job-form.hook";
 import {
   ApplicationStatusOptions,
   PositionTypeOptions,
 } from "@/types/job.type";
 import { Link } from "lucide-react";
-import { Separator } from "../ui/separator";
+import { toast } from "sonner";
 
 export default function AddJobForm() {
   const form = useFormAddJob();
+  const { data, isPending } = authClient.useSession();
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    form.handleSubmit();
+    if (!data || isPending) {
+      toast.error("You must be logged in to add a job.");
+      return;
+    }
+
+    form.handleSubmit({ userId: data.user.id });
   };
 
   return (

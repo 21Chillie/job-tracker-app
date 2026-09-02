@@ -1,6 +1,8 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { DatabaseResponse } from "@/types/global.type";
+import { handleDatabaseErrorResponse } from "@/utils/global-helper";
 import { cacheLife, cacheTag } from "next/cache";
 
 // * Get user email verified or not
@@ -9,7 +11,7 @@ export async function getUserEmail({
   emailVerified,
 }: {
   email: string;
-  emailVerified: boolean;
+  emailVerified?: boolean;
 }) {
   "use cache";
   cacheLife("weeks");
@@ -25,7 +27,7 @@ export async function getUserEmail({
     });
 
     if (!result) {
-      return { success: true, message: "User not found", data: null };
+      throw new Error("User not found");
     }
 
     return {
@@ -34,19 +36,45 @@ export async function getUserEmail({
       data: result,
     };
   } catch (err) {
+    let message = "UNKNOWN ERROR: Something went wrong on our end";
+
     if (err instanceof Error) {
       console.error(err);
-      return {
-        success: false,
-        message: `DATABASE ERROR: ${err.message}`,
-        data: null,
-      };
+      message = `DATABASE ERROR: ${err.message}`;
     }
 
     return {
       success: false,
-      message: `UNKNOWN ERROR: Something went wrong on our end`,
+      message,
       data: null,
     };
+  }
+}
+
+export async function checkUserId(
+  userId: string,
+): Promise<DatabaseResponse<{ id: string; email: string }>> {
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+
+      select: { id: true, email: true },
+    });
+
+    if (!data) throw new Error("User not found");
+
+    return {
+      success: true,
+      statusText: "ID Found",
+      message: "User ID checked successfully",
+      data: data,
+    };
+  } catch (error) {
+    return handleDatabaseErrorResponse({
+      error,
+      customStatusText: "Check User ID Failed",
+    });
   }
 }

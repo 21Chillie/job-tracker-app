@@ -32,3 +32,10 @@ export type NumberInputFieldProps = AnyInputFieldProps & {
   type: "number";
   subType?: "default" | "price";
 };
+
+export type DatabaseResponse<T> = {
+  success: boolean;
+  statusText: string;
+  message: string;
+  data: T | null;
+};

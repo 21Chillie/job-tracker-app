@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cva } from "class-variance-authority"
+import { cva } from "class-variance-authority";
+import * as React from "react";
 import {
   Calendar as AriaCalendar,
   CalendarGridHeader as AriaCalendarGridHeader,
@@ -17,10 +17,9 @@ import {
   type CalendarProps,
   type DateValue,
   type RangeCalendarProps,
-} from "react-aria-components"
+} from "react-aria-components";
 
-import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -28,8 +27,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 const cellVariants = cva(
   "group/day relative mt-2 aspect-square h-full w-full cursor-default rounded-(--cell-radius) p-0 text-center select-none [&:is(:last-child>[data-selected=true])>div]:rounded-r-(--cell-radius)",
@@ -41,7 +41,7 @@ const cellVariants = cva(
         true: "[&:is(:nth-child(2)>[data-selected=true])>div]:rounded-l-(--cell-radius)",
       },
       isToday: {
-        true: "rounded-(--cell-radius) bg-muted text-foreground",
+        true: "rounded-(--cell-radius) bg-muted text-foreground data-[selected=true]:rounded-none",
       },
       isSelectionStart: {
         true: "relative isolate z-0 rounded-l-(--cell-radius) bg-muted after:absolute after:inset-y-0 after:right-0 after:w-4 after:bg-muted",
@@ -59,25 +59,25 @@ const cellVariants = cva(
         true: "text-muted-foreground aria-selected:text-muted-foreground",
       },
     },
-  }
-)
+  },
+);
 
 function Calendar<
   T extends DateValue,
   M extends "single" | "multiple" = "single",
 >(
   props: Omit<CalendarProps<T, M>, "visibleDuration"> & {
-    buttonVariant?: React.ComponentProps<typeof Button>["variant"]
-    captionLayout?: "label" | "dropdown"
-    numberOfMonths?: number
-    showWeekNumber?: boolean
-    headerFormat?: Intl.DateTimeFormatOptions
+    buttonVariant?: React.ComponentProps<typeof Button>["variant"];
+    captionLayout?: "label" | "dropdown";
+    numberOfMonths?: number;
+    showWeekNumber?: boolean;
+    headerFormat?: Intl.DateTimeFormatOptions;
     renderCell?: (
       renderProps: CalendarCellRenderProps & {
-        defaultChildren: React.ReactNode
-      }
-    ) => React.ReactNode
-  }
+        defaultChildren: React.ReactNode;
+      },
+    ) => React.ReactNode;
+  },
 ) {
   return (
     <AriaCalendar
@@ -85,28 +85,28 @@ function Calendar<
       data-slot="calendar"
       visibleDuration={{ months: props.numberOfMonths || 1 }}
       className={cn(
-        "group/calendar w-fit bg-background p-3 [--cell-radius:var(--radius-4xl)] [--cell-size:--spacing(8)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
-        props.className
+        "group/calendar bg-background w-fit p-3 [--cell-radius:var(--radius-4xl)] [--cell-size:--spacing(8)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
+        props.className,
       )}
     >
       <CalendarInner {...props} />
     </AriaCalendar>
-  )
+  );
 }
 
 function RangeCalendar<T extends DateValue>(
   props: RangeCalendarProps<T> & {
-    buttonVariant?: React.ComponentProps<typeof Button>["variant"]
-    captionLayout?: "label" | "dropdown"
-    headerFormat?: Intl.DateTimeFormatOptions
-    numberOfMonths?: number
-    showWeekNumber?: boolean
+    buttonVariant?: React.ComponentProps<typeof Button>["variant"];
+    captionLayout?: "label" | "dropdown";
+    headerFormat?: Intl.DateTimeFormatOptions;
+    numberOfMonths?: number;
+    showWeekNumber?: boolean;
     renderCell?: (
       renderProps: CalendarCellRenderProps & {
-        defaultChildren: React.ReactNode
-      }
-    ) => React.ReactNode
-  }
+        defaultChildren: React.ReactNode;
+      },
+    ) => React.ReactNode;
+  },
 ) {
   return (
     <AriaRangeCalendar
@@ -114,13 +114,13 @@ function RangeCalendar<T extends DateValue>(
       data-slot="calendar"
       visibleDuration={{ months: props.numberOfMonths || 1 }}
       className={cn(
-        "group/calendar w-fit bg-background p-3 [--cell-radius:var(--radius-4xl)] [--cell-size:--spacing(8)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
-        props.className
+        "group/calendar bg-background w-fit p-3 [--cell-radius:var(--radius-4xl)] [--cell-size:--spacing(8)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
+        props.className,
       )}
     >
       <CalendarInner {...props} isRange />
     </AriaRangeCalendar>
-  )
+  );
 }
 
 function CalendarInner({
@@ -132,15 +132,15 @@ function CalendarInner({
   renderCell,
   isRange,
 }: {
-  buttonVariant?: React.ComponentProps<typeof Button>["variant"]
-  captionLayout?: "label" | "dropdown"
-  numberOfMonths?: number
-  showWeekNumber?: boolean
-  headerFormat?: Intl.DateTimeFormatOptions
+  buttonVariant?: React.ComponentProps<typeof Button>["variant"];
+  captionLayout?: "label" | "dropdown";
+  numberOfMonths?: number;
+  showWeekNumber?: boolean;
+  headerFormat?: Intl.DateTimeFormatOptions;
   renderCell?: (
-    renderProps: CalendarCellRenderProps & { defaultChildren: React.ReactNode }
-  ) => React.ReactNode
-  isRange?: boolean
+    renderProps: CalendarCellRenderProps & { defaultChildren: React.ReactNode },
+  ) => React.ReactNode;
+  isRange?: boolean;
 }) {
   return (
     <div className="relative flex flex-col gap-4 md:flex-row">
@@ -182,7 +182,7 @@ function CalendarInner({
           >
             <AriaCalendarGridHeader>
               {(day) => (
-                <CalendarHeaderCell className="rounded-(--cell-radius) text-[0.8rem] font-normal text-muted-foreground select-none">
+                <CalendarHeaderCell className="text-muted-foreground rounded-(--cell-radius) text-[0.8rem] font-normal select-none">
                   {day}
                 </CalendarHeaderCell>
               )}
@@ -208,7 +208,7 @@ function CalendarInner({
                       }
                       className={cn(
                         buttonVariants({ variant: "ghost", size: "icon" }),
-                        "relative isolate z-10 flex aspect-square h-full w-full min-w-(--cell-size) flex-col gap-1 border-0 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-r-(--cell-radius) data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-muted data-[range-middle=true]:text-foreground data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:rounded-l-(--cell-radius) data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground dark:hover:text-foreground [&>span]:text-xs [&>span]:opacity-70"
+                        "group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:bg-muted data-[range-middle=true]:text-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground dark:hover:text-foreground relative isolate z-10 flex aspect-square h-full w-full min-w-(--cell-size) flex-col gap-1 border-0 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-r-(--cell-radius) data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:rounded-l-(--cell-radius) [&>span]:text-xs [&>span]:opacity-70",
                       )}
                     >
                       {renderCell
@@ -223,7 +223,7 @@ function CalendarInner({
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 function MonthDropdown({ format }: { format?: Intl.DateTimeFormatOptions }) {
@@ -246,7 +246,7 @@ function MonthDropdown({ format }: { format?: Intl.DateTimeFormatOptions }) {
         </Select>
       )}
     </CalendarMonthPicker>
-  )
+  );
 }
 
 function YearDropdown({ format }: { format?: Intl.DateTimeFormatOptions }) {
@@ -267,7 +267,7 @@ function YearDropdown({ format }: { format?: Intl.DateTimeFormatOptions }) {
         </Select>
       )}
     </CalendarYearPicker>
-  )
+  );
 }
 
-export { Calendar, RangeCalendar }
+export { Calendar, RangeCalendar };

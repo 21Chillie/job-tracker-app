@@ -6,7 +6,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { useFieldContext } from "@/lib/hooks/create-form.hook";
-import { Job } from "@/prisma/generated/prisma/client";
 import { toCalendarDate } from "@/utils/job-helper";
 import { CalendarDate, getLocalTimeZone } from "@internationalized/date";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -23,7 +22,7 @@ export default function DatePickerField({
   required = false,
   fieldDescription,
 }: Props) {
-  const { name, state, handleChange } = useFieldContext<Job["dateApplied"]>();
+  const { name, state, handleChange } = useFieldContext<Date | null>();
   const [today, setToday] = useState<CalendarDate | null>(null);
 
   useEffect(() => {
@@ -55,7 +54,7 @@ export default function DatePickerField({
         <Button
           name={name}
           id="date-picker-simple"
-          className="border-input bg-input/30 hover:bg-input/50 justify-start border font-normal transition-colors"
+          className="border-input bg-input/30 hover:bg-input/50 text-foreground justify-start border font-normal transition-colors"
         >
           <CalendarIcon className="text-muted-foreground" />
           {state.value ? (
@@ -65,7 +64,7 @@ export default function DatePickerField({
               dateStyle: "long",
             })
           ) : (
-            <span>Pick a date</span>
+            <span className="text-muted-foreground">Pick a date</span>
           )}
         </Button>
         <Popover className="w-auto p-0" placement="bottom start">
