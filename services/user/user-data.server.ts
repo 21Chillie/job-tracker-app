@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { DatabaseResponse } from "@/types/global.type";
-import { handleDatabaseErrorResponse } from "@/utils/global-helper";
+import { handleDatabaseErrorResponse } from "@/utils/job-helper";
 import { cacheLife, cacheTag } from "next/cache";
 
 // * Get user email verified or not
@@ -54,6 +54,10 @@ export async function getUserEmail({
 export async function checkUserId(
   userId: string,
 ): Promise<DatabaseResponse<{ id: string; email: string }>> {
+  "use cache";
+  cacheLife("weeks");
+  cacheTag("check-user-id-data");
+
   try {
     const data = await prisma.user.findUnique({
       where: {
