@@ -51,8 +51,6 @@ export async function accountSignout() {
   try {
     await auth.api.signOut({ headers: await headers() });
 
-    revalidateTag("user-email", "max");
-
     return {
       success: true,
       message: "Signed out successfully",
@@ -76,5 +74,9 @@ export async function accountSignout() {
       message: errorMessage,
       statusText: errorStatusText,
     };
+  } finally {
+    revalidateTag("user-email", "max");
+    revalidateTag("user-quick-stats", "max");
+    revalidateTag("check-user-id-data", "max");
   }
 }
