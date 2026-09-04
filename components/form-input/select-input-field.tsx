@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { useFieldContext } from "@/lib/hooks/create-form.hook";
 import { AnyInputFieldProps } from "@/types/global.type";
+import { capitalizeString } from "@/utils/global-helper";
 
 type Props = Pick<
   AnyInputFieldProps,
@@ -62,12 +63,7 @@ export default function SelectInputField({
                 key={`${item.value}`}
                 id={item.value}
               >
-                {item.label
-                  .replaceAll("_", " ")
-                  .toLowerCase()
-                  .split(" ")
-                  .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                  .join(" ")}
+                {capitalizeString(item.label)}
               </SelectItem>
             ))}
           </SelectGroup>

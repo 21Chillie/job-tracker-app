@@ -1,4 +1,6 @@
 import AddJobForm from "@/components/job/add-job-form";
+import QuickStats from "@/components/job/quick-stats";
+import { QuickStatsSkeleton } from "@/components/job/quick-stats-skeleton";
 import {
   Card,
   CardContent,
@@ -6,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Suspense } from "react";
 
 export default async function AddJobContainer() {
   return (
@@ -25,15 +28,9 @@ export default async function AddJobContainer() {
         </Card>
 
         <div className="lg:col-span-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick stats</CardTitle>
-
-              <CardDescription>
-                Your applications stats broken down by status.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+          <Suspense fallback={<QuickStatsSkeleton />}>
+            <QuickStats />
+          </Suspense>
         </div>
       </div>
     </div>

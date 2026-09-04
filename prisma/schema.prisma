@@ -105,13 +105,11 @@ enum PositionTypeOption {
 
 enum ApplicationStatus {
   APPLIED
-  SCREENING
   INTERVIEWING
   ASSESSMENT
   OFFER
   ACCEPTED
   REJECTED
-  WITHDRAWN
 }
 
 model Job {
