@@ -1,23 +1,20 @@
-import { PrismaClientUnknownRequestError } from "@/prisma/generated/prisma/internal/prismaNamespace";
-import { DatabaseResponse } from "@/types/global.type";
+import { CalendarDate } from "@internationalized/date";
 
-export function handleDatabaseErrorResponse<T>({
-  error,
-  customStatusText,
-}: {
-  error: unknown;
-  customStatusText?: string;
-}): DatabaseResponse<T> {
-  let message = "An unknown error occurred";
-  let statusText = customStatusText || "Internal Server Error";
+export function capitalizeString(text: string) {
+  const capitalized = text
+    .replaceAll("_", " ")
+    .toLowerCase()
+    .split(" ")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
 
-  if (error instanceof PrismaClientUnknownRequestError) {
-    message = error.message;
-    statusText = error.name;
-  } else if (error instanceof Error) {
-    message = error.message;
-    statusText = customStatusText ?? error.name;
-  }
+  return capitalized;
+}
 
-  return { success: false, statusText, message, data: null };
+export function toCalendarDate(date: Date): CalendarDate {
+  return new CalendarDate(
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+  );
 }
