@@ -42,10 +42,12 @@ export function authErrorResponseHelper({
   redirectURL: string;
 }): AuthServerResponseType & { statusText: string } {
   if (error instanceof Error) {
+    console.error(error);
+
     return {
       success: false,
       statusText: "Auth Error",
-      message: error.message,
+      message: getErrorMessage("server_error") as string,
       redirectURL,
     };
   }

@@ -2,7 +2,7 @@
 
 Job Tracker App is a full-stack web application for job seekers to manage and track their job application process in one place. It provides a structured workflow for recording applications, updating progress, and reviewing outcomes through a dashboard interface.
 
-> **Note:** This version (v2) is still in development. For now, only [v1](https://github.com/21Chillie/job-tracker-app/tree/v1) is the stable, please use this version until v2 is officially released.
+> **Note:** This version (v2) is still on development. For now, only [v1](https://github.com/21Chillie/job-tracker-app/tree/v1) is the stable, please use this version until v2 is officially released.
 
 ## Test Local
 
@@ -15,3 +15,9 @@ cd job-tracker-app
 
 bun i && bun dev
 ```
+
+## UI Revamp & New Features Coming
+
+| <center>Dark</center>                                               | <center>Light</center>                                               |
+| ------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| ![Dashboard overview](./docs/images/job-tracker-dashboard-dark.png) | ![Dashboard overview](./docs/images/job-tracker-dashboard-light.png) |
