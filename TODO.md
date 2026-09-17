@@ -7,6 +7,8 @@
 - [x] ~~setup email service provider to send OTP code~~
 - [x] ~~testing oauth and email-password auth~~
 - [x] ~~feature to check disposable email and invalid email domain~~
+- [ ] Reset password functionality
+- [ ] Testing reset password functionality
 - [ ] setup rate limit and anti-bot
 - [ ] retesting auth again
 
