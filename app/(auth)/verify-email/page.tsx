@@ -1,14 +1,12 @@
 import OTPCard from "@/components/auth/otp-card";
-import { getUserEmail } from "@/services/user/user-data.server";
+import { getEmailWithVerifiedStatus } from "@/services/user/user-data.server";
 import { redirect } from "next/navigation";
 
 export default async function VerifyEmailPage({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-  }) {
-
-  
+}) {
   // // Check if there is query params ?email=...
   // // Redirect to home if no email is provided
   const { email } = (await searchParams) as { email: string | undefined };
@@ -16,7 +14,7 @@ export default async function VerifyEmailPage({
 
   // // Check if there is email but not verified in database
   // // Redirect to home if no email it's not exist
-  const userEmailExist = await getUserEmail({ email, emailVerified: false });
+  const userEmailExist = await getEmailWithVerifiedStatus({ email });
   if (!userEmailExist.data) redirect("/");
 
   return (
@@ -24,4 +22,4 @@ export default async function VerifyEmailPage({
   );
 }
 
- export const instant = false; 
+export const instant = false;
