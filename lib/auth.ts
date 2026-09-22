@@ -25,10 +25,7 @@ export const auth = betterAuth({
     maxPasswordLength: 128,
     requireEmailVerification: enableVerification,
   },
-  emailVerification: {
-    autoSignInAfterVerification: true,
-    sendOnSignUp: enableVerification,
-  },
+
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -47,7 +44,7 @@ export const auth = betterAuth({
     window: 10,
     max: 100,
     customRules: {
-      "/email-otp/send-verification-otp": {
+      "/send-verification-otp": {
         window: 600,
         max: 3,
       },
@@ -62,13 +59,6 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        after: async ({ id, email }) => {
-          if (email === process.env.ADMIN_EMAIL) {
-            await updateUserRole({ id, email });
-          }
-        },
-      },
-      update: {
         after: async ({ id, email }) => {
           if (email === process.env.ADMIN_EMAIL) {
             await updateUserRole({ id, email });
