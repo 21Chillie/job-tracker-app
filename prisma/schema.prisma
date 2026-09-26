@@ -53,7 +53,7 @@ model Session {
 
 model Account {
   id                    String    @id
-  issuer                String
+  issuer                String?
   accountId             String
   providerId            String
   userId                String

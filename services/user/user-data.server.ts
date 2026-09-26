@@ -6,22 +6,60 @@ import { handleDatabaseErrorResponse } from "@/utils/job-helper";
 import { cacheLife, cacheTag } from "next/cache";
 
 // * Get user email verified or not
-export async function getUserEmail({
+export async function getEmailWithVerifiedStatus({
   email,
-  emailVerified,
+  emailVerified = false,
 }: {
   email: string;
   emailVerified?: boolean;
 }) {
   "use cache";
   cacheLife("weeks");
-  cacheTag("user-email");
+  cacheTag("user-email-verified");
 
   try {
     const result = await prisma.user.findUnique({
       where: {
         email,
         emailVerified,
+      },
+      select: { email: true, emailVerified: true },
+    });
+
+    if (!result) {
+      throw new Error("User not found");
+    }
+
+    return {
+      success: true,
+      message: "User found",
+      data: result,
+    };
+  } catch (err) {
+    let message = "UNKNOWN ERROR: Something went wrong on our end";
+
+    if (err instanceof Error) {
+      console.error(err);
+      message = `DATABASE ERROR: ${err.message}`;
+    }
+
+    return {
+      success: false,
+      message,
+      data: null,
+    };
+  }
+}
+
+export async function getUserEmail(email: string) {
+  "use cache";
+  cacheLife("weeks");
+  cacheTag("user-email-verified");
+
+  try {
+    const result = await prisma.user.findUnique({
+      where: {
+        email,
       },
       select: { email: true, emailVerified: true },
     });

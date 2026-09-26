@@ -78,5 +78,6 @@ export async function accountSignout() {
     revalidateTag("user-email", "max");
     revalidateTag("user-quick-stats", "max");
     revalidateTag("check-user-id-data", "max");
+    revalidateTag("user-email-verified", "max");
   }
 }
