@@ -14,7 +14,7 @@ export default async function VerifyEmailPage({
 
   // // Check if there is email but not verified in database
   // // Redirect to home if no email it's not exist
-  const userEmailExist = await getEmailWithVerifiedStatus({ email });
+  const userEmailExist = await getEmailWithVerifiedStatus({ email, emailVerified: false });
   if (!userEmailExist.data) redirect("/");
 
   return (
