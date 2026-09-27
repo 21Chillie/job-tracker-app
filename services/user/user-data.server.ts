@@ -11,7 +11,7 @@ export async function getEmailWithVerifiedStatus({
   emailVerified = false,
 }: {
   email: string;
-  emailVerified?: boolean;
+  emailVerified: boolean;
 }) {
   "use cache";
   cacheLife("weeks");
@@ -27,7 +27,11 @@ export async function getEmailWithVerifiedStatus({
     });
 
     if (!result) {
-      throw new Error("User not found");
+      return {
+        success: false,
+        message: "User not found",
+        data: null,
+      };
     }
 
     return {
@@ -65,7 +69,11 @@ export async function getUserEmail(email: string) {
     });
 
     if (!result) {
-      throw new Error("User not found");
+      return {
+        success: false,
+        message: "User not found",
+        data: null,
+      };
     }
 
     return {
