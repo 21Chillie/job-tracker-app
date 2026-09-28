@@ -44,3 +44,5 @@ export type UserRoleType = User["role"];
 
 export type OTPEmailType =
   "sign-in" | "email-verification" | "forget-password" | "change-email";
+
+export type ForgotPasswordStep = "email" | "otp" | "input" | "complete";
