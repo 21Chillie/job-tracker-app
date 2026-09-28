@@ -1,5 +1,6 @@
 "use client";
 
+import ForgotPassword from "@/components/auth/forgot-password-button";
 import DynamicFieldDescription from "@/components/form-input/dynamic-field-errors";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
@@ -28,14 +29,17 @@ export default function InputPasswordField({
   const isInvalid = state.meta.isDirty && state.meta.errors.length > 0;
 
   return (
-    <Field
-      data-disabled={disabled}
-      data-invalid={isInvalid}>
+    <Field data-disabled={disabled} data-invalid={isInvalid}>
       {label && (
         <FieldLabel
-          className="text-xs"
-          htmlFor={name}>
-          {label} {required && <span className="text-destructive">*</span>}
+          className="flex items-center justify-between text-xs"
+          htmlFor={name}
+        >
+          <div>
+            {label} {required && <span className="text-destructive">*</span>}
+          </div>
+
+          <ForgotPassword />
         </FieldLabel>
       )}
       <InputGroup>
@@ -62,7 +66,8 @@ export default function InputPasswordField({
           type="button"
           onClick={() => setShowPassword(!showPassword)}
           variant={"ghost"}
-          size={"icon"}>
+          size={"icon"}
+        >
           {showPassword ? <EyeOff /> : <Eye />}
         </Button>
       </InputGroup>
