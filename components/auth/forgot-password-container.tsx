@@ -7,7 +7,7 @@ import { ForgotPasswordStep } from "@/types/auth.type";
 import { useState } from "react";
 
 export default function ForgotPasswordContainer() {
-  const [step, setStep] = useState<ForgotPasswordStep>("otp");
+  const [step, setStep] = useState<ForgotPasswordStep>("email");
   const [email, setEmail] = useState<string>("");
 
   if (step === "email") {
