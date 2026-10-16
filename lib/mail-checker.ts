@@ -5,11 +5,13 @@ export const disposableDomains = MailChecker;
 export const emailSchema = z.email({ error: "Invalid email address" }).refine(
   (val) => {
     const isDisposable = disposableDomains.isValid(val.toLowerCase());
-    return isDisposable
+    return isDisposable;
   },
   {
     error: "Disposable email addresses are not allowed.",
   },
 );
 
-disposableDomains.blacklist()
+export type EmailSchemaType = z.infer<typeof emailSchema>;
+
+disposableDomains.blacklist();
